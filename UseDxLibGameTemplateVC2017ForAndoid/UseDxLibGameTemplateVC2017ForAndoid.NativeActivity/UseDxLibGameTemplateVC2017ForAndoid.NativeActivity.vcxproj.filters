@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Random.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Form.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="InputDevice.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Play.cpp">
+      <Filter>Source\MyGame\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="MusicInfo.cpp">
+      <Filter>Source\MyGame</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectMusic.cpp">
+      <Filter>Source\MyGame\SelectMusic</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalNote.cpp">
+      <Filter>Source\MyGame\Play\Note</Filter>
+    </ClCompile>
+    <ClCompile Include="MusicScore.cpp">
+      <Filter>Source\MyGame\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="GetFilePath.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="LongNote.cpp">
+      <Filter>Source\MyGame\Play\Note</Filter>
+    </ClCompile>
+    <ClCompile Include="Note.cpp">
+      <Filter>Source\MyGame\Play\Note</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaySettings.cpp">
+      <Filter>Source\MyGame\Play\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="FlickNote.cpp">
+      <Filter>Source\MyGame\Play\Note</Filter>
+    </ClCompile>
+    <ClCompile Include="SlideNote.cpp">
+      <Filter>Source\MyGame\Play\Note</Filter>
+    </ClCompile>
+    <ClCompile Include="NoteCommon.cpp">
+      <Filter>Source\MyGame\Play\Commons</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header">
+      <UniqueIdentifier>{f0354c04-c3eb-4bf5-a25e-f1791a41913c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{30f5d8d4-5e8c-4515-bfa1-118ef3e1cb02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MyGame">
+      <UniqueIdentifier>{3578aac7-ed21-491d-9f09-2a180662bf89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\MyGame">
+      <UniqueIdentifier>{a8e8adb8-f400-41f1-8005-77d6e590529a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\MyGame\SelectMusic">
+      <UniqueIdentifier>{9f7c4ebd-aa32-46b1-9a8f-26c75c5bd10b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MyGame\SelectMusic">
+      <UniqueIdentifier>{e817676a-c4f1-41ab-bf6e-a1a02571e6fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MyGame\Play">
+      <UniqueIdentifier>{0b3dd53f-9599-4d26-8e9d-398133026d12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\MyGame\Play">
+      <UniqueIdentifier>{24a50b46-db15-4cc5-8367-126167e9ed8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\MyGame\Play\Commons">
+      <UniqueIdentifier>{bcc2728e-a7b5-486c-b628-8a5fec52b48d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\MyGame\Play\Notes">
+      <UniqueIdentifier>{dc8c701a-68bb-48e3-a40a-ee911c86cfd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MyGame\Play\Note">
+      <UniqueIdentifier>{50e2000e-ca33-4675-93cc-dacb47413cf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MyGame\Play\Commons">
+      <UniqueIdentifier>{c806fa24-ac91-46fb-be86-c2ecb89c2f1f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CommonSettings.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Form.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="InputDevice.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewKey.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorList.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectMusic.h">
+      <Filter>Header\MyGame\SelectMusic</Filter>
+    </ClInclude>
+    <ClInclude Include="Play.h">
+      <Filter>Header\MyGame\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayPositions.h">
+      <Filter>Header\MyGame\Play\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="Result.h">
+      <Filter>Header\MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Note.h">
+      <Filter>Header\MyGame\Play\Notes</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicInfo.h">
+      <Filter>Header\MyGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Align.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalNote.h">
+      <Filter>Header\MyGame\Play\Notes</Filter>
+    </ClInclude>
+    <ClInclude Include="NoteCommon.h">
+      <Filter>Header\MyGame\Play\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicScore.h">
+      <Filter>Header\MyGame\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="GetFilePath.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="LongNote.h">
+      <Filter>Header\MyGame\Play\Notes</Filter>
+    </ClInclude>
+    <ClInclude Include="FlickNote.h">
+      <Filter>Header\MyGame\Play\Notes</Filter>
+    </ClInclude>
+    <ClInclude Include="HaveNextNote.h">
+      <Filter>Header\MyGame\Play\Notes</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaySettings.h">
+      <Filter>Header\MyGame\Play\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="SlideNote.h">
+      <Filter>Header\MyGame\Play\Notes</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
