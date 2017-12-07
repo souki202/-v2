@@ -3,30 +3,40 @@
 #include <sstream>
 #include <memory>
 #include <map>
+#include "Timer.h"
 #include "Note.h"
 #include "GetFilePath.h"
-#include "PlayPositions.h"
+#include "JudgeLine.h"
+#include "MusicInfo.h"
 
 #include "NormalNote.h"
 #include "LongNote.h"
 #include "SlideNote.h"
 #include "FlickNote.h"
 
+
 class MusicScore {
 public:
-	MusicScore(const std::string& filePath) { loadMusicScore(filePath); };
+	MusicScore(const MusicInfo& musicInfo, int difficulty) 
+		: musicInfo(musicInfo)
+	{ loadMusicScore(difficulty); };
 	MusicScore() {};
-	~MusicScore() {};
+	~MusicScore() { DeleteSoundMem(bgm); };
 
-	void loadMusicScore(const std::string& filePath);
+	void setMusicInfo(const MusicInfo& musicInfo) { this->musicInfo = musicInfo; };
+	void loadMusicScore(int difficulty);
 	double calcElapsedTime(double lastPeriod, double nowPeriod, float bpm, int numBeatDiv, int beatDiv);
 
 	void draw();
 	void update();
+	void startMusic() { PlaySoundMem(bgm, DX_PLAYTYPE_BACK); timer.reset(); };
 private:
+	MusicInfo musicInfo;
 	std::string filePath;
 	float bpm;
 	int startTime;
+	Timer timer;
+	int bgm;
 
 	std::vector<std::shared_ptr<Note>> notes;
 	std::vector<std::string> errors;

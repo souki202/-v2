@@ -1,8 +1,8 @@
 #include "MusicScore.h"
 
-void MusicScore::loadMusicScore(const std::string & filePath)
+void MusicScore::loadMusicScore(int difficulty)
 {
-	this->filePath = getExternalFilePath(filePath);
+	this->filePath = getExternalFilePath(musicInfo.getFilePath() + static_cast<char>('0' + difficulty) + ".tsv");
 	std::ifstream ifs(this->filePath);
 	std::string line;
 	bool isHumen = false;
@@ -16,7 +16,7 @@ void MusicScore::loadMusicScore(const std::string & filePath)
 	std::map<int, int> useId; //id, uid(配列番号)
 	int uid = 0;
 
-	playPositions.setNumLine(5);
+	judgeLine.setNumLine(5);
 
 	while (std::getline(ifs, line)) {
 		//コメント行
@@ -47,7 +47,7 @@ void MusicScore::loadMusicScore(const std::string & filePath)
 			}
 			else if (args[0] == "Humen") isHumen = true;
 			else if (args[0] == "Key") {
-				playPositions.setNumLine(std::atoi(args[1].c_str()));
+				judgeLine.setNumLine(std::atoi(args[1].c_str()));
 			}
 			else if (args[0] == "Beat") {
 				numBeatDiv = std::atoi(args[1].c_str());
@@ -174,8 +174,13 @@ void MusicScore::loadMusicScore(const std::string & filePath)
 		//経過ピリオド数を更新
 		lastPeriod = nowPeriod;
 		nowPeriod += 1.0 / divPeriod / (numBeatDiv / beatDiv);
+		nowTime += calcElapsedTime(lastPeriod, nowPeriod, bpm, numBeatDiv, beatDiv);
 		continue;
 	}
+
+	//音楽読み込み
+	std::string musicFile = (musicInfo.getFilePath() + "bgm.ogg");
+	bgm = LoadSoundMem(musicFile.c_str());
 }
 
 double MusicScore::calcElapsedTime(double lastPeriod, double nowPeriod, float bpm, int numBeatDiv, int beatDiv)
@@ -186,9 +191,17 @@ double MusicScore::calcElapsedTime(double lastPeriod, double nowPeriod, float bp
 void MusicScore::draw()
 {
 	for (auto& x : notes) x->draw();
+
+#ifdef DEBUG
+	DrawFormatString(800, 100, 0xffffff, "time:%d", timer.getElapsedTime());
+#endif
 }
 
 void MusicScore::update()
 {
-	for (auto& x : notes) x->update();
+	timer.update();
+	for (auto& x : notes) {
+		x->setNowTime(timer.getElapsedTime());
+		x->update();
+	}
 }

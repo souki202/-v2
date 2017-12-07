@@ -202,15 +202,15 @@ void InputDevice::DeresutePlayTouchInput::update()
 	for (auto& touch : touches) {
 		//ラインをタッチ
 		if (touch.second.phase == PressPhase::BEGAN) {
-			touchLine[touch.first] = playPositions.getLine(touch.second.initPos.first);
+			touchLine[touch.first] = judgeLine.getLine(touch.second.initPos.first);
 		}
 
 		//ホールド検出
 		if (touch.second.phase == PressPhase::IN_THE_MIDDLE) {
 			//最初のホールドライン
-			holdInitLine[touch.first] = playPositions.getLine(touch.second.initPos.first);
+			holdInitLine[touch.first] = judgeLine.getLine(touch.second.initPos.first);
 			//現在のホールドライン
-			holdLine[touch.first] = playPositions.getLine(touch.second.nowPos.first);
+			holdLine[touch.first] = judgeLine.getLine(touch.second.nowPos.first);
 
 			//フリック判定
 			{
@@ -231,7 +231,7 @@ void InputDevice::DeresutePlayTouchInput::update()
 					int x2[2] = {x[0] <= x[1] ? x[0] : x[1],
 						         x[0] <= x[1] ? x[1] : x[0]};
 					cx = (x[0] + x[1]) / 2;
-					int lineCenter = playPositions.getCenterPosition(playPositions.getLine(cx));
+					int lineCenter = judgeLine.getCenterPosition(judgeLine.getLine(cx));
 					//フリック済みなら、フリック予定のラインの中央を通過すれば判定する
 					if (x2[0] <= lineCenter && lineCenter <= x2[1]) {
 						if (x[0] - x[1] > 0) d = FlickDirection::FLICK_R;
@@ -241,7 +241,7 @@ void InputDevice::DeresutePlayTouchInput::update()
 				//フリックしているならライン出して突っ込む
 				if (d != FlickDirection::INVALID) {
 					//同じ場所で同じ方向にフリックが連続して発生すればフリック無効化
-					int l = playPositions.getLine(cx);
+					int l = judgeLine.getLine(cx);
 					if (!(d == touch.second.flickDirection && l == touch.second.flickedLine)) {
 						flickLine[touch.first] = std::make_pair(l, d);
 						touch.second.setFlicked();

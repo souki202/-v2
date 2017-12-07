@@ -128,9 +128,6 @@
     <ClInclude Include="Image.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="PlayPositions.h">
-      <Filter>Header\MyGame\Play\Commons</Filter>
-    </ClInclude>
     <ClInclude Include="Result.h">
       <Filter>Header\MyGame</Filter>
     </ClInclude>
@@ -172,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="Debug.h">
       <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="JudgeLine.h">
+      <Filter>Header\MyGame\Play\Commons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

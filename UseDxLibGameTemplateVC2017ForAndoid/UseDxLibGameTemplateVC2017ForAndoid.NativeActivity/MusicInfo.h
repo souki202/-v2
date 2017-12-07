@@ -15,11 +15,13 @@ private:
 		std::array<int, 3> difficulty;
 	};
 public:
-	MusicInfo(const std::string& filePath) { info.filePath = filePath; loadMusicInfo(filePath); };
+	MusicInfo(const std::string& folderPath) { loadMusicInfo(folderPath); };
+	MusicInfo() {};
 	~MusicInfo() {};
 
-	void loadMusicInfo(const std::string& filePath);
-	const std::string& getFilePath() const { return info.filePath; };
+	void loadMusicInfo(const std::string& folderPath);
+	const std::string& getFilePath() const { return info.filePath; };//末尾にスラッシュが必ずつく
+	const std::string& getTitle() const { return info.title; };
 private:
 	Info info;
 };

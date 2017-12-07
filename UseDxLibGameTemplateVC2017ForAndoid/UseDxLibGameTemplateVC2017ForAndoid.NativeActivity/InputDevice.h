@@ -10,7 +10,7 @@
 #include "Timer.h"
 #include "CommonSettings.h"
 #include "FlickNote.h"
-#include "PlayPositions.h"
+#include "JudgeLine.h"
 
 #define USE_INPUTDEVICE_DEF
 

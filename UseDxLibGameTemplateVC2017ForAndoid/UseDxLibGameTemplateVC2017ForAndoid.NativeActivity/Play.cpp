@@ -3,7 +3,10 @@
 Play::Play(const MusicInfo& musicInfo, int difficulty)
 	: musicInfo(musicInfo), difficulty(difficulty)
 {
-	musicScore.loadMusicScore(musicInfo.getFilePath() + static_cast<char>('0' + difficulty) + ".tsv");
+	musicScore.setMusicInfo(musicInfo);
+	musicScore.loadMusicScore(difficulty);
+
+	musicScore.startMusic();
 }
 
 void Play::update()
@@ -19,29 +22,29 @@ void Play::draw()
 #ifdef DEBUG
 	auto& touchLines = touchInput.getTouchLine();
 	for (auto& x : touchLines) {
-		int c = playPositions.getCenterPosition(x.second);
-		int w = playPositions.getLineWidth();
+		int c = judgeLine.getCenterPosition(x.second);
+		int w = judgeLine.getLineWidth();
 		DrawBox(c - w/2, 0, c + w/2, CommonSettings::WINDOW_HEIGHT, 0xffffff, true);
 	}
 
 	auto& touchHoldInitLines = touchInput.getHoldInitLine();
 	for (auto& x : touchHoldInitLines) {
-		int c = playPositions.getCenterPosition(x.second);
-		int w = playPositions.getLineWidth();
+		int c = judgeLine.getCenterPosition(x.second);
+		int w = judgeLine.getLineWidth();
 		DrawBox(c - w / 2, 0, c + w / 2, CommonSettings::WINDOW_HEIGHT, 0xffff00, true);
 	}
 
 	auto& touchHoldLines = touchInput.getHoldLine();
 	for (auto& x : touchHoldLines) {
-		int c = playPositions.getCenterPosition(x.second);
-		int w = playPositions.getLineWidth();
+		int c = judgeLine.getCenterPosition(x.second);
+		int w = judgeLine.getLineWidth();
 		DrawBox(c - w / 2, 0, c + w / 2, CommonSettings::WINDOW_HEIGHT, 0xff00ff, true);
 	}
 
 	auto& touchFlickLines = touchInput.getFlickLine();
 	for (auto& x : touchFlickLines) {
-		int c = playPositions.getCenterPosition(x.second.first);
-		int w = playPositions.getLineWidth();
+		int c = judgeLine.getCenterPosition(x.second.first);
+		int w = judgeLine.getLineWidth();
 		if (x.second.second == FlickDirection::FLICK_L) {
 			DrawBox(c - w / 2, 0, c + w / 2, CommonSettings::WINDOW_HEIGHT, 0x0000ff, true);
 		}

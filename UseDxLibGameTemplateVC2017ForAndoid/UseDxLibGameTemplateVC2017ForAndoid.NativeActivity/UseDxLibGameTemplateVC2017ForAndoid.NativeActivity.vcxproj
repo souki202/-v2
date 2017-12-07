@@ -261,7 +261,7 @@
     <ClInclude Include="Note.h" />
     <ClInclude Include="NoteCommon.h" />
     <ClInclude Include="Play.h" />
-    <ClInclude Include="PlayPositions.h" />
+    <ClInclude Include="JudgeLine.h" />
     <ClInclude Include="PlaySettings.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Result.h" />

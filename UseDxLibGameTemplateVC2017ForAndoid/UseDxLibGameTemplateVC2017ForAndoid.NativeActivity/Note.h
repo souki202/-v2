@@ -3,7 +3,8 @@
 #include "Image.h"
 #include "NoteCommon.h"
 #include "PlaySettings.h"
-#include "PlayPositions.h"
+#include "JudgeLine.h"
+#include "Debug.h"
 
 class Note {
 public:
@@ -11,9 +12,11 @@ public:
 	virtual ~Note() {};
 
 	virtual void update();
-	virtual void draw() { noteImg.draw(); DrawFormatString(100, 16*uid, 0xffffff, "uid:%d, type:%d", uid, type); };
+	virtual void draw();
 
 	virtual void setting(int target, float appear, int judgeTime, int uid, int id = 0);
+	void setNowTime(int t) { nowTime = t; };
+	
 	const int& getJudgeTime() const { return judgeTime; };
 	const int& getId() const { return id; };
 	const int& getUid() const { return uid; };
@@ -30,6 +33,7 @@ protected:
 	int id;
 	float appearPos;
 	int target;
+	int nowTime;
 
 private:
 	int judgeTime;

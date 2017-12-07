@@ -1,8 +1,10 @@
 #include "MusicInfo.h"
 
-void MusicInfo::loadMusicInfo(const std::string & filePath)
+void MusicInfo::loadMusicInfo(const std::string & folderPath)
 {
-	std::ifstream ifs(filePath + "musicinfo.tsv");
+	info.filePath = folderPath;
+	if (info.filePath.back() != '/') info.filePath += '/';
+	std::ifstream ifs(folderPath + "musicinfo.tsv");
 	std::string line;
 	bool isFirstLine = true;
 	while (std::getline(ifs, line)) {

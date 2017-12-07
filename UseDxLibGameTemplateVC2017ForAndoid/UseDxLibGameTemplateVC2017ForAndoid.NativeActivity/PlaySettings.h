@@ -24,5 +24,5 @@ public:
 	int getViewNoteTime() { return static_cast<int>(BASE_VIEW_NOTE_TIME / hiSpeed); };
 private:
 	static constexpr int BASE_VIEW_NOTE_TIME = 1000;
-	float hiSpeed = 9;
+	float hiSpeed = 0.5;
 };
