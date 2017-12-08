@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include "GetFilePath.h"
+#include "JudgeLine.h"
 #undef max
 #undef min
 
@@ -21,7 +22,7 @@ public:
 
 	void changeHiSpeed(float d) { hiSpeed = std::max(std::min(hiSpeed + d, 10.f), 0.f); };
 	const float& getHiSpeed() const { return hiSpeed; };
-	int getViewNoteTime() { return static_cast<int>(BASE_VIEW_NOTE_TIME / hiSpeed); };
+	int getViewNoteTime() { return static_cast<int>(BASE_VIEW_NOTE_TIME / 0.5); };
 private:
 	static constexpr int BASE_VIEW_NOTE_TIME = 1000;
 	float hiSpeed = 0.5;

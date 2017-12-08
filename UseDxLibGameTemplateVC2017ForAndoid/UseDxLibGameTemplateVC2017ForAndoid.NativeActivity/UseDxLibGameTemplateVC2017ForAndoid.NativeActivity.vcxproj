@@ -229,6 +229,7 @@
     <ClCompile Include="GetFilePath.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="InputDevice.cpp" />
+    <ClCompile Include="JudgeLine.cpp" />
     <ClCompile Include="LongNote.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MusicInfo.cpp" />

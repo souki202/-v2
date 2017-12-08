@@ -16,7 +16,7 @@ void Play::update()
 
 void Play::draw()
 {
-	DrawString(300, 300, "Play", 0xffffff);
+	judgeLine.draw();
 	musicScore.draw();
 
 #ifdef DEBUG

@@ -2,14 +2,14 @@
 
 void MusicScore::loadMusicScore(int difficulty)
 {
-	this->filePath = getExternalFilePath(musicInfo.getFilePath() + static_cast<char>('0' + difficulty) + ".tsv");
+	this->filePath = musicInfo.getFilePath() + static_cast<char>('0' + difficulty) + ".tsv";
 	std::ifstream ifs(this->filePath);
 	std::string line;
 	bool isHumen = false;
 	float bpm = 1;
 	double nowTime = 0;
-	double lastPeriod = 0;
-	double nowPeriod = 0;
+	double lastPeriod = 1;
+	double nowPeriod = 1;
 	int divPeriod = 4; //小節分割数
 	int numBeatDiv = 4; // div分のnumDiv拍子
 	int beatDiv = 4;
@@ -25,6 +25,7 @@ void MusicScore::loadMusicScore(int difficulty)
 		}
 
 		//情報行
+		//曲の時間は加算しない
 		if (!line.empty() && line.front() == '#') {
 			line = line.substr(1);
 			std::stringstream ss(line);
@@ -58,14 +59,7 @@ void MusicScore::loadMusicScore(int difficulty)
 				nowPeriod = std::atof(args[0].c_str());
 				divPeriod = std::atoi(args[1].c_str());
 				nowTime += calcElapsedTime(lastPeriod, nowPeriod, bpm, numBeatDiv, beatDiv);
-
-				//これだけは経過ピリオド数を更新しない
-				continue;
 			}
-
-			//経過ピリオド数を更新
-			lastPeriod = nowPeriod;
-			nowPeriod += 1.0 / divPeriod / (numBeatDiv / beatDiv);
 			continue;
 		}
 
@@ -178,6 +172,7 @@ void MusicScore::loadMusicScore(int difficulty)
 		continue;
 	}
 
+	judgeLine.loadJudgeIcons();
 	//音楽読み込み
 	std::string musicFile = (musicInfo.getFilePath() + "bgm.ogg");
 	bgm = LoadSoundMem(musicFile.c_str());

@@ -34,7 +34,6 @@ void FlickNote::setDirectionByNextNote(const std::shared_ptr<Note>& nextNote)
 void FlickNote::setDirection(const FlickDirection & d)
 {
 	direction = d;
-	if (d == FlickDirection::FLICK_L) type = NoteType::FLICK_L;
-	if (d == FlickDirection::FLICK_R) type = NoteType::FLICK_R;
-	noteImg = noteImageManager.getNoteImage(type);
+	if (d == FlickDirection::FLICK_L) setType(NoteType::FLICK_L);
+	if (d == FlickDirection::FLICK_R) setType(NoteType::FLICK_R);
 }

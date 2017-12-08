@@ -23,6 +23,7 @@ public:
 	const int& getTarget() const { return target; };
 
 	const NoteType& getType() const { return type; };
+	void setType(NoteType type);
 
 	virtual void setNextNote(const std::shared_ptr<Note>& next) {};
 	virtual void setDirectionByLastNote(const std::shared_ptr<Note>& lastNote) {};

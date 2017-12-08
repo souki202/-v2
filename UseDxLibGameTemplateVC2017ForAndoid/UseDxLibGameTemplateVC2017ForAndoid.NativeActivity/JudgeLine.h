@@ -1,5 +1,8 @@
 #pragma once
+#include <memory>
 #include <algorithm>
+#include "Image.h"
+#include "CommonSettings.h"
 #undef max
 #undef min
 #define judgeLine JudgeLine::getInstance()
@@ -11,6 +14,10 @@ private:
 
 public:
 	static JudgeLine& getInstance() { static JudgeLine p; return p; };
+	void update() {};
+	void draw();
+
+	void loadJudgeIcons(int numOfLines = 0);
 	
 	int getLine(int x) { return std::max(std::min((x - offsetX) / judgeX, numLine-1), 0); }; //x座標からラインを返す
 	int getCenterPosition(float line) { return offsetX + static_cast<int>(judgeX * (line + 0.5)); };//ラインから、そのラインの中央のx座標を返す
@@ -26,4 +33,6 @@ private:
 	static constexpr int CENTER_X = CommonSettings::WINDOW_WIDTH / 2;
 	static constexpr int APPEAR_Y = 120;
 	static constexpr int JUDGE_Y = 597;
+
+	std::vector<std::unique_ptr<Image>> judgeIcons;
 };

@@ -2,6 +2,5 @@
 
 NormalNote::NormalNote()
 {
-	type = NoteType::NORMAL;
-	noteImg = noteImageManager.getNoteImage(type);
+	setType(NoteType::NORMAL);
 }

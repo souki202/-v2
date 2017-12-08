@@ -2,6 +2,5 @@
 
 LongNote::LongNote()
 {
-	type = NoteType::LN;
-	noteImg = noteImageManager.getNoteImage(type);
+	setType(NoteType::LN);
 }

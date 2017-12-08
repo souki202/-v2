@@ -127,7 +127,7 @@
     <Content Include="assets\Images\Common\buttonbgwide.png" />
     <Content Include="assets\Images\judge.png" />
     <Content Include="assets\Images\judgeline.png" />
-    <Content Include="assets\Images\judgePoint.png" />
+    <Content Include="assets\Images\Play\judgePoint.png" />
     <Content Include="assets\Images\Play\back.png" />
     <Content Include="assets\Images\Play\BGI\1.png" />
     <Content Include="assets\Images\Play\bomb.png" />

@@ -52,6 +52,9 @@
     <ClCompile Include="NoteCommon.cpp">
       <Filter>Source\MyGame\Play\Commons</Filter>
     </ClCompile>
+    <ClCompile Include="JudgeLine.cpp">
+      <Filter>Source\MyGame\Play</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">

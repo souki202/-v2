@@ -11,7 +11,7 @@ void SlideNote::setNextNote(const std::shared_ptr<Note>& next)
 	HaveNextNote::setNextNote(next);
 	type = NoteType::SLIDE;
 	if (isFirstNote && next) type = NoteType::SLIDE_RELAY;
-	noteImg = noteImageManager.getNoteImage(type);
+	setType(type);
 }
 
 void SlideNote::setIsFirstNote(bool b)

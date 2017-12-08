@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <cstdlib>
+#include "GetFilePath.h"
 
 class MusicInfo {
 private:

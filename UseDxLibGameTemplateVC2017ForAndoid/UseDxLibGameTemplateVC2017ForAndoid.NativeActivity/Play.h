@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "Debug.h"
 #include "InputDevice.h"
+#include "JudgeLine.h"
 
 class Play : public Scene {
 public:

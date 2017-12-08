@@ -4,6 +4,7 @@ void MusicInfo::loadMusicInfo(const std::string & folderPath)
 {
 	info.filePath = folderPath;
 	if (info.filePath.back() != '/') info.filePath += '/';
+	info.filePath = getExternalFilePath(info.filePath);
 	std::ifstream ifs(folderPath + "musicinfo.tsv");
 	std::string line;
 	bool isFirstLine = true;

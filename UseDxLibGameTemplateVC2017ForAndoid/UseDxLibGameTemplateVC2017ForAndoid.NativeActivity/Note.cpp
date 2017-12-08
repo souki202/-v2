@@ -23,6 +23,7 @@ void Note::update()
 
 	//セット
 	noteImg.setPosition(x, y);
+	noteImg.setScale(p, p);
 }
 
 void Note::draw()
@@ -30,16 +31,16 @@ void Note::draw()
 	noteImg.draw();
 
 #ifdef DEBUG
-	DrawFormatString(100, 16 * uid, 0xffffff, "time:%d, uid:%d, type:%d", judgeTime, uid, type);
-	
-	//ノート出現中
-	int appearTime = judgeTime - playSettings.getViewNoteTime();
-	int deltaTime = nowTime - appearTime;
-	float p = static_cast<float>(deltaTime) / playSettings.getViewNoteTime();
-	DrawFormatString(400, 16 * uid, 0xffffff, "p:%f", p);
-	if (0 < p && p <= 1) {
-		DrawFormatString(300, 16*uid, 0xffffff, "出現中");
-	}
+	//DrawFormatString(100, 16 * uid, 0xffffff, "time:%d, uid:%d, type:%d", judgeTime, uid, type);
+	//
+	////ノート出現中
+	//int appearTime = judgeTime - playSettings.getViewNoteTime();
+	//int deltaTime = nowTime - appearTime;
+	//float p = static_cast<float>(deltaTime) / playSettings.getViewNoteTime();
+	//DrawFormatString(400, 16 * uid, 0xffffff, "p:%f", p);
+	//if (0 < p && p <= 1) {
+	//	DrawFormatString(300, 16*uid, 0xffffff, "出現中");
+	//}
 #endif
 }
 
@@ -50,4 +51,11 @@ void Note::setting(int target, float appear, int judgeTime, int uid, int id)
 	this->judgeTime = judgeTime;
 	this->id = id;
 	this->uid = uid;
+}
+
+void Note::setType(NoteType type)
+{
+	this->type = type;
+	noteImg = noteImageManager.getNoteImage(type);
+	noteImg.setAlign(Align::Horizontal::CENTER, Align::Vertical::MIDDLE);
 }
