@@ -227,8 +227,10 @@
     <ClCompile Include="FlickNote.cpp" />
     <ClCompile Include="Form.cpp" />
     <ClCompile Include="GetFilePath.cpp" />
+    <ClCompile Include="HaveNextNote.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="InputDevice.cpp" />
+    <ClCompile Include="Judge.cpp" />
     <ClCompile Include="JudgeLine.cpp" />
     <ClCompile Include="LongNote.cpp" />
     <ClCompile Include="main.cpp" />
@@ -249,12 +251,16 @@
     <ClInclude Include="CommonSettings.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Factory.h" />
+    <ClInclude Include="FlickDirection.h" />
     <ClInclude Include="FlickNote.h" />
     <ClInclude Include="Form.h" />
     <ClInclude Include="GetFilePath.h" />
     <ClInclude Include="HaveNextNote.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="InputDevice.h" />
+    <ClInclude Include="Judge.h" />
+    <ClInclude Include="JudgeGrade.h" />
+    <ClInclude Include="JudgeResult.h" />
     <ClInclude Include="LongNote.h" />
     <ClInclude Include="MusicInfo.h" />
     <ClInclude Include="MusicScore.h" />

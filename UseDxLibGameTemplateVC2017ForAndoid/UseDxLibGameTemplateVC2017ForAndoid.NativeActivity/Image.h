@@ -14,9 +14,9 @@ class Image {
 public:
 	Image();
 	Image(std::string filePath);
-	Image(std::string filePath, const Align::pos_type& position);
+	Image(std::string filePath, const Point& position);
 	Image(int handle);
-	Image(int handle, const Align::pos_type& position);
+	Image(int handle, const Point& position);
 	~Image();
 
 	void init();
@@ -27,27 +27,28 @@ public:
 	void setImage(std::string filePath);
 	void setImage(int handle);
 	void setPosition(float x, float y) { setPosition(std::make_pair(x, y)); };
-	void setPosition(const Align::pos_type& position);
+	void setPosition(const Point& position);
 	void setScrollPosition(float x, float y) { setScrollPosition(std::make_pair(x, y)); };
-	void setScrollPosition(const Align::pos_type& scroll);
+	void setScrollPosition(const Point& scroll);
 	void setScale(float x, float y) { setScale(std::make_pair(x, y)); };
-	void setScale(const Align::pos_type& scale);
+	void setScale(const Point& scale);
 	void setAngle(float angle);
 	void addAngle(float delta) { setAngle(angle + delta); };
 	void setAlpha(int alpha) { this->alpha = alpha; }; //0~255
 	void recalcPosition();
 
 	const int& getHandle() const { return img; };
-	const Align::pos_type& getPosition() const { return rawPos; };
-	const Align::pos_type& getUpperLeftPosition() const { return pos; };
+	const Point& getPosition() const { return rawPos; };
+	const Point& getUpperLeftPosition() const { return pos; };
 	const std::array<std::pair<float, float>, 4>& getVertexes() const { return vertexes; };
-	Align::pos_type getPositionNonScroll() { return std::make_pair(pos.first - scrollPos.first, pos.second - scrollPos.second); };
-	const Align::pos_type& getImageSize() const { return rawSize; }; //画像そのままのサイズを返します
-	const Align::pos_type& getSize() const { return scaledSize; }; //画像をリスケール後のサイズを返します
+	Point getPositionNonScroll() { return std::make_pair(pos.first - scrollPos.first, pos.second - scrollPos.second); };
+	const Point& getImageSize() const { return rawSize; }; //画像そのままのサイズを返します
+	const Point& getSize() const { return scaledSize; }; //画像をリスケール後のサイズを返します
 	const float& getAngle() const { return angle; };
 
-	void draw();
-	void update();
+	virtual void draw();
+	void drawByVertex(const std::vector<Point>& vertex); //頂点の値は保存されない
+	virtual void update();
 
 	void setHasDefaultCollider(bool b) { hasDefaultCollider = b; };
 

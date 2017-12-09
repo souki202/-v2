@@ -1,8 +1,8 @@
 #pragma once
 #include <utility>
+typedef std::pair<float, float> Point;
 
 namespace Align {
-	typedef std::pair<float, float> pos_type;
 	enum class Horizontal {
 		LEFT, CENTER, RIGHT, INVALID,
 	};
@@ -11,8 +11,8 @@ namespace Align {
 		UPPER, MIDDLE, BOTTOM, INVALID,
 	};
 
-	static pos_type calcBasePosition(const pos_type& leftUpperPos, const pos_type& size, const Horizontal& hAlign, const Vertical& vAlign) {
-		pos_type newPos = leftUpperPos;
+	static Point calcBasePosition(const Point& leftUpperPos, const Point& size, const Horizontal& hAlign, const Vertical& vAlign) {
+		Point newPos = leftUpperPos;
 
 		switch (hAlign)
 		{

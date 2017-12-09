@@ -1,7 +1,7 @@
 #pragma once
-#include "HaveNextNote.h"
+#include "LongNote.h"
 
-class SlideNote : public HaveNextNote {
+class SlideNote : public LongNote {
 public:
 	SlideNote();
 	~SlideNote() {};

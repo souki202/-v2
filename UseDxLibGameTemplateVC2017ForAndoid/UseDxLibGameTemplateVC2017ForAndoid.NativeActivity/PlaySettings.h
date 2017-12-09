@@ -16,7 +16,6 @@ private:
 	~PlaySettings() {};
 
 public:
-
 	static PlaySettings& getInstance() { static PlaySettings p; return p; };
 	void loadConfig();
 

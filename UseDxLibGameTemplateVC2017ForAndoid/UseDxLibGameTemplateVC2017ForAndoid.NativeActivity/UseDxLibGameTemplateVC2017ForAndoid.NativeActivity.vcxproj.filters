@@ -55,6 +55,12 @@
     <ClCompile Include="JudgeLine.cpp">
       <Filter>Source\MyGame\Play</Filter>
     </ClCompile>
+    <ClCompile Include="Judge.cpp">
+      <Filter>Source\MyGame\Play\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="HaveNextNote.cpp">
+      <Filter>Source\MyGame\Play\Note</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">
@@ -174,6 +180,18 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="JudgeLine.h">
+      <Filter>Header\MyGame\Play\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="Judge.h">
+      <Filter>Header\MyGame\Play\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="JudgeGrade.h">
+      <Filter>Header\MyGame\Play\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="JudgeResult.h">
+      <Filter>Header\MyGame\Play\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="FlickDirection.h">
       <Filter>Header\MyGame\Play\Commons</Filter>
     </ClInclude>
   </ItemGroup>

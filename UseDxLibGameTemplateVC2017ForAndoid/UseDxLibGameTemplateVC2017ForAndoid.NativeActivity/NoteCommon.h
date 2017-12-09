@@ -11,6 +11,10 @@ enum class NoteType {
 	INVALID
 };
 
+enum class JudgeTiming {
+	TOUCH, FLICK_L, FLICK_R, RELEASE_INIT, RELEASE, THROUGH, INVALID
+};
+
 class NoteImageManager {
 private:
 	NoteImageManager() {};

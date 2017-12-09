@@ -4,7 +4,16 @@
 class LongNote : public HaveNextNote {
 public:
 	LongNote();
-	~LongNote() {};
+	virtual ~LongNote() {};
+
+	virtual void draw();
+	virtual void setNextNote(const std::shared_ptr<Note>& next);
+
+	virtual float getViewPercentage();
+
+	virtual void setJudge(const JudgeResult& judgeResult);
+
+protected:
 
 private:
 

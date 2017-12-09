@@ -25,6 +25,8 @@ public:
 	const int& getLineWidth() const { return judgeX; };
 	int GET_APPEAR_Y() const { return APPEAR_Y; };
 	int GET_JUDGE_Y() const { return JUDGE_Y; };
+
+	int GET_JUDGE_SIZE() const { return JUDGE_SIZE; };
 private:
 	int offsetX = 0;
 	int numLine = 5;

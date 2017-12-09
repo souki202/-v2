@@ -12,7 +12,7 @@ Image::Image(std::string filePath)
 	init();
 }
 
-Image::Image(std::string filePath, const Align::pos_type & position)
+Image::Image(std::string filePath, const Point & position)
 {
 	setImage(filePath);
 	setPosition(position);
@@ -26,7 +26,7 @@ Image::Image(int handle)
 	init();
 }
 
-Image::Image(int handle, const Align::pos_type & position)
+Image::Image(int handle, const Point & position)
 {
 	setImage(handle);
 	setPosition(position);
@@ -65,19 +65,19 @@ void Image::setImage(int handle)
 	isExternal = true;
 }
 
-void Image::setPosition(const Align::pos_type & position)
+void Image::setPosition(const Point & position)
 {
 	rawPos = position;
 	recalcPosition();
 }
 
-void Image::setScrollPosition(const Align::pos_type & scroll)
+void Image::setScrollPosition(const Point & scroll)
 {
 	scrollPos = scroll;
 	recalcPosition();
 }
 
-void Image::setScale(const Align::pos_type & scale)
+void Image::setScale(const Point & scale)
 {
 	this->scale = scale;
 	recalcPosition();
@@ -131,6 +131,19 @@ void Image::draw()
 		img, true
 	);
 	//DrawExtendGraphF(pos.first, pos.second, pos.first + scaledSize.first, pos.second + scaledSize.second, img, true);
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+}
+
+void Image::drawByVertex(const std::vector<Point>& vertex)
+{
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+	DrawModiGraphF(
+		vertex[0].first, vertex[0].second,
+		vertex[1].first, vertex[1].second,
+		vertex[2].first, vertex[2].second,
+		vertex[3].first, vertex[3].second,
+		img, true
+	);
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 

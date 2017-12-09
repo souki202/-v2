@@ -9,8 +9,8 @@
 #include "DxLib.h"
 #include "Timer.h"
 #include "CommonSettings.h"
-#include "FlickNote.h"
 #include "JudgeLine.h"
+#include "FlickDirection.h"
 
 #define USE_INPUTDEVICE_DEF
 
@@ -25,6 +25,7 @@ namespace InputDevice {
 	enum PressPhase {
 		BEGAN, IN_THE_MIDDLE, ENDED, INVALID
 	};
+	typedef std::map<int, std::vector<int>> TouchMap; //line, id
 
 	class Keyboard {
 	private:
@@ -141,6 +142,7 @@ namespace InputDevice {
 		decltype(touches.find(0)) firstTouch;
 	};
 
+
 	class DeresutePlayTouchInput : public InputDevice::Touch {
 	protected:
 		DeresutePlayTouchInput() {};
@@ -151,14 +153,21 @@ namespace InputDevice {
 
 		void update();
 
-		const std::map<int, int>& getTouchLine() const { return touchLine; };
-		const std::map<int, int>& getHoldInitLine() const { return holdInitLine; };
-		const std::map<int, int>& getHoldLine() const { return holdLine; };
-		const std::map<int, std::pair<int, FlickDirection>>& getFlickLine() const { return flickLine; };
+		const TouchMap& getTouchLine() const { return touchLine; };
+		const TouchMap& getHoldInitLine() const { return holdInitLine; };
+		const TouchMap& getHoldLine() const { return holdLine; };
+		const TouchMap& getFlickLeftLine() const { return flickLeftLine; };
+		const TouchMap& getFlickRightLine() const { return flickRightLine; };
+		const TouchMap& getReleaseInitLine() const { return releaseInitLine; };
+		const TouchMap& getReleaseLine() const { return releaseLine; };
+
 	private:
-		std::map<int, int> touchLine; //id,line
-		std::map<int, int> holdInitLine;
-		std::map<int, int> holdLine;
-		std::map<int, std::pair<int, FlickDirection>> flickLine; //id, (line,d)
+		TouchMap touchLine; //line, id
+		TouchMap holdInitLine;
+		TouchMap holdLine;
+		TouchMap flickLeftLine;
+		TouchMap flickRightLine;
+		TouchMap releaseInitLine;
+		TouchMap releaseLine;
 	};
 }

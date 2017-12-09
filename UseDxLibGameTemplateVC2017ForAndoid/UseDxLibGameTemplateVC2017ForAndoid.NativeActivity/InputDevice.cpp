@@ -194,23 +194,26 @@ void InputDevice::DeresutePlayTouchInput::update()
 
 	//clear
 	touchLine.clear();
-	flickLine.clear();
+	flickLeftLine.clear();
+	flickRightLine.clear();
 	holdInitLine.clear();
 	holdLine.clear();
+	releaseInitLine.clear();
+	releaseLine.clear();
 
 	auto& touches = getAllTouchInfo();
 	for (auto& touch : touches) {
 		//ラインをタッチ
 		if (touch.second.phase == PressPhase::BEGAN) {
-			touchLine[touch.first] = judgeLine.getLine(touch.second.initPos.first);
+			touchLine[judgeLine.getLine(touch.second.initPos.first)].push_back(touch.first);
 		}
 
 		//ホールド検出
 		if (touch.second.phase == PressPhase::IN_THE_MIDDLE) {
 			//最初のホールドライン
-			holdInitLine[touch.first] = judgeLine.getLine(touch.second.initPos.first);
+			holdInitLine[judgeLine.getLine(touch.second.initPos.first)].push_back(touch.first);
 			//現在のホールドライン
-			holdLine[touch.first] = judgeLine.getLine(touch.second.nowPos.first);
+			holdLine[judgeLine.getLine(touch.second.nowPos.first)].push_back(touch.first);
 
 			//フリック判定
 			{
@@ -243,12 +246,21 @@ void InputDevice::DeresutePlayTouchInput::update()
 					//同じ場所で同じ方向にフリックが連続して発生すればフリック無効化
 					int l = judgeLine.getLine(cx);
 					if (!(d == touch.second.flickDirection && l == touch.second.flickedLine)) {
-						flickLine[touch.first] = std::make_pair(l, d);
+						if (d == FlickDirection::FLICK_L) {
+							flickLeftLine[l].push_back(touch.first);
+						}
+						else flickRightLine[l].push_back(touch.first);
 						touch.second.setFlicked();
 						touch.second.setLastFlickLine(l, d);
 					}
 				}
 			}
+		}
+
+		//リリース検出
+		if (touch.second.phase == PressPhase::ENDED) {
+			releaseInitLine[judgeLine.getLine(touch.second.initPos.first)].push_back(touch.first);
+			releaseLine[judgeLine.getLine(touch.second.nowPos.first)].push_back(touch.first);
 		}
 	}
 }

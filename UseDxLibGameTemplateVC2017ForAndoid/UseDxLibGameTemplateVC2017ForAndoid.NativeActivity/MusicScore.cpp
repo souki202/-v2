@@ -13,7 +13,8 @@ void MusicScore::loadMusicScore(int difficulty)
 	int divPeriod = 4; //小節分割数
 	int numBeatDiv = 4; // div分のnumDiv拍子
 	int beatDiv = 4;
-	std::map<int, int> useId; //id, uid(配列番号)
+	std::map<int, int> useId; //id, uid(配列番号) LN以外
+	std::map<int, int> useLnId; //line, uid LN専用
 	int uid = 0;
 
 	judgeLine.setNumLine(5);
@@ -94,11 +95,13 @@ void MusicScore::loadMusicScore(int difficulty)
 
 					//タイプ設定
 					//FLICKはLN,SLIDE終点以外自動設定
-
 					std::shared_ptr<Note> lastNote;
 					//前のノートがあるならそれを利用するため保存
-					if (useId.find(id) != useId.end()) {
+					if (useId.find(id) != useId.end() && type != NoteType::LN) {
 						lastNote = notes[useId[id]];
+					}
+					else if (useLnId.find(no) != useLnId.end() && type == NoteType::LN) {
+						lastNote = notes[useLnId[no]];
 					}
 
 					std::shared_ptr<Note> note;
@@ -144,13 +147,19 @@ void MusicScore::loadMusicScore(int difficulty)
 						note = std::move(haveNextNote);
 
 						//次のノートを更新
-						if (NoteType::LN <= type && type <= NoteType::FLICK_R) {
+						if (NoteType::LN < type && type <= NoteType::FLICK_R) {
 							useId[id] = uid;
+						}
+						if (type == NoteType::LN) {
+							useLnId[no] = uid;
 						}
 
 						//id開放 普通のLNは接続先が現れたら強制的に開放
-						if (endPoint || (lastNote && type == NoteType::LN)) {
+						if (endPoint && (type != NoteType::LN)) {
 							useId.erase(id);
+						}
+						else if ((endPoint || lastNote) && type == NoteType::LN) {
+							useLnId.erase(no);
 						}
 					}
 
@@ -172,6 +181,13 @@ void MusicScore::loadMusicScore(int difficulty)
 		continue;
 	}
 
+	//ノートを時間順にソート
+	std::sort(notes.begin(), notes.end(), 
+			  [](const std::shared_ptr<Note>& l, const std::shared_ptr<Note>& r) {
+					return l->getJudgeTime() > r->getJudgeTime(); 
+			  }
+	);
+
 	judgeLine.loadJudgeIcons();
 	//音楽読み込み
 	std::string musicFile = (musicInfo.getFilePath() + "bgm.ogg");
@@ -186,6 +202,7 @@ double MusicScore::calcElapsedTime(double lastPeriod, double nowPeriod, float bp
 void MusicScore::draw()
 {
 	for (auto& x : notes) x->draw();
+	judge.draw();
 
 #ifdef DEBUG
 	DrawFormatString(800, 100, 0xffffff, "time:%d", timer.getElapsedTime());
@@ -195,7 +212,18 @@ void MusicScore::draw()
 void MusicScore::update()
 {
 	timer.update();
+	judge.resetJudgedId();
 	for (auto& x : notes) {
+		//判定
+		if (!x->getWasJudged()) {
+			JudgeResult grade = judge.judge(x->getJudgeTiming(),
+				                           timer.getElapsedTime(), 
+				                           x->getJudgeTime(), 
+				                           x->getTarget(),
+				                           x->getTouchId());
+			x->setJudge(grade);
+		}
+
 		x->setNowTime(timer.getElapsedTime());
 		x->update();
 	}

@@ -13,6 +13,7 @@
 #include "LongNote.h"
 #include "SlideNote.h"
 #include "FlickNote.h"
+#include "Judge.h"
 
 
 class MusicScore {
@@ -26,7 +27,7 @@ public:
 	void setMusicInfo(const MusicInfo& musicInfo) { this->musicInfo = musicInfo; };
 	void loadMusicScore(int difficulty);
 	double calcElapsedTime(double lastPeriod, double nowPeriod, float bpm, int numBeatDiv, int beatDiv);
-
+	
 	void draw();
 	void update();
 	void startMusic() { PlaySoundMem(bgm, DX_PLAYTYPE_BACK); timer.reset(); };
@@ -37,6 +38,8 @@ private:
 	int startTime;
 	Timer timer;
 	int bgm;
+
+	Judge judge;
 
 	std::vector<std::shared_ptr<Note>> notes;
 	std::vector<std::string> errors;
