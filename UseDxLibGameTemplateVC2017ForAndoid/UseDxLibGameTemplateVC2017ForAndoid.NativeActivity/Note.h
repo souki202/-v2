@@ -6,10 +6,11 @@
 #include "JudgeLine.h"
 #include "Debug.h"
 #include "Judge.h"
+#include "Bomb.h"
 
 class Note {
 public:
-	Note() {};
+	Note() { nowTime = 0; };
 	virtual ~Note() {};
 
 	virtual void update();
@@ -24,9 +25,9 @@ public:
 	const int& getTarget() const { return target; };
 
 	float getX() const { return pos.first; }; //画面外ならINFINITYを返す
-	float getX(float p); //画面外ならINFINITYを返す 進行割合を入れるver
+	virtual float getX(float p); //画面外ならINFINITYを返す 進行割合を入れるver
 	float getY() const { return pos.second; }; //画面外ならINFINITYを返す
-	float getY(float p); //画面外ならINFINITYを返す 進行割合を入れるver
+	virtual float getY(float p); //画面外ならINFINITYを返す 進行割合を入れるver
 	virtual float getViewPercentage();
 
 	const NoteType& getType() const { return type; };
@@ -40,10 +41,12 @@ public:
 
 	virtual void setJudge(const JudgeResult& judgeResult);
 	bool getWasJudged() const { return wasJudged; };
+	virtual void setIsFirstNote(bool b) {};
 
 	virtual void setTouchId(int id) { touchId = id; };
 	const int& getTouchId() const { return touchId; };
 protected:
+	Bomb bomb;
 	Image noteImg;
 	NoteType type;
 	int id;
@@ -58,4 +61,6 @@ private:
 	int judgeTime;
 	int uid = -1;
 	Point pos;
+	float p;
+
 };

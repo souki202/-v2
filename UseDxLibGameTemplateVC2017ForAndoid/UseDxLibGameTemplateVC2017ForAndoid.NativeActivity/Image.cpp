@@ -134,7 +134,7 @@ void Image::draw()
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
 
-void Image::drawByVertex(const std::vector<Point>& vertex)
+void Image::drawByVertex(const std::vector<Point>& vertex) const
 {
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 	DrawModiGraphF(

@@ -2,6 +2,6 @@
 
 void SelectMusic::update()
 {
-	MusicInfo musicInfo("Assets/Musics/started/");
+	MusicInfo musicInfo("Assets/Musics/Sample/");
 	factory.setNewScene<Play>(musicInfo, 1);
 }

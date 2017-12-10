@@ -2,20 +2,24 @@
 
 void Note::update()
 {
-	float p = getViewPercentage();
+	p = getViewPercentage();
 	//画面外は適当
-	if (p < 0 || p > 2) p = -1000;
+	if (p < 0 || p > 2) p = 0;
 	pos.first = getX(p);
 	pos.second = getY(p);
 	//セット
-	noteImg.setPosition(getX(p), getY(p));
+	noteImg.setPosition(pos.first, pos.second);
 	noteImg.setScale(p, p);
+
+	bomb.update();
 }
 
 void Note::draw()
 {
-	if (wasJudged) return;
-	noteImg.draw();
+	if (!(wasJudged || p <= 0)) {
+		noteImg.draw();
+	}
+	if (wasJudged) bomb.draw();
 
 #ifdef DEBUG
 	DrawFormatString(noteImg.getPosition().first, noteImg.getPosition().second, 0xffffff, "UID:%d", uid);
@@ -93,5 +97,8 @@ void Note::setJudge(const JudgeResult & judgeResult)
 	if (judgeResult.grade != JudgeGrade::INVALID) {
 		wasJudged = true;
 		touchId = judgeResult.id;
+	}
+	if (judgeResult.grade <= JudgeGrade::GREAT) {
+		bomb.startBomb(target);
 	}
 }

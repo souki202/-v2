@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include "Image.h"
 #include "DxLib.h"
 
 #define noteImageManager NoteImageManager::getInstance()
@@ -20,17 +21,21 @@ private:
 	NoteImageManager() {};
 	~NoteImageManager() {};
 
-	static std::array<int, static_cast<int>(NoteType::INVALID)> noteImg;
+	std::array<int, static_cast<int>(NoteType::INVALID)> noteImg;
+	std::array<std::array<int, static_cast<int>(NoteType::INVALID)>, 4> familyNoteImg;
+	int* rawFamilyNoteImg = nullptr;
+	Image whiteImg;
 public:
-	static const NoteImageManager& getInstance() { static NoteImageManager n; return n; };
+	static NoteImageManager& getInstance() { static NoteImageManager n; return n; };
 
-	static void loadImage();
-	static void releaseImage() {
+	void loadImage();
+	void releaseImage() {
 		for (int i = 0; i < static_cast<int>(NoteType::INVALID); i++) {
 			DeleteGraph(noteImg[i]);
 		}
 	}
-	static const int& getNoteImage(const NoteType& type) { return noteImg[static_cast<int>(type)]; };
+	const int& getNoteImage(const NoteType& type) const { return familyNoteImg[3][static_cast<int>(type)]; };
+	const Image& getWhiteImg() const { return whiteImg; };
 private:
 
 };

@@ -224,6 +224,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="Combo.cpp" />
     <ClCompile Include="FlickNote.cpp" />
     <ClCompile Include="Form.cpp" />
     <ClCompile Include="GetFilePath.cpp" />
@@ -232,6 +234,7 @@
     <ClCompile Include="InputDevice.cpp" />
     <ClCompile Include="Judge.cpp" />
     <ClCompile Include="JudgeLine.cpp" />
+    <ClCompile Include="JudgeView.cpp" />
     <ClCompile Include="LongNote.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MusicInfo.cpp" />
@@ -247,9 +250,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Align.h" />
+    <ClInclude Include="Bomb.h" />
     <ClInclude Include="ColorList.h" />
+    <ClInclude Include="Combo.h" />
     <ClInclude Include="CommonSettings.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="Easing.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="FlickDirection.h" />
     <ClInclude Include="FlickNote.h" />
@@ -261,9 +267,11 @@
     <ClInclude Include="Judge.h" />
     <ClInclude Include="JudgeGrade.h" />
     <ClInclude Include="JudgeResult.h" />
+    <ClInclude Include="JudgeView.h" />
     <ClInclude Include="LongNote.h" />
     <ClInclude Include="MusicInfo.h" />
     <ClInclude Include="MusicScore.h" />
+    <ClInclude Include="MyFuncs.h" />
     <ClInclude Include="NormalNote.h" />
     <ClInclude Include="Note.h" />
     <ClInclude Include="NoteCommon.h" />

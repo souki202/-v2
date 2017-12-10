@@ -10,6 +10,11 @@ void Judge::setJudgeDifficulty(int difficulty)
 		judgeRange[static_cast<int>(JudgeGrade::GOOD)] = 225;
 		judgeRange[static_cast<int>(JudgeGrade::BAD)] = 450;
 		judgeRange[static_cast<int>(JudgeGrade::POOR)] = 451;
+		flickJudgeRange[static_cast<int>(JudgeGrade::PERFECT)] = 100;
+		flickJudgeRange[static_cast<int>(JudgeGrade::GREAT)] = 150; //FAST only
+		flickJudgeRange[static_cast<int>(JudgeGrade::GOOD)] = 275; //FAST only
+		flickJudgeRange[static_cast<int>(JudgeGrade::BAD)] = 450; //FAST only
+		flickJudgeRange[static_cast<int>(JudgeGrade::POOR)] = 451;
 		break;
 	case 1:
 		judgeRange[static_cast<int>(JudgeGrade::PERFECT)] = 33;
@@ -17,6 +22,11 @@ void Judge::setJudgeDifficulty(int difficulty)
 		judgeRange[static_cast<int>(JudgeGrade::GOOD)] = 167;
 		judgeRange[static_cast<int>(JudgeGrade::BAD)] = 330;
 		judgeRange[static_cast<int>(JudgeGrade::POOR)] = 331;
+		flickJudgeRange[static_cast<int>(JudgeGrade::PERFECT)] = 66;
+		flickJudgeRange[static_cast<int>(JudgeGrade::GREAT)] = 100; //FAST only
+		flickJudgeRange[static_cast<int>(JudgeGrade::GOOD)] = 200; //FAST only
+		flickJudgeRange[static_cast<int>(JudgeGrade::BAD)] = 330; //FAST only
+		flickJudgeRange[static_cast<int>(JudgeGrade::POOR)] = 331;
 		break;
 	default:
 		break;
@@ -48,28 +58,26 @@ JudgeResult Judge::judge(const JudgeTiming& timing, int nowTime, int judgeTime, 
 	{
 		//どこかで離されていることを調べる
 		result.id = touchId;
-		if (touchId != -1) { //そもそもLN押してる?
-			bool isThere = false;
-			for (auto& eachLine : touchInput.getReleaseInitLine()) { //それぞれのライン(あれば)
-				for (auto& x : eachLine.second) { //それぞれのid
-					if (x == touchId) { //離した
-						//ちーがーうーだーろー!! ちがうだろー!!!
-						if (eachLine.first != line) {
-							result.grade = JudgeGrade::POOR;
-						}
-						else {//あってる…
-							result.grade = calcGrade(deltaTime, true);
-						}
-						isThere = true;
-						break;
+		bool isThere = false;
+		for (auto& eachLine : touchInput.getReleaseLine()) { //それぞれのライン(あれば)
+			for (auto& x : eachLine.second) { //それぞれのid
+				if (x == touchId) { //離した
+					//ちーがーうーだーろー!! ちがうだろー!!!
+					if (eachLine.first != line) {
+						result.grade = JudgeGrade::POOR;
 					}
+					else {//あってる…
+						result.grade = calcGrade(deltaTime, true);
+					}
+					isThere = true;
+					break;
 				}
-
 			}
-			//離してないなら見逃し判定
-			if (!isThere) {
-				if (result.grade != JudgeGrade::POOR) result.grade = JudgeGrade::INVALID;
-			}
+			if (isThere) break;
+		}
+		//離してないなら見逃し判定
+		if (!isThere) {
+			if (result.grade != JudgeGrade::POOR) result.grade = JudgeGrade::INVALID;
 		}
 	}
 		break;
@@ -96,6 +104,7 @@ JudgeResult Judge::judge(const JudgeTiming& timing, int nowTime, int judgeTime, 
 		result.id = searchUnuseId(touchInput.getReleaseInitLine(), line);
 		break;
 	case JudgeTiming::FLICK_L:
+		result.grade = calcFlickGrade(deltaTime);
 		//早すぎなら計算しない
 		if (deltaTime <= -judgeRange.back()) return JudgeResult();
 		result.id = searchUnuseId(touchInput.getFlickLeftLine(), line);
@@ -104,6 +113,7 @@ JudgeResult Judge::judge(const JudgeTiming& timing, int nowTime, int judgeTime, 
 		}
 		break;
 	case JudgeTiming::FLICK_R:
+		result.grade = calcFlickGrade(deltaTime);
 		//早すぎなら計算しない
 		if (deltaTime <= -judgeRange.back()) return JudgeResult();
 		result.id = searchUnuseId(touchInput.getFlickRightLine(), line);
@@ -131,6 +141,13 @@ JudgeResult Judge::judge(const JudgeTiming& timing, int nowTime, int judgeTime, 
 			}
 		}
 	}
+	{ //ノート通過前に離してたらPOOR
+		for (auto& eachLine : touchInput.getReleaseLine()) { //それぞれのライン(あれば)
+			for (auto& x : eachLine.second) { //それぞれのid
+				if (x == touchId) result.grade = JudgeGrade::POOR;
+			}
+		}
+	}
 	break;
 	case JudgeTiming::INVALID:
 		result.grade = JudgeGrade::INVALID;
@@ -141,9 +158,14 @@ JudgeResult Judge::judge(const JudgeTiming& timing, int nowTime, int judgeTime, 
 	//判定が別ノーツに影響でないよう追加
 	judgedId.push_back(result.id);
 
-	if (result.grade != JudgeGrade::INVALID) {
-		lastJudgeStr = static_cast<int>(result.grade);
+	view.setGrade(result.grade);
+	if (result.grade <= JudgeGrade::GOOD) {
+		combo.addCombo();
 	}
+	else if (result.grade <= JudgeGrade::POOR) {
+		combo.resetCombo();
+	}
+
 	return result;
 }
 
@@ -151,7 +173,7 @@ JudgeGrade Judge::calcGrade(int deltaTime, bool isInLn)
 {
 	//BADまで判定
 	int absDeltaTime = std::abs(deltaTime);
-	for (int i = 0; i < static_cast<int>(JudgeGrade::BAD); i++) {
+	for (int i = 0; i <= static_cast<int>(JudgeGrade::BAD); i++) {
 		if (absDeltaTime <= judgeRange[i]) return static_cast<JudgeGrade>(i);
 	}
 
@@ -161,8 +183,25 @@ JudgeGrade Judge::calcGrade(int deltaTime, bool isInLn)
 	}
 
 	//INVALID時
-	if (isInLn && absDeltaTime < 0) return JudgeGrade::POOR;
+	if (isInLn && deltaTime < 0) return JudgeGrade::POOR;
 	return JudgeGrade::INVALID;
+}
+
+JudgeGrade Judge::calcFlickGrade(int deltaTime)
+{
+	//BADまで判定
+	int absDeltaTime = std::abs(deltaTime);
+	JudgeGrade grade = JudgeGrade::INVALID;
+
+	for (int i = static_cast<int>(JudgeGrade::BAD); i >= 0; i--) {
+		if (absDeltaTime <= flickJudgeRange[i]) grade = static_cast<JudgeGrade>(i);
+	}
+	//見逃し
+	if (grade >= JudgeGrade::GOOD && deltaTime > 0) {
+		grade = JudgeGrade::POOR;
+	}
+
+	return grade;
 }
 
 int Judge::searchUnuseId(const InputDevice::TouchMap & touches, int line)
@@ -177,9 +216,4 @@ int Judge::searchUnuseId(const InputDevice::TouchMap & touches, int line)
 	}
 
 	return -1;
-}
-
-void Judge::draw()
-{
-	DrawFormatString(CommonSettings::WINDOW_WIDTH / 2, 400, 0xffffff, "%d", lastJudgeStr);
 }

@@ -125,8 +125,11 @@
     <Content Include="assets\Images\bomb.png" />
     <Content Include="assets\Images\Common\buttonbgsquare.png" />
     <Content Include="assets\Images\Common\buttonbgwide.png" />
-    <Content Include="assets\Images\judge.png" />
     <Content Include="assets\Images\judgeline.png" />
+    <Content Include="assets\Images\Play\Bomb\hit_circle.png" />
+    <Content Include="assets\Images\Play\Bomb\hit_star.png" />
+    <Content Include="assets\Images\Play\Bomb\kira.png" />
+    <Content Include="assets\Images\Play\comboText.png" />
     <Content Include="assets\Images\Play\judgePoint.png" />
     <Content Include="assets\Images\Play\back.png" />
     <Content Include="assets\Images\Play\BGI\1.png" />
@@ -138,6 +141,7 @@
     <Content Include="assets\Images\Play\Notes\flickr.png" />
     <Content Include="assets\Images\Play\Notes\ln.png" />
     <Content Include="assets\Images\Play\Notes\normal.png" />
+    <Content Include="assets\Images\Play\Notes\notes.png" />
     <Content Include="assets\Images\Play\Notes\relay.png" />
     <Content Include="assets\Images\Play\Notes\relay2.png" />
     <Content Include="assets\Images\Play\scorebg.png" />
@@ -163,7 +167,7 @@
     <Content Include="assets\Images\Select\optionbutton.png" />
     <Content Include="assets\Images\Select\star.png" />
     <Content Include="assets\Images\Select\star10.png" />
-    <Content Include="assets\Images\while1x1.png" />
+    <Content Include="assets\Images\white1x1.png" />
     <Content Include="res\values\strings.xml" />
     <AntBuildXml Include="build.xml" />
     <AndroidManifest Include="AndroidManifest.xml" />

@@ -7,6 +7,7 @@ public:
 	virtual ~LongNote() {};
 
 	virtual void draw();
+	virtual void update();
 	virtual void setNextNote(const std::shared_ptr<Note>& next);
 
 	virtual float getViewPercentage();

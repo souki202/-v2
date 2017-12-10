@@ -6,7 +6,6 @@ void MusicScore::loadMusicScore(int difficulty)
 	std::ifstream ifs(this->filePath);
 	std::string line;
 	bool isHumen = false;
-	float bpm = 1;
 	double nowTime = 0;
 	double lastPeriod = 1;
 	double nowPeriod = 1;
@@ -23,6 +22,11 @@ void MusicScore::loadMusicScore(int difficulty)
 		//コメント行
 		if (line.size() >= 2) {
 			if (line[0] == '/' && line[1] == '/') continue;
+		}
+
+		//末尾CRLFなら対象によってはCRが残ってしまうので削除
+		if (!line.empty() && line.back() == '\r') {
+			line.pop_back();
 		}
 
 		//情報行
@@ -78,17 +82,22 @@ void MusicScore::loadMusicScore(int difficulty)
 					//引数を取得
 					std::stringstream ss2(noteStr);
 					std::vector<float> args;
-					while (std::getline(ss2, noteStr)) {
+					while (std::getline(ss2, noteStr, ' ')) {
 						args.push_back(std::atof(noteStr.c_str()));
 					}
 
 					//ノート設定
+					//引数は type appear id endpoint
 					float appear = no;
 					NoteType type;
 					int id = 0;
 					int endPoint = false; //LN等の終点
 					type = static_cast<NoteType>(static_cast<int>(args[0]));
-					if (args.size() >= 2) appear = args[1];
+					if (args.size() >= 2) {
+						float a = args[1];
+						if (a < 0) appear = no;
+						else appear = args[1];
+					}
 					if (args.size() >= 3) id = static_cast<int>(args[2]);
 					if (args.size() >= 4) endPoint = true;
 
@@ -110,12 +119,12 @@ void MusicScore::loadMusicScore(int difficulty)
 					}
 					else {
 						std::shared_ptr<HaveNextNote> haveNextNote;
+
 						switch (type) {
 						case NoteType::LN: haveNextNote = std::make_shared<LongNote>(); break;
 						case NoteType::SLIDE: 
 						{
 							std::shared_ptr<SlideNote> slideNote = std::make_shared<SlideNote>();
-							if (lastNote) slideNote->setIsFirstNote(false);
 							haveNextNote = slideNote;
 						}
 							break;
@@ -127,6 +136,7 @@ void MusicScore::loadMusicScore(int difficulty)
 							if (type == NoteType::FLICK_R) direction = FlickDirection::FLICK_R;
 
 							std::shared_ptr<FlickNote> flickNote = std::make_shared<FlickNote>();
+							flickNote->setting(no, appear, nowTime, uid, id);
 							//取り敢えず突っ込んどく
 							flickNote->setDirection(direction);
 							//前回のノートと照らし合わせてフリック方向を決定
@@ -143,8 +153,9 @@ void MusicScore::loadMusicScore(int difficulty)
 						//手前のノートに接続するノートを設定
 						if (lastNote) {
 							lastNote->setNextNote(haveNextNote);
+							haveNextNote->setIsFirstNote(false);
 						}
-						note = std::move(haveNextNote);
+						note = haveNextNote;
 
 						//次のノートを更新
 						if (NoteType::LN < type && type <= NoteType::FLICK_R) {
@@ -162,7 +173,6 @@ void MusicScore::loadMusicScore(int difficulty)
 							useLnId.erase(no);
 						}
 					}
-
 					//汎用設定して追加
 					note->setting(no, appear, nowTime, uid, id);
 					notes.push_back(std::move(note));
@@ -181,10 +191,11 @@ void MusicScore::loadMusicScore(int difficulty)
 		continue;
 	}
 
+
 	//ノートを時間順にソート
 	std::sort(notes.begin(), notes.end(), 
 			  [](const std::shared_ptr<Note>& l, const std::shared_ptr<Note>& r) {
-					return l->getJudgeTime() > r->getJudgeTime(); 
+					return l->getJudgeTime() < r->getJudgeTime(); 
 			  }
 	);
 
@@ -212,6 +223,7 @@ void MusicScore::draw()
 void MusicScore::update()
 {
 	timer.update();
+	judge.update();
 	judge.resetJudgedId();
 	for (auto& x : notes) {
 		//判定

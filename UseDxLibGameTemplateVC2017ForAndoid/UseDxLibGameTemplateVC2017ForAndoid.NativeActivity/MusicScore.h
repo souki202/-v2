@@ -34,7 +34,7 @@ public:
 private:
 	MusicInfo musicInfo;
 	std::string filePath;
-	float bpm;
+	float bpm = 1;
 	int startTime;
 	Timer timer;
 	int bgm;

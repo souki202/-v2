@@ -2,7 +2,36 @@
 
 FlickNote::FlickNote()
 {
-	judgeTiming = JudgeTiming::FLICK_R;
+	setDirection(FlickDirection::FLICK_R);
+}
+
+void FlickNote::draw()
+{
+	//ƒtƒŠƒbƒNŠÔ‚Ìü‚ð•`‰æ
+	if (!wasJudged) {
+		auto points = getDrawLine(1);
+		if (points.size() >= 2) {
+			float dx[2], dy[2];
+			dx[0] = points[0].scale * LINE_WIDTH * std::sin(points[0].slope);
+			dy[0] = points[0].scale * LINE_WIDTH * std::cos(points[0].slope);
+			dx[1] = points[1].scale * LINE_WIDTH * std::sin(points[1].slope);
+			dy[1] = points[1].scale * LINE_WIDTH * std::cos(points[1].slope);
+			DrawModiGraphF(
+				points[0].pos.first - dx[0],
+				points[0].pos.second - dy[0],
+				points[1].pos.first - dx[1],
+				points[1].pos.second - dy[1],
+				points[1].pos.first + dx[1],
+				points[1].pos.second + dy[1],
+				points[0].pos.first + dx[0],
+				points[0].pos.second + dy[0],
+				noteImageManager.getWhiteImg().getHandle(),
+				true
+			);
+		}
+	}
+
+	HaveNextNote::draw();
 }
 
 void FlickNote::setDirectionByLastNote(const std::shared_ptr<Note>& lastNote)

@@ -224,9 +224,9 @@ void InputDevice::DeresutePlayTouchInput::update()
 				if (touch.second.hasNeverFlickYet) {
 					int x[2] = { touch.second.initPos.first, touch.second.nowPos.first };
 					cx = (x[0] + x[1]) / 2;
-					//前-後>32なら右フリック
-					if (x[0] - x[1] > 32) d = FlickDirection::FLICK_R;
-					else if (x[0] - x[1] < -32) d = FlickDirection::FLICK_L;
+					//前-後>32なら後が左側なので左フリック
+					if (x[0] - x[1] > 32) d = FlickDirection::FLICK_L;
+					else if (x[0] - x[1] < -32) d = FlickDirection::FLICK_R;
 				}
 				else{
 					int x[2] = { touch.second.nowPos.first - touch.second.deltaPos.first,
@@ -237,11 +237,11 @@ void InputDevice::DeresutePlayTouchInput::update()
 					int lineCenter = judgeLine.getCenterPosition(judgeLine.getLine(cx));
 					//フリック済みなら、フリック予定のラインの中央を通過すれば判定する
 					if (x2[0] <= lineCenter && lineCenter <= x2[1]) {
-						if (x[0] - x[1] > 0) d = FlickDirection::FLICK_R;
-						else if (x[0] - x[1] < 0) d = FlickDirection::FLICK_L;
+						if (x[0] - x[1] > 0) d = FlickDirection::FLICK_L;
+						else if (x[0] - x[1] < 0) d = FlickDirection::FLICK_R;
 					}
 				}
-				//フリックしているならライン出して突っ込む
+				//フリックしているなら中間部分のライン出して入れる
 				if (d != FlickDirection::INVALID) {
 					//同じ場所で同じ方向にフリックが連続して発生すればフリック無効化
 					int l = judgeLine.getLine(cx);

@@ -52,14 +52,23 @@
     <ClCompile Include="NoteCommon.cpp">
       <Filter>Source\MyGame\Play\Commons</Filter>
     </ClCompile>
-    <ClCompile Include="JudgeLine.cpp">
-      <Filter>Source\MyGame\Play</Filter>
-    </ClCompile>
-    <ClCompile Include="Judge.cpp">
-      <Filter>Source\MyGame\Play\Commons</Filter>
-    </ClCompile>
     <ClCompile Include="HaveNextNote.cpp">
       <Filter>Source\MyGame\Play\Note</Filter>
+    </ClCompile>
+    <ClCompile Include="Judge.cpp">
+      <Filter>Source\MyGame\Play\Judge</Filter>
+    </ClCompile>
+    <ClCompile Include="JudgeView.cpp">
+      <Filter>Source\MyGame\Play\Judge</Filter>
+    </ClCompile>
+    <ClCompile Include="JudgeLine.cpp">
+      <Filter>Source\MyGame\Play\Judge</Filter>
+    </ClCompile>
+    <ClCompile Include="Combo.cpp">
+      <Filter>Source\MyGame\Play\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="Bomb.cpp">
+      <Filter>Source\MyGame\Play\Judge</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +107,12 @@
     </Filter>
     <Filter Include="Source\MyGame\Play\Commons">
       <UniqueIdentifier>{c806fa24-ac91-46fb-be86-c2ecb89c2f1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MyGame\Play\Judge">
+      <UniqueIdentifier>{ec6191e8-3d28-43a7-98ce-f3c03b64c3b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\MyGame\Play\Judge">
+      <UniqueIdentifier>{d368c324-23db-416e-ade4-0ccae5dc9bc7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -179,20 +194,35 @@
     <ClInclude Include="Debug.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="JudgeLine.h">
-      <Filter>Header\MyGame\Play\Commons</Filter>
-    </ClInclude>
-    <ClInclude Include="Judge.h">
-      <Filter>Header\MyGame\Play\Commons</Filter>
-    </ClInclude>
-    <ClInclude Include="JudgeGrade.h">
-      <Filter>Header\MyGame\Play\Commons</Filter>
-    </ClInclude>
-    <ClInclude Include="JudgeResult.h">
-      <Filter>Header\MyGame\Play\Commons</Filter>
-    </ClInclude>
     <ClInclude Include="FlickDirection.h">
       <Filter>Header\MyGame\Play\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="JudgeView.h">
+      <Filter>Header\MyGame\Play\Judge</Filter>
+    </ClInclude>
+    <ClInclude Include="JudgeResult.h">
+      <Filter>Header\MyGame\Play\Judge</Filter>
+    </ClInclude>
+    <ClInclude Include="JudgeLine.h">
+      <Filter>Header\MyGame\Play\Judge</Filter>
+    </ClInclude>
+    <ClInclude Include="Judge.h">
+      <Filter>Header\MyGame\Play\Judge</Filter>
+    </ClInclude>
+    <ClInclude Include="JudgeGrade.h">
+      <Filter>Header\MyGame\Play\Judge</Filter>
+    </ClInclude>
+    <ClInclude Include="Combo.h">
+      <Filter>Header\MyGame\Play\Judge</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFuncs.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>Header\MyGame\Play\Judge</Filter>
+    </ClInclude>
+    <ClInclude Include="Easing.h">
+      <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

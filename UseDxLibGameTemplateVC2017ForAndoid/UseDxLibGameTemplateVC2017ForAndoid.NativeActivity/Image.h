@@ -47,7 +47,7 @@ public:
 	const float& getAngle() const { return angle; };
 
 	virtual void draw();
-	void drawByVertex(const std::vector<Point>& vertex); //頂点の値は保存されない
+	void drawByVertex(const std::vector<Point>& vertex) const; //頂点の値は保存されない
 	virtual void update();
 
 	void setHasDefaultCollider(bool b) { hasDefaultCollider = b; };
