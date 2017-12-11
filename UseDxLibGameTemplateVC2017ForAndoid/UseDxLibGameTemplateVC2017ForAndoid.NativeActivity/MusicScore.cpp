@@ -199,7 +199,12 @@ void MusicScore::loadMusicScore(int difficulty)
 			  }
 	);
 
+	//判定部分のアイコン読み込み
 	judgeLine.loadJudgeIcons();
+
+	//スコア初期化
+	score.initScore(musicInfo.getLevel(difficulty), notes.size());
+
 	//音楽読み込み
 	std::string musicFile = (musicInfo.getFilePath() + "bgm.ogg");
 	bgm = LoadSoundMem(musicFile.c_str());
@@ -214,6 +219,8 @@ void MusicScore::draw()
 {
 	for (auto& x : notes) x->draw();
 	judge.draw();
+	combo.draw();
+	score.draw();
 
 #ifdef DEBUG
 	DrawFormatString(800, 100, 0xffffff, "time:%d", timer.getElapsedTime());
@@ -234,9 +241,18 @@ void MusicScore::update()
 				                           x->getTarget(),
 				                           x->getTouchId());
 			x->setJudge(grade);
+			if (grade.grade <= JudgeGrade::GOOD) {
+				combo.addCombo();
+				score.addScore(grade.grade, combo.getCombo());
+			}
+			else if (grade.grade <= JudgeGrade::POOR) {
+				combo.resetCombo();
+			}
 		}
 
 		x->setNowTime(timer.getElapsedTime());
 		x->update();
 	}
+	score.update();
+	combo.update();
 }

@@ -68,7 +68,16 @@
       <Filter>Source\MyGame\Play\Commons</Filter>
     </ClCompile>
     <ClCompile Include="Bomb.cpp">
-      <Filter>Source\MyGame\Play\Judge</Filter>
+      <Filter>Source\MyGame\Play\Note</Filter>
+    </ClCompile>
+    <ClCompile Include="Score.cpp">
+      <Filter>Source\MyGame\Play\Score</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreGauge.cpp">
+      <Filter>Source\MyGame\Play\Score</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreNumber.cpp">
+      <Filter>Source\MyGame\Play\Score</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +122,12 @@
     </Filter>
     <Filter Include="Header\MyGame\Play\Judge">
       <UniqueIdentifier>{d368c324-23db-416e-ade4-0ccae5dc9bc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\MyGame\Play\Score">
+      <UniqueIdentifier>{6e5bac91-b27d-4b32-9212-8de89a0938fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MyGame\Play\Score">
+      <UniqueIdentifier>{0615e419-6c2d-4639-b73f-8cad6a6798c7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -212,17 +227,26 @@
     <ClInclude Include="JudgeGrade.h">
       <Filter>Header\MyGame\Play\Judge</Filter>
     </ClInclude>
-    <ClInclude Include="Combo.h">
-      <Filter>Header\MyGame\Play\Judge</Filter>
-    </ClInclude>
     <ClInclude Include="MyFuncs.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="Bomb.h">
-      <Filter>Header\MyGame\Play\Judge</Filter>
-    </ClInclude>
     <ClInclude Include="Easing.h">
       <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Bomb.h">
+      <Filter>Header\MyGame\Play\Notes</Filter>
+    </ClInclude>
+    <ClInclude Include="Score.h">
+      <Filter>Header\MyGame\Play\Score</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreGauge.h">
+      <Filter>Header\MyGame\Play\Score</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreNumber.h">
+      <Filter>Header\MyGame\Play\Score</Filter>
+    </ClInclude>
+    <ClInclude Include="Combo.h">
+      <Filter>Header\MyGame\Play\Commons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

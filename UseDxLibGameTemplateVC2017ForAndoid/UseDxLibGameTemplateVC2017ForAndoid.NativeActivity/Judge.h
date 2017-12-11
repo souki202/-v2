@@ -6,7 +6,6 @@
 #include "JudgeView.h"
 #include "InputDevice.h"
 #include "JudgeResult.h"
-#include "Combo.h"
 
 class Judge {
 public:
@@ -21,10 +20,9 @@ public:
 
 	int searchUnuseId(const InputDevice::TouchMap& touches, int line); //ˆ—Ï‚İ‚©’†g‚È‚µ‚È‚ç-1
 
-	void update() { view.update(); combo.update(); };
-	void draw() { view.draw(); combo.draw(); };
+	void update() { view.update(); };
+	void draw() { view.draw(); };
 private:
-	Combo combo;
 	JudgeView view;
 	std::vector<int> judgedId;//”»’èÏ‚İ‚Ìid‚ğŠi”[
 	std::array<int, static_cast<int>(JudgeGrade::INVALID)> judgeRange;

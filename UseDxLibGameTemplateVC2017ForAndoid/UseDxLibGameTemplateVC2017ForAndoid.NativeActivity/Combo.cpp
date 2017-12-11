@@ -12,7 +12,7 @@ Combo::Combo()
 Combo::~Combo()
 {
 	for (int i = 0; i < 10; i++) {
-		DeleteGraph(i);
+		DeleteGraph(rawImage[i]);
 	}
 	if (rawImage != nullptr) {
 		delete[] rawImage;

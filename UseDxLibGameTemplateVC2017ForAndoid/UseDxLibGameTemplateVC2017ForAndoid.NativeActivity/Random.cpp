@@ -20,6 +20,6 @@ int Random::generate(int min, int max)
 	}
 	else {
 		std::uniform_int_distribution<> rn(min, max);
-		return rn(mt) + min;
+		return rn(mt);
 	}
 }

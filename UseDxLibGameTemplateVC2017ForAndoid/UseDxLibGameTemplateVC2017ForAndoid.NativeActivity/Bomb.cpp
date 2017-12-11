@@ -11,10 +11,12 @@ void Bomb::draw()
 {
 	for (auto& x : bombImgs) x.draw();
 	for (auto& x : particle) {//パーティクルは軽量化のため,Imageを通さない.
-		int size = PARTICLE_SIZE * x.scale;
-		DrawExtendGraph(x.pos.first - size/2, x.pos.second - size/2,
+		SetDrawBlendMode(DX_BLENDMODE_ALPHA, x.alpha);
+		float size = PARTICLE_SIZE * x.scale;
+		DrawExtendGraphF(x.pos.first - size/2, x.pos.second - size/2,
 			            x.pos.first + size/2, x.pos.second + size/2,
 			            bombResources.getKiraImage(), true);
+		SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	}
 }
 
@@ -35,18 +37,6 @@ void Bomb::update()
 	bombImgs[1].setAlpha(static_cast<int>(alpha));
 
 	//パーティクル
-	//更新ついでに終了したものを削除
-	for (auto it = particle.begin(); it != particle.end();) {
-		if (it->time > BOMB_ANIM_TIME) {
-			it = particle.erase(it);
-		}
-		else {
-			it->time = particleTimer.getDeltaTime();
-			it->alpha = MyEase::easeOut(it->time, BOMB_ANIM_TIME, 255, 0);
-			it->pos.second = judgeLine.GET_APPEAR_Y() - 200.f * it->time / BOMB_ANIM_TIME;
-			++it;
-		}
-	}
 	if (isStartParticle) {
 		//新しく.
 		particleElapsedTime += particleTimer.getDeltaTime();
@@ -55,9 +45,21 @@ void Bomb::update()
 			//新規作成
 			particle.push_back(ParticleInfo());
 			particle.back().pos.first = rnd.generate(
-				                                     particleX - judgeLine.GET_JUDGE_SIZE() / 1.5, 
-				                                     particleX + judgeLine.GET_JUDGE_SIZE() / 1.5
-			                                        );
+				particleX - judgeLine.GET_JUDGE_SIZE() / 1.75,
+				particleX + judgeLine.GET_JUDGE_SIZE() / 1.75
+			);
+		}
+	}
+	//更新ついでに終了したものを削除
+	for (auto it = particle.begin(); it != particle.end();) {
+		if (it->time > BOMB_ANIM_TIME) {
+			it = particle.erase(it);
+		}
+		else {
+			it->time += particleTimer.getDeltaTime();
+			it->alpha = MyEase::easeIn(it->time, BOMB_ANIM_TIME, 255, 0);
+			it->pos.second = judgeLine.GET_JUDGE_Y() - 125.f * it->time / BOMB_ANIM_TIME;
+			++it;
 		}
 	}
 }

@@ -14,6 +14,5 @@ public:
 	virtual void setIsFirstNote(bool b) { isFirstNote = b; updateNoteType(); };
 	void updateNoteType();
 private:
-	bool isFirstNote = true;
 
 };

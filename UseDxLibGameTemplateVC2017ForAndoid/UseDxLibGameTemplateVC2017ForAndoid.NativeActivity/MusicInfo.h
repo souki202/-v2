@@ -23,6 +23,7 @@ public:
 	void loadMusicInfo(const std::string& folderPath);
 	const std::string& getFilePath() const { return info.filePath; };//末尾にスラッシュが必ずつく
 	const std::string& getTitle() const { return info.title; };
+	const int& getLevel(int difficulty) const { return info.difficulty[difficulty-1]; };
 private:
 	Info info;
 };

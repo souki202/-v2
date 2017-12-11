@@ -17,9 +17,20 @@ void LongNote::draw()
 			int w = judgeLine.GET_JUDGE_SIZE() / 2;
 			for (int i = 0; i < static_cast<int>(points.size()) - 1; i++) {
 				dx[0] = std::abs(points[i].scale * w * std::sin(points[i].slope));
-				dy[0] = std::abs(points[i].scale * w * std::cos(points[i].slope));
+				dy[0] = -(points[i].scale * w * std::cos(points[i].slope));
 				dx[1] = std::abs(points[i+1].scale * w * std::sin(points[i+1].slope));
-				dy[1] = std::abs(points[i+1].scale * w * std::cos(points[i+1].slope));
+				dy[1] = -(points[i+1].scale * w * std::cos(points[i+1].slope));
+				if (!(isFirstNote || !nextNote)) {
+					if (!i) {
+						dy[0] = 0;
+						dx[0] = points[i].scale * w;
+					}
+					else if (i == static_cast<int>(points.size()) - 2) {
+						dy[1] = 0;
+						dx[1] = points[i + 1].scale * w;
+					}
+				}
+
 				vx[0] = points[i].pos.first - dx[0];
 				vx[1] = points[i].pos.first + dx[0];
 				vx[2] = points[i + 1].pos.first + dx[1];
@@ -28,18 +39,13 @@ void LongNote::draw()
 				vy[1] = points[i].pos.second + dy[0];
 				vy[2] = points[i + 1].pos.second + dy[1];
 				vy[3] = points[i + 1].pos.second - dy[1];
-				if (points[i].slope > 0) {
-					std::swap(vx[0], vx[1]);
-					std::swap(vx[2], vx[3]);
-				}
-
 				DrawModiGraphF(vx[0], vy[0], vx[1], vy[1], vx[2], vy[2], vx[3], vy[3],
 					           noteImageManager.getWhiteImg().getHandle(), true
 				);
 			}
 		}
-		HaveNextNote::draw();
 		if (wasJudged) noteImg.draw();
+		HaveNextNote::draw();
 	}
 
 #ifdef DEBUG
@@ -54,11 +60,11 @@ void LongNote::draw()
 
 void LongNote::update()
 {
+	bomb.setParticleX(getX());
 	HaveNextNote::update();
 	if (nextNote && nextNote->getWasJudged()) {
 		bomb.stopParticle();
 	}
-	bomb.setParticleX(getX());
 }
 
 void LongNote::setNextNote(const std::shared_ptr<Note>& next)

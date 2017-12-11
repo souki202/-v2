@@ -13,6 +13,7 @@ public:
 	void update() {};
 	int addCombo(); //return Œ»İ‚ÌƒRƒ“ƒ{”
 	void resetCombo() { nowCombo = 0; imgs.clear(); };
+	int getCombo() const { return nowCombo; };
 private:
 	int nowCombo = 0;
 	int* rawImage = nullptr;

@@ -245,6 +245,9 @@
     <ClCompile Include="Play.cpp" />
     <ClCompile Include="PlaySettings.cpp" />
     <ClCompile Include="Random.cpp" />
+    <ClCompile Include="Score.cpp" />
+    <ClCompile Include="ScoreGauge.cpp" />
+    <ClCompile Include="ScoreNumber.cpp" />
     <ClCompile Include="SelectMusic.cpp" />
     <ClCompile Include="SlideNote.cpp" />
   </ItemGroup>
@@ -281,6 +284,9 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Score.h" />
+    <ClInclude Include="ScoreGauge.h" />
+    <ClInclude Include="ScoreNumber.h" />
     <ClInclude Include="SelectMusic.h" />
     <ClInclude Include="SlideNote.h" />
     <ClInclude Include="Timer.h" />

@@ -5,7 +5,7 @@ void MusicInfo::loadMusicInfo(const std::string & folderPath)
 	info.filePath = folderPath;
 	if (info.filePath.back() != '/') info.filePath += '/';
 	info.filePath = getExternalFilePath(info.filePath);
-	std::ifstream ifs(folderPath + "musicinfo.tsv");
+	std::ifstream ifs(info.filePath + "musicinfo.tsv");
 	std::string line;
 	bool isFirstLine = true;
 	while (std::getline(ifs, line)) {
@@ -22,6 +22,7 @@ void MusicInfo::loadMusicInfo(const std::string & folderPath)
 			case 2: info.genre = line; break;
 			case 3: case 4: case 5: info.difficulty[cnt - 3] = std::atoi(line.c_str()); break;
 			}
+			cnt++;
 		}
 	}
 }

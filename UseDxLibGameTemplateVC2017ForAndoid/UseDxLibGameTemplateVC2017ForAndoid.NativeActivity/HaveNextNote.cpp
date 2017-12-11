@@ -28,19 +28,31 @@ const std::vector<PointWithSlope>& HaveNextNote::getDrawLine(int div)
 	float nowP = nextNoteP;
 
 	float initNextNoteX = nextNote->getX(nextNoteP);
+	float x1 = initNextNoteX;
+	float x3 = getX();
+	float x2 = (x1 + x3) / 2;
+	if (dp > 0.2) {
+		float tx = judgeLine.getCenterPosition(nextNote->getTarget());
+		float dp2 = (dp - 0.2f) * 1.2f;
+		x2 += (tx - x2) * dp2;
+	}
 
+	//各点の座標,幅,傾きをとる
 	Point lastPoint, nowPoint;
 	nowPoint = std::make_pair(initNextNoteX, nextNote->getY(nowP));
 	for (int i = 0; i <= div+1; i++, nowP += divP) {
 		lastPoint = nowPoint;
-		nowPoint.first = initNextNoteX + (getX() - initNextNoteX) * i / (div);
+		double t = static_cast<double>(i) / div;
+		nowPoint.first = static_cast<float>(1 - t)*(1 - t)*x1 + 2*t*(1 - t)*x2 + t * t*x3;
+		//nowPoint.first = initNextNoteX + (getX() - initNextNoteX) * i / (div);
 		nowPoint.second = getY(nowP);
 		if (!i) continue;
 		float a = M_PI_2;
-		//傾き atan2なので千年女王SHDみたいなのだと重いかも
-		if (std::abs(nowPoint.first - lastPoint.first) > 0.01) {
-			a = std::atan((nowPoint.second - lastPoint.second) / (nowPoint.first - lastPoint.first));
+		//傾き 千年女王SHDみたいなのだと重いかも
+		if (std::abs(nowPoint.first - lastPoint.first) > 0.0001) {
+			a = std::atan2((nowPoint.second - lastPoint.second), (nowPoint.first - lastPoint.first));
 		}
+		//if (a < 0) a += M_PI;
 		
 		//保存
 		connectLine[i-1].pos = lastPoint;

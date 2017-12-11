@@ -15,8 +15,7 @@ public:
 	virtual void setJudge(const JudgeResult& judgeResult);
 
 protected:
+	bool isFirstNote = true;
 
 private:
-
-
 };

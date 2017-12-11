@@ -18,6 +18,7 @@ float SlideNote::getX(float p)
 		int dtThisNote = std::max(nowTime - getJudgeTime(), 0);
 		//p
 		float p = static_cast<float>(dtThisNote) / dt;
+		p = std::min(p, 1.f);
 		int x = judgeLine.getCenterPosition(target);
 		int nx = judgeLine.getCenterPosition(nextNote->getTarget());
 		return x + p * (nx - x);

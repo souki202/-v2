@@ -14,6 +14,8 @@
 #include "SlideNote.h"
 #include "FlickNote.h"
 #include "Judge.h"
+#include "Score.h"
+#include "Combo.h"
 
 
 class MusicScore {
@@ -40,7 +42,10 @@ private:
 	int bgm;
 
 	Judge judge;
+	Combo combo;
+	Score score;
 
 	std::vector<std::shared_ptr<Note>> notes;
 	std::vector<std::string> errors;
+
 };

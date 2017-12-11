@@ -136,6 +136,7 @@
     <Content Include="assets\Images\Play\bomb.png" />
     <Content Include="assets\Images\Play\comboNumber.png" />
     <Content Include="assets\Images\Play\judge.png" />
+    <Content Include="assets\Images\Play\left.png" />
     <Content Include="assets\Images\Play\lifebg.png" />
     <Content Include="assets\Images\Play\Notes\flickl.png" />
     <Content Include="assets\Images\Play\Notes\flickr.png" />

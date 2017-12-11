@@ -41,7 +41,7 @@ private:
 		int time = 0;
 		Point pos;
 		int alpha = 255;
-		float scale = 0.75f;
+		float scale = 0.8f;
 	};
 	Random rnd;
 	Timer bombTimer;
@@ -54,7 +54,7 @@ private:
 	bool isStartBomb = false;
 
 	static constexpr int BOMB_ANIM_TIME = 350;
-	static constexpr int PARTICLE_INTERVAL = 64;
+	static constexpr int PARTICLE_INTERVAL = 32;
 	int particleElapsedTime = 0;
 	static constexpr int PARTICLE_SIZE = 64;
 };

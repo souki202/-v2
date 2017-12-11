@@ -159,12 +159,6 @@ JudgeResult Judge::judge(const JudgeTiming& timing, int nowTime, int judgeTime, 
 	judgedId.push_back(result.id);
 
 	view.setGrade(result.grade);
-	if (result.grade <= JudgeGrade::GOOD) {
-		combo.addCombo();
-	}
-	else if (result.grade <= JudgeGrade::POOR) {
-		combo.resetCombo();
-	}
 
 	return result;
 }
