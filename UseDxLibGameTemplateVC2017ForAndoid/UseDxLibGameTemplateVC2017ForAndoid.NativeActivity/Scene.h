@@ -1,11 +1,17 @@
 #pragma once
 #include "DxLib.h"
+#include "NowLoadingWindow.h"
 
 class Scene {
 public:
 	Scene() {};
 	virtual ~Scene() {};
 
-	virtual void update() = 0;
-	virtual void draw() = 0;
+	virtual void update();
+	virtual void draw();
+
+	void updateLoadCount() { loading.updateLoadCount(); };
+	virtual void onLoadComplete() {};
+private:
+	bool isExecuteLoadComplete = false;
 };

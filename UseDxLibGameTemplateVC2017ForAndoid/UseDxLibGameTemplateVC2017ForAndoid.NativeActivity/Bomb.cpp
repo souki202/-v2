@@ -9,8 +9,10 @@ BombResources::BombResources()
 
 void Bomb::draw()
 {
-	for (auto& x : bombImgs) x.draw();
-	for (auto& x : particle) {//ƒp[ƒeƒBƒNƒ‹‚ÍŒy—Ê‰»‚Ì‚½‚ß,Image‚ğ’Ê‚³‚È‚¢.
+	if (bombTimer.getElapsedTime() <= BOMB_ANIM_TIME) {
+		for (auto& x : bombImgs) x.draw();
+	}
+	for (auto& x : particle) {//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã¯è»½é‡åŒ–ã®ãŸã‚,Imageã‚’é€šã•ãªã„.
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, x.alpha);
 		float size = PARTICLE_SIZE * x.scale;
 		DrawExtendGraphF(x.pos.first - size/2, x.pos.second - size/2,
@@ -22,7 +24,7 @@ void Bomb::draw()
 
 void Bomb::update()
 {
-	//ƒ{ƒ€
+	//ãƒœãƒ 
 	bombTimer.update();
 	particleTimer.update();
 	float scale = MyEase::easeOut(bombTimer.getElapsedTime(), BOMB_ANIM_TIME, 1.f, 1.75f);
@@ -36,13 +38,13 @@ void Bomb::update()
 	bombImgs[0].setAlpha(static_cast<int>(alpha2));
 	bombImgs[1].setAlpha(static_cast<int>(alpha));
 
-	//ƒp[ƒeƒBƒNƒ‹
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«
 	if (isStartParticle) {
-		//V‚µ‚­.
+		//æ–°ã—ã.
 		particleElapsedTime += particleTimer.getDeltaTime();
 		if (particleElapsedTime >= PARTICLE_INTERVAL) {
 			particleElapsedTime -= PARTICLE_INTERVAL;
-			//V‹Kì¬
+			//æ–°è¦ä½œæˆ
 			particle.push_back(ParticleInfo());
 			particle.back().pos.first = rnd.generate(
 				particleX - judgeLine.GET_JUDGE_SIZE() / 1.75,
@@ -50,7 +52,7 @@ void Bomb::update()
 			);
 		}
 	}
-	//XV‚Â‚¢‚Å‚ÉI—¹‚µ‚½‚à‚Ì‚ğíœ
+	//æ›´æ–°ã¤ã„ã§ã«çµ‚äº†ã—ãŸã‚‚ã®ã‚’å‰Šé™¤
 	for (auto it = particle.begin(); it != particle.end();) {
 		if (it->time > BOMB_ANIM_TIME) {
 			it = particle.erase(it);

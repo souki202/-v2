@@ -34,19 +34,19 @@ namespace InputDevice {
 	public:
 		static Keyboard& getInstance() { static Keyboard key; return key; };
 
-		void update();				// ƒL[‚Ì“ü—Íó‘Ô‚ğXV‚·‚é
-		int getPressFrame(int keyCode) { return m_frame[keyCode]; }// ˆø”‚ÌƒL[ƒR[ƒh‚ÌƒL[‚Ì“ü—ÍƒtƒŒ[ƒ€”‚ğ•Ô‚·
-		int getPressTime(int keyCode) { return m_time[keyCode]; }	// ˆø”‚ÌƒL[ƒR[ƒh‚ÌƒL[‚Ì“ü—ÍŠÔ(ƒŠƒAƒ‹ƒ^ƒCƒ€)‚ğ•Ô‚·
-		bool isRelease(int keyCode);	// ƒ{ƒ^ƒ“‚ªã‚ª‚Á‚½‚Æ‚«
-		void setInterval(int time) { m_interval = time; };	//ƒ~ƒŠ•b
-		bool getIsUpdate(int keyCode);	//ƒtƒŒ[ƒ€Šî€‚È‚ç—]‚è‹‚ß‚Ä‚Ëš
+		void update();				// ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’æ›´æ–°ã™ã‚‹
+		int getPressFrame(int keyCode) { return m_frame[keyCode]; }// å¼•æ•°ã®ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã®ã‚­ãƒ¼ã®å…¥åŠ›ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã‚’è¿”ã™
+		int getPressTime(int keyCode) { return m_time[keyCode]; }	// å¼•æ•°ã®ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã®ã‚­ãƒ¼ã®å…¥åŠ›æ™‚é–“(ãƒªã‚¢ãƒ«ã‚¿ã‚¤ãƒ )ã‚’è¿”ã™
+		bool isRelease(int keyCode);	// ãƒœã‚¿ãƒ³ãŒä¸ŠãŒã£ãŸã¨ã
+		void setInterval(int time) { m_interval = time; };	//ãƒŸãƒªç§’
+		bool getIsUpdate(int keyCode);	//ãƒ•ãƒ¬ãƒ¼ãƒ åŸºæº–ãªã‚‰ä½™ã‚Šæ±‚ã‚ã¦ã­â˜…
 	private:
 		Timer timer;
 		std::array<int, 256> m_frame;
 		std::array<int, 256> m_time;
 		std::array<int, 256> m_lastUpdateTime;
 		std::array<bool, 256> m_isPress;
-		char m_isPushKey[256];	//Update()‚ÅƒL[‚Ì“ü—Íó‘Ô‚ğ•Û
+		char m_isPushKey[256];	//Update()ã§ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’ä¿æŒ
 
 		int m_interval;
 	};
@@ -70,7 +70,7 @@ namespace InputDevice {
 		int getMiddlePressFrame() { return press[2].first; };
 		int getMiddlePressTime() { return press[2].second; };
 		int getMiddlePressPhase() { return phases[2]; };
-		int getWheelRotateValue() { return GetMouseWheelRotVol(); };	//‰œ‚ª³, è‘O‚ª•‰
+		int getWheelRotateValue() { return GetMouseWheelRotVol(); };	//å¥¥ãŒæ­£, æ‰‹å‰ãŒè² 
 		const std::pair<int, int>& getPosition() {
 			return m_position;
 		};
@@ -79,7 +79,7 @@ namespace InputDevice {
 		};
 	private:
 		Timer timer;
-		std::array<std::pair<int, int>, 3> press;//ƒtƒŒ[ƒ€, ŠÔ
+		std::array<std::pair<int, int>, 3> press;//ãƒ•ãƒ¬ãƒ¼ãƒ , æ™‚é–“
 		std::pair<int, int> m_position;
 		std::pair<int, int> m_leftClickInitPosition;
 		std::pair<int, int> m_lastPosition;
@@ -113,7 +113,7 @@ namespace InputDevice {
 			};
 			std::pair<int, int> initPos;
 			std::pair<int, int> nowPos;
-			std::pair<int, int> deltaPos; //‘OƒtƒŒ[ƒ€‚Æ‚Ì·
+			std::pair<int, int> deltaPos; //å‰ãƒ•ãƒ¬ãƒ¼ãƒ ã¨ã®å·®
 			std::pair<int, int> turnPos;
 			int frame;
 			int time;
@@ -137,7 +137,7 @@ namespace InputDevice {
 	private:
 		Timer timer;
 		std::map<int, Info> touches;
-		std::map<int, std::pair<int, int>> keys; //ID, À•W
+		std::map<int, std::pair<int, int>> keys; //ID, åº§æ¨™
 		int firstTouchId;
 		decltype(touches.find(0)) firstTouch;
 	};

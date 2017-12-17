@@ -6,10 +6,11 @@
 
 class SelectMusic : public Scene {
 public:
-	SelectMusic() {};
+	SelectMusic();
 	~SelectMusic() {};
 
 	void update();
-	void draw() {};
+	void draw();
 private:
+	bool isFirstFrame = true;
 };

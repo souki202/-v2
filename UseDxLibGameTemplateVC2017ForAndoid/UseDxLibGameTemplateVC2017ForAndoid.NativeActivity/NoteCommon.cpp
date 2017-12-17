@@ -22,4 +22,5 @@ void NoteImageManager::loadImage()
 	}
 
 	whiteImg.setImage("Images/white1x1.png");
+	connectImg.setImage("Images/Play/Notes/connect.png");
 }

@@ -37,36 +37,47 @@ JudgeResult Judge::judge(const JudgeTiming& timing, int nowTime, int judgeTime, 
 {
 	JudgeResult result;
 	result.grade = JudgeGrade::INVALID;
+	result.id = 0;
 	int deltaTime = nowTime - judgeTime;
 
+	if (playSettings.getIsAuto()) {
+		if (deltaTime >= 0) {
+			result.grade = JudgeGrade::PERFECT;
+			cnt[static_cast<int>(result.grade)]++;
+			if (result.grade <= JudgeGrade::GREAT) PlaySoundMem(tapSe, DX_PLAYTYPE_BACK);
+			view.setGrade(result.grade);
+		}
+		return result;
+	}
+
 	
-	//æ‚èŠ¸‚¦‚¸ƒ^ƒbƒ`“™‚µ‚Ä”»’è‚ğ‹N‚±‚¹‚Ä‚¢‚é‚à‚Ì‚Æ‚·‚éB
+	//å–ã‚Šæ•¢ãˆãšã‚¿ãƒƒãƒç­‰ã—ã¦åˆ¤å®šã‚’èµ·ã“ã›ã¦ã„ã‚‹ã‚‚ã®ã¨ã™ã‚‹ã€‚
 	result.grade = calcGrade(deltaTime);
 	result.id = -1;
 
-	//‚±‚±‚ÍŒ©“¦‚µPOOR‚ÆA’†Œp’n“_‚Ì‚İl‚¦‚éB
+	//ã“ã“ã¯è¦‹é€ƒã—POORã¨ã€ä¸­ç¶™åœ°ç‚¹ã®ã¿è€ƒãˆã‚‹ã€‚
 	switch (timing) {
 	case JudgeTiming::TOUCH:
-		//‘‚·‚¬‚È‚çŒvZ‚µ‚È‚¢
+		//æ—©ã™ããªã‚‰è¨ˆç®—ã—ãªã„
 		if (deltaTime <= -judgeRange.back()) return JudgeResult();
 		result.id = searchUnuseId(touchInput.getTouchLine(), line);
 		if (result.id == -1) {
 			if (result.grade != JudgeGrade::POOR) result.grade = JudgeGrade::INVALID;
 		}
 		break;
-	case JudgeTiming::RELEASE://g—pÏ‚İ‚ğl—¶‚µ‚È‚¢
+	case JudgeTiming::RELEASE://ä½¿ç”¨æ¸ˆã¿ã‚’è€ƒæ…®ã—ãªã„
 	{
-		//‚Ç‚±‚©‚Å—£‚³‚ê‚Ä‚¢‚é‚±‚Æ‚ğ’²‚×‚é
+		//ã©ã“ã‹ã§é›¢ã•ã‚Œã¦ã„ã‚‹ã“ã¨ã‚’èª¿ã¹ã‚‹
 		result.id = touchId;
 		bool isThere = false;
-		for (auto& eachLine : touchInput.getReleaseLine()) { //‚»‚ê‚¼‚ê‚Ìƒ‰ƒCƒ“(‚ ‚ê‚Î)
-			for (auto& x : eachLine.second) { //‚»‚ê‚¼‚ê‚Ìid
-				if (x == touchId) { //—£‚µ‚½
-					//‚¿[‚ª[‚¤[‚¾[‚ë[!! ‚¿‚ª‚¤‚¾‚ë[!!!
+		for (auto& eachLine : touchInput.getReleaseLine()) { //ãã‚Œãã‚Œã®ãƒ©ã‚¤ãƒ³(ã‚ã‚Œã°)
+			for (auto& x : eachLine.second) { //ãã‚Œãã‚Œã®id
+				if (x == touchId) { //é›¢ã—ãŸ
+					//ã¡ãƒ¼ãŒãƒ¼ã†ãƒ¼ã ãƒ¼ã‚ãƒ¼!! ã¡ãŒã†ã ã‚ãƒ¼!!!
 					if (eachLine.first != line) {
 						result.grade = JudgeGrade::POOR;
 					}
-					else {//‚ ‚Á‚Ä‚éc
+					else {//ã‚ã£ã¦ã‚‹â€¦
 						result.grade = calcGrade(deltaTime, true);
 					}
 					isThere = true;
@@ -75,24 +86,24 @@ JudgeResult Judge::judge(const JudgeTiming& timing, int nowTime, int judgeTime, 
 			}
 			if (isThere) break;
 		}
-		//—£‚µ‚Ä‚È‚¢‚È‚çŒ©“¦‚µ”»’è
+		//é›¢ã—ã¦ãªã„ãªã‚‰è¦‹é€ƒã—åˆ¤å®š
 		if (!isThere) {
 			if (result.grade != JudgeGrade::POOR) result.grade = JudgeGrade::INVALID;
 		}
 	}
 		break;
-	case JudgeTiming::RELEASE_INIT://g—pÏ‚İ‚ğl—¶‚µ‚È‚¢
+	case JudgeTiming::RELEASE_INIT://ä½¿ç”¨æ¸ˆã¿ã‚’è€ƒæ…®ã—ãªã„
 	{
 		result.id = touchId;
-		if (touchId != -1) { //‚»‚à‚»‚àLN‰Ÿ‚µ‚Ä‚é?
+		if (touchId != -1) { //ãã‚‚ãã‚‚LNæŠ¼ã—ã¦ã‚‹?
 			bool isThere = false;
-			auto it = touchInput.getReleaseInitLine().find(line); //‚»‚à‚»‚à‚»‚Ìƒ‰ƒCƒ“‚É”»’è‚ª‚ ‚é‚©’²‚×‚é
-			if (it != touchInput.getReleaseInitLine().end()) { //‚ ‚é‚È‚çid‚ğŒ©‚Ä‚¢‚­
-				for (auto& x : it->second) { //‚»‚ê‚¼‚ê‚Ìid’Šo
+			auto it = touchInput.getReleaseInitLine().find(line); //ãã‚‚ãã‚‚ãã®ãƒ©ã‚¤ãƒ³ã«åˆ¤å®šãŒã‚ã‚‹ã‹èª¿ã¹ã‚‹
+			if (it != touchInput.getReleaseInitLine().end()) { //ã‚ã‚‹ãªã‚‰idã‚’è¦‹ã¦ã„ã
+				for (auto& x : it->second) { //ãã‚Œãã‚Œã®idæŠ½å‡º
 					isThere |= (x == touchId);
 				}
 			}
-			//—£‚µ‚Ä‚È‚¢‚È‚çŒ©“¦‚µ”»’è
+			//é›¢ã—ã¦ãªã„ãªã‚‰è¦‹é€ƒã—åˆ¤å®š
 			if (!isThere) {
 				if (result.grade != JudgeGrade::POOR) result.grade = JudgeGrade::INVALID;
 			}
@@ -105,7 +116,7 @@ JudgeResult Judge::judge(const JudgeTiming& timing, int nowTime, int judgeTime, 
 		break;
 	case JudgeTiming::FLICK_L:
 		result.grade = calcFlickGrade(deltaTime);
-		//‘‚·‚¬‚È‚çŒvZ‚µ‚È‚¢
+		//æ—©ã™ããªã‚‰è¨ˆç®—ã—ãªã„
 		if (deltaTime <= -judgeRange.back()) return JudgeResult();
 		result.id = searchUnuseId(touchInput.getFlickLeftLine(), line);
 		if (result.id == -1) {
@@ -114,36 +125,36 @@ JudgeResult Judge::judge(const JudgeTiming& timing, int nowTime, int judgeTime, 
 		break;
 	case JudgeTiming::FLICK_R:
 		result.grade = calcFlickGrade(deltaTime);
-		//‘‚·‚¬‚È‚çŒvZ‚µ‚È‚¢
+		//æ—©ã™ããªã‚‰è¨ˆç®—ã—ãªã„
 		if (deltaTime <= -judgeRange.back()) return JudgeResult();
 		result.id = searchUnuseId(touchInput.getFlickRightLine(), line);
 		if (result.id == -1) {
 			if (result.grade != JudgeGrade::POOR) result.grade = JudgeGrade::INVALID;
 		}
 		break;
-	case JudgeTiming::THROUGH://g—pÏ‚İ‚ğl—¶‚µ‚È‚¢
+	case JudgeTiming::THROUGH://ä½¿ç”¨æ¸ˆã¿ã‚’è€ƒæ…®ã—ãªã„
 	{
 		result.id = touchId;
 		bool isThere = false;
-		auto it = touchInput.getHoldLine().find(line); //‚»‚à‚»‚à‚»‚Ìƒ‰ƒCƒ“‚É”»’è‚ª‚ ‚é‚©’²‚×‚é
-		if (it != touchInput.getHoldLine().end()) { //‚ ‚é‚È‚çid‚ğŒ©‚Ä‚¢‚­
-			for (auto& x : it->second) { //‚»‚ê‚¼‚ê‚Ìid’Šo
+		auto it = touchInput.getHoldLine().find(line); //ãã‚‚ãã‚‚ãã®ãƒ©ã‚¤ãƒ³ã«åˆ¤å®šãŒã‚ã‚‹ã‹èª¿ã¹ã‚‹
+		if (it != touchInput.getHoldLine().end()) { //ã‚ã‚‹ãªã‚‰idã‚’è¦‹ã¦ã„ã
+			for (auto& x : it->second) { //ãã‚Œãã‚Œã®idæŠ½å‡º
 				isThere |= (x == touchId);
 			}
 		}
-		//ŠY“–ƒ‰ƒCƒ“‚ğ‰Ÿ‚µ‚Ä‚È‚¢‚È‚çŒ©“¦‚µ”»’è
+		//è©²å½“ãƒ©ã‚¤ãƒ³ã‚’æŠ¼ã—ã¦ãªã„ãªã‚‰è¦‹é€ƒã—åˆ¤å®š
 		if (!isThere) {
 			if (result.grade != JudgeGrade::POOR) result.grade = JudgeGrade::INVALID;
 		}
-		else { //‰Ÿ‚µ‚Ä‚é‚È‚ç’Ê‚è‰ß‚¬‚é‚Ü‚Å”»’è‚µ‚È‚¢
+		else { //æŠ¼ã—ã¦ã‚‹ãªã‚‰é€šã‚Šéãã‚‹ã¾ã§åˆ¤å®šã—ãªã„
 			if (deltaTime < -judgeRange[static_cast<int>(JudgeGrade::PERFECT)]) {
 				result.grade = JudgeGrade::INVALID;
 			}
 		}
 	}
-	{ //ƒm[ƒg’Ê‰ß‘O‚É—£‚µ‚Ä‚½‚çPOOR
-		for (auto& eachLine : touchInput.getReleaseLine()) { //‚»‚ê‚¼‚ê‚Ìƒ‰ƒCƒ“(‚ ‚ê‚Î)
-			for (auto& x : eachLine.second) { //‚»‚ê‚¼‚ê‚Ìid
+	{ //ãƒãƒ¼ãƒˆé€šéå‰ã«é›¢ã—ã¦ãŸã‚‰POOR
+		for (auto& eachLine : touchInput.getReleaseLine()) { //ãã‚Œãã‚Œã®ãƒ©ã‚¤ãƒ³(ã‚ã‚Œã°)
+			for (auto& x : eachLine.second) { //ãã‚Œãã‚Œã®id
 				if (x == touchId) result.grade = JudgeGrade::POOR;
 			}
 		}
@@ -154,43 +165,46 @@ JudgeResult Judge::judge(const JudgeTiming& timing, int nowTime, int judgeTime, 
 		result.id = -1;
 		break;
 	}
+	if (result.grade <= JudgeGrade::GREAT) PlaySoundMem(tapSe, DX_PLAYTYPE_BACK);
 
-	//”»’è‚ª•Êƒm[ƒc‚É‰e‹¿‚Å‚È‚¢‚æ‚¤’Ç‰Á
+	//åˆ¤å®šãŒåˆ¥ãƒãƒ¼ãƒ„ã«å½±éŸ¿ã§ãªã„ã‚ˆã†è¿½åŠ 
 	judgedId.push_back(result.id);
 
 	view.setGrade(result.grade);
-
+	if (result.grade != JudgeGrade::INVALID) {
+		cnt[static_cast<int>(result.grade)]++;
+	}
 	return result;
 }
 
 JudgeGrade Judge::calcGrade(int deltaTime, bool isInLn)
 {
-	//BAD‚Ü‚Å”»’è
+	//BADã¾ã§åˆ¤å®š
 	int absDeltaTime = std::abs(deltaTime);
 	for (int i = 0; i <= static_cast<int>(JudgeGrade::BAD); i++) {
 		if (absDeltaTime <= judgeRange[i]) return static_cast<JudgeGrade>(i);
 	}
 
-	//Œ©“¦‚µPOOR
+	//è¦‹é€ƒã—POOR
 	if (deltaTime >= judgeRange[static_cast<int>(JudgeGrade::POOR)]) {
 		return JudgeGrade::POOR;
 	}
 
-	//INVALID
+	//INVALIDæ™‚
 	if (isInLn && deltaTime < 0) return JudgeGrade::POOR;
 	return JudgeGrade::INVALID;
 }
 
 JudgeGrade Judge::calcFlickGrade(int deltaTime)
 {
-	//BAD‚Ü‚Å”»’è
+	//BADã¾ã§åˆ¤å®š
 	int absDeltaTime = std::abs(deltaTime);
 	JudgeGrade grade = JudgeGrade::INVALID;
 
 	for (int i = static_cast<int>(JudgeGrade::BAD); i >= 0; i--) {
 		if (absDeltaTime <= flickJudgeRange[i]) grade = static_cast<JudgeGrade>(i);
 	}
-	//Œ©“¦‚µ
+	//è¦‹é€ƒã—
 	if (grade >= JudgeGrade::GOOD && deltaTime > 0) {
 		grade = JudgeGrade::POOR;
 	}

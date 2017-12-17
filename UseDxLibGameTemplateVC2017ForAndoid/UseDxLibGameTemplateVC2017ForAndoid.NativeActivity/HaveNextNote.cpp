@@ -1,45 +1,54 @@
 #include "HaveNextNote.h"
 
+void HaveNextNote::setTouchId(int id)
+{
+	Note::setTouchId(id);
+	auto&& lockNextNote = nextNote.lock();
+	if (lockNextNote) lockNextNote->setTouchId(id);
+}
+
 void HaveNextNote::setJudge(const JudgeResult & judgeResult)
 {
 	Note::setJudge(judgeResult);
 	if (judgeResult.grade != JudgeGrade::INVALID) {
-		if (nextNote) nextNote->setTouchId(judgeResult.id);
+		auto&& lockNextNote = nextNote.lock();
+		if (lockNextNote) lockNextNote->setTouchId(judgeResult.id);
 	}
 }
 
 const std::vector<PointWithSlope>& HaveNextNote::getDrawLine(int div)
 {
 	connectLine.clear();
-	//•\¦‚³‚ê‚é‘O‚©,Ÿ‚ª‚È‚¢‚È‚ç‹ó
+	auto&& lockNextNote = nextNote.lock();
+	//è¡¨ç¤ºã•ã‚Œã‚‹å‰ã‹,æ¬¡ãŒãªã„ãªã‚‰ç©º
 	if (nowTime < getJudgeTime() - playSettings.getViewNoteTime()
-		|| !nextNote) {
+		|| !lockNextNote) {
 		return connectLine;
 	}
-	if (nextNote->getWasJudged()) return connectLine;
+	if (lockNextNote->getWasJudged()) return connectLine;
 	connectLine.resize(div + 1);
 
-	//ˆÚ“®‹ï‡‚Ìƒp[ƒZƒ“ƒe[ƒW‚ğæ“¾
-	float nextNoteP = nextNote->getViewPercentage();
+	//ç§»å‹•å…·åˆã®ãƒ‘ãƒ¼ã‚»ãƒ³ãƒ†ãƒ¼ã‚¸ã‚’å–å¾—
+	float nextNoteP = lockNextNote->getViewPercentage();
 	if (nextNoteP < 0) nextNoteP = 0;
 	float targetP = getViewPercentage();
 	float dp = targetP - nextNoteP;
 	float divP = dp / div;
 	float nowP = nextNoteP;
 
-	float initNextNoteX = nextNote->getX(nextNoteP);
+	float initNextNoteX = lockNextNote->getX(nextNoteP);
 	float x1 = initNextNoteX;
 	float x3 = getX();
 	float x2 = (x1 + x3) / 2;
 	if (dp > 0.2) {
-		float tx = judgeLine.getCenterPosition(nextNote->getTarget());
+		float tx = judgeLine.getCenterPosition(lockNextNote->getTarget());
 		float dp2 = (dp - 0.2f) * 1.2f;
 		x2 += (tx - x2) * dp2;
 	}
 
-	//Še“_‚ÌÀ•W,•,ŒX‚«‚ğ‚Æ‚é
+	//å„ç‚¹ã®åº§æ¨™,å¹…,å‚¾ãã‚’ã¨ã‚‹
 	Point lastPoint, nowPoint;
-	nowPoint = std::make_pair(initNextNoteX, nextNote->getY(nowP));
+	nowPoint = std::make_pair(initNextNoteX, lockNextNote->getY(nowP));
 	for (int i = 0; i <= div+1; i++, nowP += divP) {
 		lastPoint = nowPoint;
 		double t = static_cast<double>(i) / div;
@@ -48,13 +57,13 @@ const std::vector<PointWithSlope>& HaveNextNote::getDrawLine(int div)
 		nowPoint.second = getY(nowP);
 		if (!i) continue;
 		float a = M_PI_2;
-		//ŒX‚« ç”N—‰¤SHD‚İ‚½‚¢‚È‚Ì‚¾‚Æd‚¢‚©‚à
+		//å‚¾ã åƒå¹´å¥³ç‹SHDã¿ãŸã„ãªã®ã ã¨é‡ã„ã‹ã‚‚
 		if (std::abs(nowPoint.first - lastPoint.first) > 0.0001) {
 			a = std::atan2((nowPoint.second - lastPoint.second), (nowPoint.first - lastPoint.first));
 		}
 		//if (a < 0) a += M_PI;
 		
-		//•Û‘¶
+		//ä¿å­˜
 		connectLine[i-1].pos = lastPoint;
 		connectLine[i-1].slope = a;
 		connectLine[i-1].scale = nowP - divP;

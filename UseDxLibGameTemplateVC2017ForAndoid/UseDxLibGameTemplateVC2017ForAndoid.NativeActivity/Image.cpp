@@ -55,6 +55,7 @@ void Image::setImage(std::string filePath)
 	img = LoadGraph(filePath.c_str());
 	GetGraphSizeF(img, &rawSize.first, &rawSize.second);
 	recalcPosition();
+	loading.updateLoadCount();
 }
 
 void Image::setImage(int handle)
@@ -97,21 +98,21 @@ void Image::recalcPosition()
 	pos.first += scrollPos.first;
 	pos.second += scrollPos.second;
 
-	//‰ñ“]
-	float x[2], y[2]; //0:¶ã 1:‰E‰º
+	//å›è»¢
+	float x[2], y[2]; //0:å·¦ä¸Š 1:å³ä¸‹
 	x[0] = pos.first - rawPos.first;
 	x[1] = x[0] + scaledSize.first;
 	y[0] = pos.second - rawPos.second;
 	y[1] = y[0] + scaledSize.second;
 	float s = std::sin(angle);
 	float c = std::cos(angle);
-	vertexes[0].first = x[0] * c - y[0] * s;//¶ã
+	vertexes[0].first = x[0] * c - y[0] * s;//å·¦ä¸Š
 	vertexes[0].second = x[0] * s + y[0] * c;
-	vertexes[1].first = x[1] * c - y[0] * s;//‰Eã
+	vertexes[1].first = x[1] * c - y[0] * s;//å³ä¸Š
 	vertexes[1].second = x[1] * s + y[0] * c;
-	vertexes[2].first = x[1] * c - y[1] * s;//‰E‰º
+	vertexes[2].first = x[1] * c - y[1] * s;//å³ä¸‹
 	vertexes[2].second = x[1] * s + y[1] * c;
-	vertexes[3].first = x[0] * c - y[1] * s;//¶‰º
+	vertexes[3].first = x[0] * c - y[1] * s;//å·¦ä¸‹
 	vertexes[3].second = x[0] * s + y[1] * c;
 
 	for (auto& x : vertexes) {
@@ -122,6 +123,13 @@ void Image::recalcPosition()
 
 void Image::draw()
 {
+	if (!rawSize.first || !rawSize.second) {
+		GetGraphSizeF(img, &rawSize.first, &rawSize.second);
+		//ã¡ã‚‡ã†ã©ãƒ­ãƒ¼ãƒ‰çµ‚äº†
+		if (rawSize.first && rawSize.second) {
+			recalcPosition();
+		}
+	}
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 	DrawModiGraphF(
 		vertexes[0].first, vertexes[0].second,
@@ -153,7 +161,7 @@ void Image::update()
 
 bool Image::getIsOutOfWindow()
 {
-	//‚¢‚¸‚ê‚©‚Ì“_‚ª‰æ–Ê“à‚È‚ç‰f‚Á‚Ä‚¢‚é
+	//ã„ãšã‚Œã‹ã®ç‚¹ãŒç”»é¢å†…ãªã‚‰æ˜ ã£ã¦ã„ã‚‹
 	bool isOk = false;
 	for (auto& x : vertexes) {
 		if (0 < x.first) {

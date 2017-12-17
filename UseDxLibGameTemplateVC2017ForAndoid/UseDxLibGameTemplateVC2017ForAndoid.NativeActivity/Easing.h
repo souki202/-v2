@@ -2,27 +2,30 @@
 
 namespace MyEase {
 	/**
-	* ƒC[ƒWƒ“ƒO
-	* @param t Œ»İ‚ÌŒo‰ßŠÔ
-	*        d ˆÚ“®‚ªI‚í‚éŠÔ
-	*        start ŠJn’l
-	*        end I—¹’l
+	* ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
+	* @param t ç¾åœ¨ã®çµŒéæ™‚é–“
+	*        d ç§»å‹•ãŒçµ‚ã‚ã‚‹æ™‚é–“
+	*        start é–‹å§‹å€¤
+	*        end çµ‚äº†å€¤
 	*/
 	template<typename T>
-	auto easeIn(int t, int d, T start, T end) -> decltype((end - start) * t, T()) {
+	auto easeIn(int t, int d, T start, T end, bool isInRange = false) -> decltype((end - start) * t, T()) {
 		float tt = static_cast<float>(t) / d;
+		if (isInRange) tt = std::max(std::min(tt, 1.f), 0.f);
 		return start + (end - start) * tt * tt;
 	}
 
 	template<typename T>
-	auto easeOut(int t, int d, T start, T end) -> decltype((end - start) * (t - 2.0f), T()) {
+	auto easeOut(int t, int d, T start, T end, bool isInRange = false) -> decltype((end - start) * (t - 2.0f), T()) {
 		float tt = static_cast<float>(t) / d;
+		if (isInRange) tt = std::max(std::min(tt, 1.f), 0.f);
 		return start - (end - start) * tt * (tt - 2.0f);
 	}
 
 	template<typename T>
-	auto easeInOut(int t, int d, T start, T end) -> decltype((end - start) * (t - 2.0f), T()) {
-		float tt = static_cast<float>(t) / (d / 2.0f);
+	auto easeInOut(int t, int d, T start, T end, bool isInRange = false) -> decltype((end - start) * (t - 2.0f), T()) {
+		float tt = static_cast<float>(t) / (d / 2.f);
+		if (isInRange) tt = std::max(std::min(tt, 2.f), 0.f);
 		if (tt < 1) {
 			return start + (end - start) / 2 * tt * tt;
 		}

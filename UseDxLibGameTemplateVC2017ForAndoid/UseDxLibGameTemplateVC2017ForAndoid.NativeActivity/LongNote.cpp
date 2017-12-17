@@ -8,8 +8,9 @@ LongNote::LongNote()
 
 void LongNote::draw()
 {
-	//ŽŸƒm[ƒg‚ª–¢”»’è‚ÅŽc‚Á‚Ä‚¢‚é‚È‚çƒm[ƒg•`‰æ
-	if (!wasJudged || (nextNote && wasJudged && !nextNote->getWasJudged())) {
+	//æ¬¡ãƒŽãƒ¼ãƒˆãŒæœªåˆ¤å®šã§æ®‹ã£ã¦ã„ã‚‹ãªã‚‰ãƒŽãƒ¼ãƒˆæç”»
+	auto&& lockNextNote = nextNote.lock();
+	if (!wasJudged || (lockNextNote && wasJudged && !lockNextNote->getWasJudged())) {
 		{
 			auto& points = getDrawLine();
 			float dx[2], dy[2];
@@ -20,7 +21,7 @@ void LongNote::draw()
 				dy[0] = -(points[i].scale * w * std::cos(points[i].slope));
 				dx[1] = std::abs(points[i+1].scale * w * std::sin(points[i+1].slope));
 				dy[1] = -(points[i+1].scale * w * std::cos(points[i+1].slope));
-				if (!(isFirstNote || !nextNote)) {
+				if (!(isFirstNote || !lockNextNote)) {
 					if (!i) {
 						dy[0] = 0;
 						dx[0] = points[i].scale * w;
@@ -40,21 +41,22 @@ void LongNote::draw()
 				vy[2] = points[i + 1].pos.second + dy[1];
 				vy[3] = points[i + 1].pos.second - dy[1];
 				DrawModiGraphF(vx[0], vy[0], vx[1], vy[1], vx[2], vy[2], vx[3], vy[3],
-					           noteImageManager.getWhiteImg().getHandle(), true
+					           noteImageManager.getWhiteImage().getHandle(), true
 				);
 			}
 		}
 		if (wasJudged) noteImg.draw();
 		HaveNextNote::draw();
 	}
+	else bomb.draw();
 
 #ifdef DEBUG
-	if (touchId >= 0) {
-		DrawFormatString(noteImg.getPosition().first, noteImg.getPosition().second, 0xffffff, "LN");
-	}
-	if (nextNote) {
-		DrawFormatString(noteImg.getPosition().first + 50, noteImg.getPosition().second, 0xffffff, "nextId:%d", nextNote->getUid());
-	}
+	//if (touchId >= 0) {
+	//	DrawFormatString(noteImg.getPosition().first, noteImg.getPosition().second, 0xffffff, "LN");
+	//}
+	//if (nextNote) {
+	//	DrawFormatString(noteImg.getPosition().first + 50, noteImg.getPosition().second, 0xffffff, "nextId:%d", nextNote->getUid());
+	//}
 #endif
 }
 
@@ -62,7 +64,8 @@ void LongNote::update()
 {
 	bomb.setParticleX(getX());
 	HaveNextNote::update();
-	if (nextNote && nextNote->getWasJudged()) {
+	auto&& lockNextNote = nextNote.lock();
+	if (lockNextNote && lockNextNote->getWasJudged()) {
 		bomb.stopParticle();
 	}
 }
@@ -76,7 +79,8 @@ void LongNote::setNextNote(const std::shared_ptr<Note>& next)
 float LongNote::getViewPercentage()
 {
 	float p = HaveNextNote::getViewPercentage();
-	if (wasJudged && nextNote && !nextNote->getWasJudged()) {
+	auto&& lockNextNote = nextNote.lock();
+	if (wasJudged && lockNextNote && !lockNextNote->getWasJudged()) {
 		return 1.f;
 	}
 	return p;
@@ -85,12 +89,13 @@ float LongNote::getViewPercentage()
 void LongNote::setJudge(const JudgeResult & judgeResult)
 {
 	HaveNextNote::setJudge(judgeResult);
-	//BADˆÈ‰º‚¾‚µ‚½‚çŒã‘±Á‚·
+	//BADä»¥ä¸‹ã ã—ãŸã‚‰å¾Œç¶šæ¶ˆã™
+	auto&& lockNextNote = nextNote.lock();
 	if (judgeResult.grade >= JudgeGrade::BAD
 		&& judgeResult.grade != JudgeGrade::INVALID) {
-		if (nextNote) nextNote->setJudge(judgeResult);
+		if (lockNextNote) lockNextNote->setJudge(judgeResult);
 	}
-	else if (nextNote) {
+	else if (lockNextNote) {
 		bomb.startParticle();
 	}
 }

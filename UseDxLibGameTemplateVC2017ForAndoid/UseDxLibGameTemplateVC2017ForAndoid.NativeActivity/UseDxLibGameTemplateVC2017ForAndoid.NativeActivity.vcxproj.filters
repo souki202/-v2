@@ -1,23 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Random.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Form.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="InputDevice.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Play.cpp">
       <Filter>Source\MyGame\Play</Filter>
-    </ClCompile>
-    <ClCompile Include="Image.cpp">
-      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="MusicInfo.cpp">
       <Filter>Source\MyGame</Filter>
@@ -30,9 +18,6 @@
     </ClCompile>
     <ClCompile Include="MusicScore.cpp">
       <Filter>Source\MyGame\Play</Filter>
-    </ClCompile>
-    <ClCompile Include="GetFilePath.cpp">
-      <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="LongNote.cpp">
       <Filter>Source\MyGame\Play\Note</Filter>
@@ -78,6 +63,51 @@
     </ClCompile>
     <ClCompile Include="ScoreNumber.cpp">
       <Filter>Source\MyGame\Play\Score</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreRank.cpp">
+      <Filter>Source\MyGame\Play\Score</Filter>
+    </ClCompile>
+    <ClCompile Include="Life.cpp">
+      <Filter>Source\MyGame\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="BackGroundAnimation.cpp">
+      <Filter>Source\MyGame</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayIntro.cpp">
+      <Filter>Source\MyGame\Play</Filter>
+    </ClCompile>
+    <ClCompile Include="Form.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="GetFilePath.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="InputDevice.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="NowLoadingWindow.cpp">
+      <Filter>Source\MyGame\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Result.cpp">
+      <Filter>Source\MyGame\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewString.cpp">
+      <Filter>Source\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultBackGroundAnimation.cpp">
+      <Filter>Source\MyGame\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewJudgeResultDetail.cpp">
+      <Filter>Source\MyGame\Result</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -129,33 +159,27 @@
     <Filter Include="Source\MyGame\Play\Score">
       <UniqueIdentifier>{0615e419-6c2d-4639-b73f-8cad6a6798c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header\Common">
+      <UniqueIdentifier>{e6c9cb3f-7b27-477e-a8c4-768bfecd9b4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Common">
+      <UniqueIdentifier>{e09b3b3e-15dd-4d09-b072-b670e3b208f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MyGame\Commons">
+      <UniqueIdentifier>{6d958369-0034-43d6-92b5-f22fe374f353}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\MyGame\Commons">
+      <UniqueIdentifier>{343ac7ee-5abc-4745-b133-c96d74ecf6c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\MyGame\Result">
+      <UniqueIdentifier>{1ace07a0-d15d-455d-bb6e-bd6b04afb73f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\MyGame\Result">
+      <UniqueIdentifier>{c353b17a-2f30-41c4-8608-44e60882c6a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CommonSettings.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="Form.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="InputDevice.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Random.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="ViewKey.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="ColorList.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Factory.h">
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="SelectMusic.h">
@@ -164,20 +188,11 @@
     <ClInclude Include="Play.h">
       <Filter>Header\MyGame\Play</Filter>
     </ClInclude>
-    <ClInclude Include="Image.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Result.h">
-      <Filter>Header\MyGame</Filter>
-    </ClInclude>
     <ClInclude Include="Note.h">
       <Filter>Header\MyGame\Play\Notes</Filter>
     </ClInclude>
     <ClInclude Include="MusicInfo.h">
       <Filter>Header\MyGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Align.h">
-      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="NormalNote.h">
       <Filter>Header\MyGame\Play\Notes</Filter>
@@ -187,9 +202,6 @@
     </ClInclude>
     <ClInclude Include="MusicScore.h">
       <Filter>Header\MyGame\Play</Filter>
-    </ClInclude>
-    <ClInclude Include="GetFilePath.h">
-      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="LongNote.h">
       <Filter>Header\MyGame\Play\Notes</Filter>
@@ -205,9 +217,6 @@
     </ClInclude>
     <ClInclude Include="SlideNote.h">
       <Filter>Header\MyGame\Play\Notes</Filter>
-    </ClInclude>
-    <ClInclude Include="Debug.h">
-      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="FlickDirection.h">
       <Filter>Header\MyGame\Play\Commons</Filter>
@@ -227,12 +236,6 @@
     <ClInclude Include="JudgeGrade.h">
       <Filter>Header\MyGame\Play\Judge</Filter>
     </ClInclude>
-    <ClInclude Include="MyFuncs.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Easing.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="Bomb.h">
       <Filter>Header\MyGame\Play\Notes</Filter>
     </ClInclude>
@@ -247,6 +250,81 @@
     </ClInclude>
     <ClInclude Include="Combo.h">
       <Filter>Header\MyGame\Play\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreRank.h">
+      <Filter>Header\MyGame\Play\Score</Filter>
+    </ClInclude>
+    <ClInclude Include="Life.h">
+      <Filter>Header\MyGame\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="GaugeType.h">
+      <Filter>Header\MyGame\Play\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="BackGroundAnimation.h">
+      <Filter>Header\MyGame\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayIntro.h">
+      <Filter>Header\MyGame\Play</Filter>
+    </ClInclude>
+    <ClInclude Include="Align.h">
+      <Filter>Header\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorList.h">
+      <Filter>Header\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonSettings.h">
+      <Filter>Header\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Header\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Easing.h">
+      <Filter>Header\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory.h">
+      <Filter>Header\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GetFilePath.h">
+      <Filter>Header\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Header\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="InputDevice.h">
+      <Filter>Header\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFuncs.h">
+      <Filter>Header\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.h">
+      <Filter>Header\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewKey.h">
+      <Filter>Header\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="NowLoadingWindow.h">
+      <Filter>Header\MyGame\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="Result.h">
+      <Filter>Header\MyGame\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultRecord.h">
+      <Filter>Header\MyGame\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewString.h">
+      <Filter>Header\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultBackGroundAnimation.h">
+      <Filter>Header\MyGame\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewJudgeResultDetail.h">
+      <Filter>Header\MyGame\Result</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

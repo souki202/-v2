@@ -31,18 +31,19 @@ void Combo::draw()
 int Combo::addCombo()
 {
 	nowCombo++;
+	maxCombo = std::max(maxCombo, nowCombo);
 	imgs.clear();
 	std::string comboStr = MyFuncs::to_string(nowCombo);
 
-	//ã‚©‚çŒ…–ˆ‚ÉŒ©‚Ä‚¢‚­
+	//ä¸Šã‹ã‚‰æ¡æ¯ã«è¦‹ã¦ã„ã
 	for (auto& x : comboStr) {
 		if (x - '0' < 0 || x - '0' > 9) continue;
 		imgs.push_back(std::make_unique<Image>(rawImage[x - '0']));
 		imgs.back()->setAlign(Align::Horizontal::CENTER, Align::Vertical::MIDDLE);
 	}
-	if (imgs.empty()) return 0; //‚ ‚è‚¦‚È‚¢‚¯‚Ç0ƒRƒ“ƒ{
+	if (imgs.empty()) return 0; //ã‚ã‚Šãˆãªã„ã‘ã©0ã‚³ãƒ³ãƒœ
 
-	//ˆÊ’u‚¸‚ç‚µ
+	//ä½ç½®ãšã‚‰ã—
 	float x = -(imgs.size() - 1.f) / 2.f * NUMBER_WIDTH;
 	for (int i = 0; i < imgs.size(); i++, x += NUMBER_WIDTH) {
 		imgs[i]->setPosition(BASE_X + x, BASE_Y);

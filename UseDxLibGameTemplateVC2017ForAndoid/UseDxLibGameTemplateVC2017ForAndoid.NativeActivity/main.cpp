@@ -2,27 +2,27 @@
 #include "Form.h"
 
 using namespace CommonSettings;
-
-// ƒvƒƒOƒ‰ƒ€‚Í android_main ‚©‚çn‚Ü‚è‚Ü‚·
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ ã¯ android_main ã‹ã‚‰å§‹ã¾ã‚Šã¾ã™
 int android_main(void)
 {
 	SetUseDXArchiveFlag(FALSE);
-	SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32);//ƒEƒBƒ“ƒhƒEƒTƒCƒY
+	SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32);//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚º
 	if (DxLib_Init() == -1) {
 		return -1;
 	}
+	SetUseASyncLoadFlag(true);
 
 	Form Fmain;
 
-	// •`‰ææ‚ğ— ‰æ–Ê‚É•ÏX
+	// æç”»å…ˆã‚’è£ç”»é¢ã«å¤‰æ›´
 	SetDrawScreen(DX_SCREEN_BACK);
 	while (1) {
 		if (ProcessMessage() != 0 || keyInput.getPressFrame(KEY_INPUT_ESCAPE)) {
-			break;//ƒEƒBƒ“ƒhƒE‚Ì~ƒ{ƒ^ƒ“‚Ü‚½‚ÍEscƒL[‰Ÿ‚³‚ê‚½‚çƒ‹[ƒv‚ğ”²‚¯‚é
+			break;//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®Ã—ãƒœã‚¿ãƒ³ã¾ãŸã¯Escã‚­ãƒ¼æŠ¼ã•ã‚ŒãŸã‚‰ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
 		}
 		ClearDrawScreen();
 
-		//ƒL[ƒ{[ƒh, ƒ}ƒEƒX‚Ìó‘Ô‚ğXV
+		//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰, ãƒã‚¦ã‚¹ã®çŠ¶æ…‹ã‚’æ›´æ–°
 		keyInput.update();
 		mouseInput.update();
 		touchInput.update();
@@ -30,7 +30,7 @@ int android_main(void)
 		if (!Fmain.update()) {
 			break;
 		}
-		ScreenFlip();//— ‰æ–Ê‚ğ”½‰f
+		ScreenFlip();//è£ç”»é¢ã‚’åæ˜ 
 	}
 
 	DxLib_End();

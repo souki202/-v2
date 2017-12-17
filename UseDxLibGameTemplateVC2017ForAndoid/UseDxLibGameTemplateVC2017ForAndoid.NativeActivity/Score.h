@@ -17,6 +17,8 @@ public:
 	void draw();
 	void update();
 	void addScore(const JudgeGrade& grade, int combo);
+	int getScore() const { return score; };
+	int getExScore() const { return exScore; };
 private:
 	Timer timer;
 	ScoreGauge gauge;
@@ -24,6 +26,5 @@ private:
 	int score = 0;
 	int exScore = 0;
 	int eachNoteScore = 0;
-	int maxScore = 1, maxExScore = 1;
-	float p = 0;
+	int maxExScore = 1;
 };

@@ -1,7 +1,20 @@
 #include "SelectMusic.h"
 
+SelectMusic::SelectMusic()
+{
+	updateLoadCount();
+}
+
 void SelectMusic::update()
 {
-	MusicInfo musicInfo("Assets/Musics/Sample/");
-	factory.setNewScene<Play>(musicInfo, 1);
+	if (isFirstFrame) {
+		MusicInfo musicInfo("Assets/Musics/started/");
+		factory.setNewScene<Play>(musicInfo, 1);
+		isFirstFrame = false;
+	}
+}
+
+void SelectMusic::draw()
+{
+	DrawFormatString(400, 400, 0xffffff, "select window");
 }

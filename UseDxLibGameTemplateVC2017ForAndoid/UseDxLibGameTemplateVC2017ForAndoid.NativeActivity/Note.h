@@ -15,6 +15,7 @@ public:
 
 	virtual void update();
 	virtual void draw();
+	void drawSameTimeNoteLine();
 
 	virtual void setting(int target, float appear, int judgeTime, int uid, int id = 0);
 	void setNowTime(int t) { nowTime = t; };
@@ -24,10 +25,10 @@ public:
 	const int& getUid() const { return uid; };
 	const int& getTarget() const { return target; };
 
-	float getX() const { return pos.first; }; //画面外ならINFINITYを返す
-	virtual float getX(float p); //画面外ならINFINITYを返す 進行割合を入れるver
-	float getY() const { return pos.second; }; //画面外ならINFINITYを返す
-	virtual float getY(float p); //画面外ならINFINITYを返す 進行割合を入れるver
+	float getX() const { return pos.first; }; //逕ｻ髱｢螟悶↑繧迂NFINITY繧定ｿ斐☆
+	virtual float getX(float p); //逕ｻ髱｢螟悶↑繧迂NFINITY繧定ｿ斐☆ 騾ｲ陦悟牡蜷医ｒ蜈･繧後ｋver
+	float getY() const { return pos.second; }; //逕ｻ髱｢螟悶↑繧迂NFINITY繧定ｿ斐☆
+	virtual float getY(float p); //逕ｻ髱｢螟悶↑繧迂NFINITY繧定ｿ斐☆ 騾ｲ陦悟牡蜷医ｒ蜈･繧後ｋver
 	virtual float getViewPercentage();
 
 	const NoteType& getType() const { return type; };
@@ -45,6 +46,7 @@ public:
 
 	virtual void setTouchId(int id) { touchId = id; };
 	const int& getTouchId() const { return touchId; };
+	void addSameTimeNote(const std::shared_ptr<Note>& note) { sameTimeNotes.push_back(note); };
 protected:
 	Bomb bomb;
 	Image noteImg;
@@ -62,5 +64,6 @@ private:
 	int uid = -1;
 	Point pos;
 	float p;
-
+	std::vector<std::weak_ptr<Note>> sameTimeNotes;
+	static constexpr int CONNECT_LINE_HEIGHT = 32;
 };

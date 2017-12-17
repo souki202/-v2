@@ -224,6 +224,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BackGroundAnimation.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Combo.cpp" />
     <ClCompile Include="FlickNote.cpp" />
@@ -235,6 +236,7 @@
     <ClCompile Include="Judge.cpp" />
     <ClCompile Include="JudgeLine.cpp" />
     <ClCompile Include="JudgeView.cpp" />
+    <ClCompile Include="Life.cpp" />
     <ClCompile Include="LongNote.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MusicInfo.cpp" />
@@ -242,17 +244,26 @@
     <ClCompile Include="NormalNote.cpp" />
     <ClCompile Include="Note.cpp" />
     <ClCompile Include="NoteCommon.cpp" />
+    <ClCompile Include="NowLoadingWindow.cpp" />
     <ClCompile Include="Play.cpp" />
+    <ClCompile Include="PlayIntro.cpp" />
     <ClCompile Include="PlaySettings.cpp" />
     <ClCompile Include="Random.cpp" />
+    <ClCompile Include="Result.cpp" />
+    <ClCompile Include="ResultBackGroundAnimation.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="ScoreGauge.cpp" />
     <ClCompile Include="ScoreNumber.cpp" />
+    <ClCompile Include="ScoreRank.cpp" />
     <ClCompile Include="SelectMusic.cpp" />
     <ClCompile Include="SlideNote.cpp" />
+    <ClCompile Include="ViewJudgeResultDetail.cpp" />
+    <ClCompile Include="ViewString.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Align.h" />
+    <ClInclude Include="BackGroundAnimation.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="ColorList.h" />
     <ClInclude Include="Combo.h" />
@@ -263,6 +274,7 @@
     <ClInclude Include="FlickDirection.h" />
     <ClInclude Include="FlickNote.h" />
     <ClInclude Include="Form.h" />
+    <ClInclude Include="GaugeType.h" />
     <ClInclude Include="GetFilePath.h" />
     <ClInclude Include="HaveNextNote.h" />
     <ClInclude Include="Image.h" />
@@ -271,6 +283,7 @@
     <ClInclude Include="JudgeGrade.h" />
     <ClInclude Include="JudgeResult.h" />
     <ClInclude Include="JudgeView.h" />
+    <ClInclude Include="Life.h" />
     <ClInclude Include="LongNote.h" />
     <ClInclude Include="MusicInfo.h" />
     <ClInclude Include="MusicScore.h" />
@@ -278,19 +291,26 @@
     <ClInclude Include="NormalNote.h" />
     <ClInclude Include="Note.h" />
     <ClInclude Include="NoteCommon.h" />
+    <ClInclude Include="NowLoadingWindow.h" />
     <ClInclude Include="Play.h" />
     <ClInclude Include="JudgeLine.h" />
+    <ClInclude Include="PlayIntro.h" />
     <ClInclude Include="PlaySettings.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Result.h" />
+    <ClInclude Include="ResultBackGroundAnimation.h" />
+    <ClInclude Include="ResultRecord.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="ScoreGauge.h" />
     <ClInclude Include="ScoreNumber.h" />
+    <ClInclude Include="ScoreRank.h" />
     <ClInclude Include="SelectMusic.h" />
     <ClInclude Include="SlideNote.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="ViewJudgeResultDetail.h" />
     <ClInclude Include="ViewKey.h" />
+    <ClInclude Include="ViewString.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

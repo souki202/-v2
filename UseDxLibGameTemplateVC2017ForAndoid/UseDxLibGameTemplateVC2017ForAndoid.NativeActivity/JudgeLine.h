@@ -19,8 +19,8 @@ public:
 
 	void loadJudgeIcons(int numOfLines = 0);
 	
-	int getLine(int x) { return std::max(std::min((x - offsetX) / judgeX, numLine-1), 0); }; //xÀ•W‚©‚çƒ‰ƒCƒ“‚ğ•Ô‚·
-	int getCenterPosition(float line) { return offsetX + static_cast<int>(judgeX * (line + 0.5)); };//ƒ‰ƒCƒ“‚©‚çA‚»‚Ìƒ‰ƒCƒ“‚Ì’†‰›‚ÌxÀ•W‚ğ•Ô‚·
+	int getLine(int x) { return std::max(std::min((x - offsetX) / judgeX, numLine-1), 0); }; //xåº§æ¨™ã‹ã‚‰ãƒ©ã‚¤ãƒ³ã‚’è¿”ã™
+	int getCenterPosition(float line) { return offsetX + static_cast<int>(judgeX * (line + 0.5)); };//ãƒ©ã‚¤ãƒ³ã‹ã‚‰ã€ãã®ãƒ©ã‚¤ãƒ³ã®ä¸­å¤®ã®xåº§æ¨™ã‚’è¿”ã™
 	void setNumLine(int num) { numLine = num; offsetX = (CommonSettings::WINDOW_WIDTH - (judgeX * numLine)) / 2; };
 	const int& getLineWidth() const { return judgeX; };
 	int GET_APPEAR_Y() const { return APPEAR_Y; };
@@ -30,7 +30,7 @@ public:
 private:
 	int offsetX = 0;
 	int numLine = 5;
-	int judgeX = 214; //(JUDGE_X * (i + 1)) ‚ªi”Ô–Ú‚ÌÀ•W
+	int judgeX = 214; //(JUDGE_X * (i + 1)) ãŒiç•ªç›®ã®åº§æ¨™
 	static constexpr int JUDGE_SIZE = 90;
 	static constexpr int CENTER_X = CommonSettings::WINDOW_WIDTH / 2;
 	static constexpr int APPEAR_Y = 120;

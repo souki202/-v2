@@ -11,11 +11,12 @@ public:
 
 	void draw();
 	void update() {};
-	int addCombo(); //return Œ»İ‚ÌƒRƒ“ƒ{”
+	int addCombo(); //return ç¾åœ¨ã®ã‚³ãƒ³ãƒœæ•°
 	void resetCombo() { nowCombo = 0; imgs.clear(); };
 	int getCombo() const { return nowCombo; };
+	int getMaxCombo() const { return maxCombo; };
 private:
-	int nowCombo = 0;
+	int nowCombo = 0, maxCombo = 0;
 	int* rawImage = nullptr;
 	Image comboTextImg;
 	std::vector<std::unique_ptr<Image>> imgs;

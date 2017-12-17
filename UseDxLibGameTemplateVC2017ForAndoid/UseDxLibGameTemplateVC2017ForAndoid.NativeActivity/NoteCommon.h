@@ -8,7 +8,7 @@
 enum class NoteType {
 	NONE, NORMAL, 
 	LN, SLIDE, SLIDE_RELAY ,
-	FLICK_L, FLICK_R, //LRÇÕLNÇ∆SLIDEèIì_à»äOñ≥éã
+	FLICK_L, FLICK_R, //LR„ÅØLN„Å®SLIDEÁµÇÁÇπ‰ª•Â§ñÁÑ°Ë¶ñ
 	INVALID
 };
 
@@ -25,6 +25,7 @@ private:
 	std::array<std::array<int, static_cast<int>(NoteType::INVALID)>, 4> familyNoteImg;
 	int* rawFamilyNoteImg = nullptr;
 	Image whiteImg;
+	Image connectImg;
 public:
 	static NoteImageManager& getInstance() { static NoteImageManager n; return n; };
 
@@ -35,7 +36,8 @@ public:
 		}
 	}
 	const int& getNoteImage(const NoteType& type) const { return familyNoteImg[3][static_cast<int>(type)]; };
-	const Image& getWhiteImg() const { return whiteImg; };
+	const Image& getWhiteImage() const { return whiteImg; };
+	int getConnectImage() const { return connectImg.getHandle(); };
 private:
 
 };

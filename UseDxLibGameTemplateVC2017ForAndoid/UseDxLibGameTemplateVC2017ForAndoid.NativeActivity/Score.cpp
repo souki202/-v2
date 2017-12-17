@@ -8,28 +8,17 @@ Score::Score(int level, int totalNotes)
 void Score::initScore(int level, int totalNotes)
 {
 	level = std::max(level, 1);
-	int initTotalNotes = totalNotes;
-	maxScore = level * 50000;
+	int maxScore = level * 50000;
 	maxExScore = totalNotes * 2;
 
-	//ƒXƒRƒA‚É‘Î‚·‚éÀ¿ƒRƒ“ƒ{”‚ğŒvZ
-	//100‚Ü‚Å‚Í100+combo%A100ˆÈ~‚Í200%‚ÌƒXƒRƒA
-	int under100 = totalNotes >= 100 ? 100 : totalNotes;
-	if (totalNotes > 100) {
-		totalNotes += totalNotes - under100;
+	//ã‚¹ã‚³ã‚¢ã«å¯¾ã™ã‚‹å®Ÿè³ªã‚³ãƒ³ãƒœæ•°ã‚’è¨ˆç®—
+	float substanceTotalNotes = 0;
+	int num = 0;
+	while (++num <= totalNotes) {
+		substanceTotalNotes += 1 + std::min(num, 100) / 100.f;
 	}
-	totalNotes += under100 / 2;
-	if (totalNotes < 0) totalNotes = 1;
-
-	//Å‚ƒXƒRƒAŒvZ
-	eachNoteScore = static_cast<int>(std::ceil(static_cast<float>(maxScore) / totalNotes));
-	int tmpCombo = 0;
-	maxScore = 0;
-	while (++tmpCombo <= initTotalNotes) {
-		int addScore = static_cast<int>(static_cast<double>(eachNoteScore) * (tmpCombo > 100 ? 200 : 100 + tmpCombo) / 100);
-		maxScore += addScore;
-	}
-	maxScore = std::max(maxScore, 1);
+	//å„ãƒãƒ¼ãƒˆã®ã‚¹ã‚³ã‚¢è¨ˆç®—
+	eachNoteScore = static_cast<int>(std::ceil(maxScore / substanceTotalNotes));
 
 	gauge.setMaxExScore(maxExScore);
 }
@@ -42,17 +31,15 @@ void Score::draw()
 
 void Score::update()
 {
-	p = static_cast<float>(exScore) / maxExScore;
-
-	//ƒXƒRƒA‚Ì”š
+	//ã‚¹ã‚³ã‚¢ã®æ•°å­—
 	number.update();
-	//ƒQ[ƒW
+	//ã‚²ãƒ¼ã‚¸
 	gauge.update();
 }
 
 void Score::addScore(const JudgeGrade & grade, int combo)
 {
-	int addScore = static_cast<int>(static_cast<float>(eachNoteScore) * (combo > 100 ? 200 : 100 + combo) / 100);
+	int addScore = eachNoteScore * (combo >= 100 ? 200 : 100 + combo) / 100;
 	switch (grade)
 	{
 	case JudgeGrade::PERFECT:

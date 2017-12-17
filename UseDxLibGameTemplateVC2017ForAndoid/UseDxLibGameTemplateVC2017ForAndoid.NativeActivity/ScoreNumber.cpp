@@ -2,7 +2,7 @@
 
 ScoreNumber::ScoreNumber()
 {
-	//‰æ‘œ“Ç‚İ‚İ
+	//ç”»åƒèª­ã¿è¾¼ã¿
 	LoadDivGraph("Images/Play/scorenumber.png", 10, 10, 1, 24, 30, numberImg);
 
 	for (int i = 0; i < static_cast<int>(scoreImg.size()); i++) {
@@ -27,15 +27,15 @@ void ScoreNumber::update()
 	timer.update();
 	int t = std::min(timer.getElapsedTime(), 500);
 	drawScore = MyEase::easeOut(t, 500, lastScore, nowScore);
-	drawScore = std::min(drawScore, static_cast<int>(std::pow(10, MAX_DIGITS-1) - 1));
+	drawScore = std::min(drawScore, static_cast<int>(std::pow(10, MAX_DIGITS) - 1));
 
-	//ƒXƒRƒA•\¦—p‚Ìİ’è
+	//ã‚¹ã‚³ã‚¢è¡¨ç¤ºç”¨ã®è¨­å®š
 	std::string scoreStr = MyFuncs::to_string(drawScore);
 	std::reverse(scoreStr.begin(), scoreStr.end());
 	if (scoreStr.size() > MAX_DIGITS) {
 		return;
 	}
-	//ã‚ÌŒ…‚©‚ç
+	//ä¸Šã®æ¡ã‹ã‚‰
 	for (int i = 0; i < static_cast<int>(scoreStr.size()); i++) {
 		int index = scoreStr[i] - '0';
 		if (index < 0 || 9 < index) {

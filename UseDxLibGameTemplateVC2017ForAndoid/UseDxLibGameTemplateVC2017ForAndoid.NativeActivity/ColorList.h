@@ -2,7 +2,7 @@
 
 //http://www.colordic.org/
 
-//�f�o�b�O���ĂȂ��̂Œl���Ԉ���Ă�����̂����邩���B
+//デバッグしてないので値が間違っているものがあるかも。
 
 namespace Color {
 	constexpr int GetColor(int R, int G, int B) {
@@ -10,7 +10,7 @@ namespace Color {
 	}
 
 	//---------------------
-	//�u���E�U�Ŗ��O����`����Ă���140�F
+	//ブラウザで名前が定義されている140色
 	//---------------------
 	//MONOTONE
 	constexpr int BLACK = GetColor(0, 0, 0);
@@ -197,7 +197,7 @@ namespace Color {
 	};
 
 	//---------------------
-	//�a�F
+	//和色
 	//---------------------
 	constexpr int NADESHIKO = GetColor(0xdc, 0x9f, 0xb4);
 	constexpr int KOHBAI = GetColor(0xe1, 0x6b, 0xbc);

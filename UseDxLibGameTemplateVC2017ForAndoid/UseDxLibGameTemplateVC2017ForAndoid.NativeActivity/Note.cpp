@@ -3,11 +3,11 @@
 void Note::update()
 {
 	p = getViewPercentage();
-	//‰æ–ÊŠO‚Í“K“–
+	//ç”»é¢å¤–ã¯é©å½“
 	if (p < 0 || p > 2) p = 0;
 	pos.first = getX(p);
 	pos.second = getY(p);
-	//ƒZƒbƒg
+	//ã‚»ãƒƒãƒˆ
 	noteImg.setPosition(pos.first, pos.second);
 	noteImg.setScale(p, p);
 
@@ -16,24 +16,29 @@ void Note::update()
 
 void Note::draw()
 {
-	if (!(wasJudged || p <= 0)) {
+	if (!(wasJudged || (p <= 0 || p > 1.3))) {
 		noteImg.draw();
 	}
 	if (wasJudged) bomb.draw();
+}
 
-#ifdef DEBUG
-	DrawFormatString(noteImg.getPosition().first, noteImg.getPosition().second, 0xffffff, "UID:%d", uid);
-	//DrawFormatString(100, 16 * uid, 0xffffff, "time:%d, uid:%d, type:%d", judgeTime, uid, type);
-	//
-	////ƒm[ƒgoŒ»’†
-	//int appearTime = judgeTime - playSettings.getViewNoteTime();
-	//int deltaTime = nowTime - appearTime;
-	//float p = static_cast<float>(deltaTime) / playSettings.getViewNoteTime();
-	//DrawFormatString(400, 16 * uid, 0xffffff, "p:%f", p);
-	//if (0 < p && p <= 1) {
-	//	DrawFormatString(300, 16*uid, 0xffffff, "oŒ»’†");
-	//}
-#endif
+void Note::drawSameTimeNoteLine()
+{
+	if (!(wasJudged || (p <= 0 || p > 1.3))) {
+		//åŒæ™‚æŠ¼ã—ã®æ¥ç¶šç·šã®æç”». ä¸€æ–¹é€šè¡Œ
+		for (auto& other : sameTimeNotes) {
+			auto&& lockOther = other.lock();
+			if (lockOther) {
+				if (!lockOther->getWasJudged() && lockOther->getTarget() >= target) {
+					DrawModiGraphF(getX(), getY() - CONNECT_LINE_HEIGHT / 2.f,
+						lockOther->getX(), getY() - CONNECT_LINE_HEIGHT / 2.f,
+						lockOther->getX(), getY() + CONNECT_LINE_HEIGHT / 2.f,
+						getX(), getY() + CONNECT_LINE_HEIGHT / 2.f,
+						noteImageManager.getConnectImage(), true);
+				}
+			}
+		}
+	}
 }
 
 void Note::setting(int target, float appear, int judgeTime, int uid, int id)
@@ -47,12 +52,12 @@ void Note::setting(int target, float appear, int judgeTime, int uid, int id)
 
 float Note::getX(float p)
 {
-	//‰æ–ÊŠO‚Í“K“–
+	//ç”»é¢å¤–ã¯é©å½“
 	if (p < 0) {
 		return INFINITY;
 	}
 
-	//xÀ•W
+	//xåº§æ¨™
 	int appearX = judgeLine.getCenterPosition(appearPos);
 	int targetX = judgeLine.getCenterPosition(target);
 	float x = appearX + p * (targetX - appearX);
@@ -62,12 +67,12 @@ float Note::getX(float p)
 
 float Note::getY(float p)
 {
-	//‰æ–ÊŠO‚Í“K“–
+	//ç”»é¢å¤–ã¯é©å½“
 	if (p < 0) {
 		return INFINITY;
 	}
 
-	//yÀ•W
+	//yåº§æ¨™
 	int yLen = judgeLine.GET_JUDGE_Y() - judgeLine.GET_APPEAR_Y();
 	float y = yLen * std::pow(p * 1.2f - 0.2f, 2) + judgeLine.GET_APPEAR_Y();
 
@@ -76,10 +81,10 @@ float Note::getY(float p)
 
 float Note::getViewPercentage()
 {
-	//À•WŒvZ
+	//åº§æ¨™è¨ˆç®—
 	int viewTime = playSettings.getViewNoteTime();
 
-	//”»’è‚ÆoŒ»‚©‚çis“x‡‚¢‚ğŒvZ
+	//åˆ¤å®šæ™‚åˆ»ã¨å‡ºç¾æ™‚åˆ»ã‹ã‚‰é€²è¡Œåº¦åˆã„ã‚’è¨ˆç®—
 	int appearTime = judgeTime - playSettings.getViewNoteTime();
 	int deltaTime = nowTime - appearTime;
 	return static_cast<float>(deltaTime) / playSettings.getViewNoteTime();

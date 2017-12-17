@@ -22,7 +22,7 @@ public:
 		return static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(nowTime - lastTime).count());
 	}
 
-	int getElapsedTime() {
+	int getElapsedTime() const {
 		return static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(nowTime - initTime).count());
 	}
 

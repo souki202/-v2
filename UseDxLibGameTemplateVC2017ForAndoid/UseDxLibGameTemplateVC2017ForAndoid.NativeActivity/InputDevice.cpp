@@ -18,20 +18,20 @@ InputDevice::Keyboard::~Keyboard()
 {
 }
 
-// ƒL[‚Ì“ü—Íó‘ÔXV
+// ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹æ›´æ–°
 void InputDevice::Keyboard::update()
 {
 	timer.update();
 
-	GetHitKeyStateAll(m_isPushKey);  // ‘S‚Ä‚ÌƒL[‚Ì“ü—Íó‘Ô‚ğ“¾‚é
+	GetHitKeyStateAll(m_isPushKey);  // å…¨ã¦ã®ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’å¾—ã‚‹
 
 	for (int i = 0; i < 256; i++) {
-		if (m_isPushKey[i]) { // i”Ô‚ÌƒL[ƒR[ƒh‚É‘Î‰‚·‚éƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚½‚ç
-			m_frame[i]++;   // ‰ÁZ
+		if (m_isPushKey[i]) { // iç•ªã®ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰ã«å¯¾å¿œã™ã‚‹ã‚­ãƒ¼ãŒæŠ¼ã•ã‚Œã¦ã„ãŸã‚‰
+			m_frame[i]++;   // åŠ ç®—
 			m_time[i] += timer.getDeltaTime();
 		}
-		else {              // ‰Ÿ‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î
-			m_frame[i] = 0; // 0‚É‚·‚é
+		else {              // æŠ¼ã•ã‚Œã¦ã„ãªã‘ã‚Œã°
+			m_frame[i] = 0; // 0ã«ã™ã‚‹
 			m_time[i] = 0;
 		}
 	}
@@ -58,11 +58,11 @@ bool InputDevice::Keyboard::getIsUpdate(int keyCode)
 		m_lastUpdateTime[keyCode] = 0;
 		return false;
 	}
-	else if (m_time[keyCode] && m_lastUpdateTime[keyCode] == 0) { //‰‰ñƒtƒŒ[ƒ€
+	else if (m_time[keyCode] && m_lastUpdateTime[keyCode] == 0) { //åˆå›ãƒ•ãƒ¬ãƒ¼ãƒ 
 		m_lastUpdateTime[keyCode] += m_interval * 3;
 		return true;
 	}
-	else if (m_time[keyCode] && //‰Ÿ‚µ‚Ä‚¢‚ÄAŸ‚Étrue‚ª•Ô‚é‚×‚«ŠÔ‚ğ’´‚¦‚Ä‚¢‚é
+	else if (m_time[keyCode] && //æŠ¼ã—ã¦ã„ã¦ã€æ¬¡ã«trueãŒè¿”ã‚‹ã¹ãæ™‚é–“ã‚’è¶…ãˆã¦ã„ã‚‹æ™‚
 		m_time[keyCode] >= m_lastUpdateTime[keyCode] + m_interval) {
 		m_lastUpdateTime[keyCode] += m_interval;
 		return true;
@@ -72,7 +72,7 @@ bool InputDevice::Keyboard::getIsUpdate(int keyCode)
 }
 
 
-//‚±‚±‚©‚çƒ}ƒEƒX
+//ã“ã“ã‹ã‚‰ãƒã‚¦ã‚¹
 InputDevice::Mouse::Mouse()
 {
 	for (auto& x : press) {
@@ -131,7 +131,7 @@ void InputDevice::Touch::update()
 
 	for (int i = 0; i < num; i++) {
 		GetTouchInput(i, &x, &y, &id, NULL);
-		//‰æ–ÊŠO‚ÍC³
+		//ç”»é¢å¤–ã¯ä¿®æ­£
 		if (x < 0) x = 0;
 		else if (x > CommonSettings::WINDOW_WIDTH) x = CommonSettings::WINDOW_WIDTH;
 		if (y < 0) y = 0;
@@ -144,9 +144,9 @@ void InputDevice::Touch::update()
 			continue;
 		}
 
-		//Šù‘¶‚Ìƒ^ƒbƒ`‚©’²‚×‚é
+		//æ—¢å­˜ã®ã‚¿ãƒƒãƒã‹èª¿ã¹ã‚‹
 		auto it = keys.find(touch.first);
-		//‚ ‚é
+		//ã‚ã‚‹
 		if (it != keys.end()) {
 			int beforeX = touch.second.nowPos.first, beforeY = touch.second.nowPos.second;
 			int lastDeltaPosX = touch.second.deltaPos.first;
@@ -155,7 +155,7 @@ void InputDevice::Touch::update()
 			touch.second.nowPos.first = it->second.first;
 			touch.second.nowPos.second = it->second.second;
 
-			//•ûŒü“]Š·(¶‰E‚Ì‚İ)
+			//æ–¹å‘è»¢æ›(å·¦å³ã®ã¿)
 			if ((lastDeltaPosX <= 0 && touch.second.deltaPos.first > 0)
 				|| (lastDeltaPosX >= 0 && touch.second.deltaPos.first < 0)) {
 				touch.second.turnPos = touch.second.nowPos;
@@ -168,13 +168,13 @@ void InputDevice::Touch::update()
 			keys.erase(it);
 			continue;
 		}
-		else { //–³‚¢Bƒ^ƒbƒ`I—¹
+		else { //ç„¡ã„ã€‚ã‚¿ãƒƒãƒçµ‚äº†
 			touch.second.phase = ENDED;
 			newTouches.insert(std::make_pair(touch.first, std::move(touch.second)));
 		}
 	}
 
-	//c‚Á‚½key‚ÍV‹K
+	//æ®‹ã£ãŸkeyã¯æ–°è¦
 	if (!num && keys.empty() && touches.empty()) firstTouchId = -1;
 	for (auto& key : keys) {
 		if (firstTouchId == -1) {
@@ -203,28 +203,28 @@ void InputDevice::DeresutePlayTouchInput::update()
 
 	auto& touches = getAllTouchInfo();
 	for (auto& touch : touches) {
-		//ƒ‰ƒCƒ“‚ğƒ^ƒbƒ`
+		//ãƒ©ã‚¤ãƒ³ã‚’ã‚¿ãƒƒãƒ
 		if (touch.second.phase == PressPhase::BEGAN) {
 			touchLine[judgeLine.getLine(touch.second.initPos.first)].push_back(touch.first);
 		}
 
-		//ƒz[ƒ‹ƒhŒŸo
+		//ãƒ›ãƒ¼ãƒ«ãƒ‰æ¤œå‡º
 		if (touch.second.phase == PressPhase::IN_THE_MIDDLE) {
-			//Å‰‚Ìƒz[ƒ‹ƒhƒ‰ƒCƒ“
+			//æœ€åˆã®ãƒ›ãƒ¼ãƒ«ãƒ‰ãƒ©ã‚¤ãƒ³
 			holdInitLine[judgeLine.getLine(touch.second.initPos.first)].push_back(touch.first);
-			//Œ»İ‚Ìƒz[ƒ‹ƒhƒ‰ƒCƒ“
+			//ç¾åœ¨ã®ãƒ›ãƒ¼ãƒ«ãƒ‰ãƒ©ã‚¤ãƒ³
 			holdLine[judgeLine.getLine(touch.second.nowPos.first)].push_back(touch.first);
 
-			//ƒtƒŠƒbƒN”»’è
+			//ãƒ•ãƒªãƒƒã‚¯åˆ¤å®š
 			{
 				FlickDirection d = FlickDirection::INVALID;
 				int cx = 0;
-				//–¢ƒtƒŠƒbƒN‚È‚ç‰ŠúˆÊ’u‚©‚çˆê’è—ÊˆÚ“®‚Å‘¦”»’è
-				//ƒ‰ƒCƒ“”»’è‚Í’†‰›
+				//æœªãƒ•ãƒªãƒƒã‚¯ãªã‚‰åˆæœŸä½ç½®ã‹ã‚‰ä¸€å®šé‡ç§»å‹•ã§å³æ™‚åˆ¤å®š
+				//ãƒ©ã‚¤ãƒ³åˆ¤å®šã¯ä¸­å¤®
 				if (touch.second.hasNeverFlickYet) {
 					int x[2] = { touch.second.initPos.first, touch.second.nowPos.first };
 					cx = (x[0] + x[1]) / 2;
-					//‘O-Œã>32‚È‚çŒã‚ª¶‘¤‚È‚Ì‚Å¶ƒtƒŠƒbƒN
+					//å‰-å¾Œ>32ãªã‚‰å¾ŒãŒå·¦å´ãªã®ã§å·¦ãƒ•ãƒªãƒƒã‚¯
 					if (x[0] - x[1] > 32) d = FlickDirection::FLICK_L;
 					else if (x[0] - x[1] < -32) d = FlickDirection::FLICK_R;
 				}
@@ -235,15 +235,15 @@ void InputDevice::DeresutePlayTouchInput::update()
 						         x[0] <= x[1] ? x[1] : x[0]};
 					cx = (x[0] + x[1]) / 2;
 					int lineCenter = judgeLine.getCenterPosition(judgeLine.getLine(cx));
-					//ƒtƒŠƒbƒNÏ‚İ‚È‚çAƒtƒŠƒbƒN—\’è‚Ìƒ‰ƒCƒ“‚Ì’†‰›‚ğ’Ê‰ß‚·‚ê‚Î”»’è‚·‚é
+					//ãƒ•ãƒªãƒƒã‚¯æ¸ˆã¿ãªã‚‰ã€ãƒ•ãƒªãƒƒã‚¯äºˆå®šã®ãƒ©ã‚¤ãƒ³ã®ä¸­å¤®ã‚’é€šéã™ã‚Œã°åˆ¤å®šã™ã‚‹
 					if (x2[0] <= lineCenter && lineCenter <= x2[1]) {
 						if (x[0] - x[1] > 0) d = FlickDirection::FLICK_L;
 						else if (x[0] - x[1] < 0) d = FlickDirection::FLICK_R;
 					}
 				}
-				//ƒtƒŠƒbƒN‚µ‚Ä‚¢‚é‚È‚ç’†ŠÔ•”•ª‚Ìƒ‰ƒCƒ“o‚µ‚Ä“ü‚ê‚é
+				//ãƒ•ãƒªãƒƒã‚¯ã—ã¦ã„ã‚‹ãªã‚‰ä¸­é–“éƒ¨åˆ†ã®ãƒ©ã‚¤ãƒ³å‡ºã—ã¦å…¥ã‚Œã‚‹
 				if (d != FlickDirection::INVALID) {
-					//“¯‚¶êŠ‚Å“¯‚¶•ûŒü‚ÉƒtƒŠƒbƒN‚ª˜A‘±‚µ‚Ä”­¶‚·‚ê‚ÎƒtƒŠƒbƒN–³Œø‰»
+					//åŒã˜å ´æ‰€ã§åŒã˜æ–¹å‘ã«ãƒ•ãƒªãƒƒã‚¯ãŒé€£ç¶šã—ã¦ç™ºç”Ÿã™ã‚Œã°ãƒ•ãƒªãƒƒã‚¯ç„¡åŠ¹åŒ–
 					int l = judgeLine.getLine(cx);
 					if (!(d == touch.second.flickDirection && l == touch.second.flickedLine)) {
 						if (d == FlickDirection::FLICK_L) {
@@ -257,7 +257,7 @@ void InputDevice::DeresutePlayTouchInput::update()
 			}
 		}
 
-		//ƒŠƒŠ[ƒXŒŸo
+		//ãƒªãƒªãƒ¼ã‚¹æ¤œå‡º
 		if (touch.second.phase == PressPhase::ENDED) {
 			releaseInitLine[judgeLine.getLine(touch.second.initPos.first)].push_back(touch.first);
 			releaseLine[judgeLine.getLine(touch.second.nowPos.first)].push_back(touch.first);

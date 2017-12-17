@@ -7,7 +7,7 @@ FlickNote::FlickNote()
 
 void FlickNote::draw()
 {
-	//フリック間の線を描画
+	//繝輔Μ繝�繧ｯ髢薙�ｮ邱壹ｒ謠冗判
 	if (!wasJudged) {
 		auto points = getDrawLine(1);
 		if (points.size() >= 2) {
@@ -25,7 +25,7 @@ void FlickNote::draw()
 				points[1].pos.second + dy[1],
 				points[0].pos.first + dx[0],
 				points[0].pos.second + dy[0],
-				noteImageManager.getWhiteImg().getHandle(),
+				noteImageManager.getWhiteImage().getHandle(),
 				true
 			);
 		}
@@ -41,7 +41,7 @@ void FlickNote::setDirectionByLastNote(const std::shared_ptr<Note>& lastNote)
 			|| lastNote->getType() == NoteType::FLICK_R)) {
 		int lastNotePos = lastNote->getTarget();
 		int nowNotePos = target;
-		//右から左なら両方左向き
+		//蜿ｳ縺九ｉ蟾ｦ縺ｪ繧我ｸ｡譁ｹ蟾ｦ蜷代″
 		if (lastNotePos > nowNotePos) setDirection(FlickDirection::FLICK_L);
 		else if (lastNotePos < nowNotePos)  setDirection(FlickDirection::FLICK_R);
 	}

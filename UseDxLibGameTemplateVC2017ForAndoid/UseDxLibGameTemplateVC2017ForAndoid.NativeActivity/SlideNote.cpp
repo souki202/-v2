@@ -8,19 +8,20 @@ SlideNote::SlideNote()
 
 float SlideNote::getX(float p)
 {
-	if (!wasJudged || !nextNote) {
+	auto&& lockNextNote = nextNote.lock();
+	if (!wasJudged || !lockNextNote) {
 		return LongNote::getX(p);
 	}
-	else if(nextNote && wasJudged){
-		//Ÿƒm[ƒg‚Æ‚ÌŠÔ·
-		int dt = nextNote->getJudgeTime() - getJudgeTime();
-		//‚±‚Ìƒm[ƒg‚©‚ç‚ÌŠÔŒo‰ß—Ê
+	else if(lockNextNote && wasJudged){
+		//æ¬¡ãƒãƒ¼ãƒˆã¨ã®æ™‚é–“å·®
+		int dt = lockNextNote->getJudgeTime() - getJudgeTime();
+		//ã“ã®ãƒãƒ¼ãƒˆã‹ã‚‰ã®æ™‚é–“çµŒéé‡
 		int dtThisNote = std::max(nowTime - getJudgeTime(), 0);
 		//p
 		float p = static_cast<float>(dtThisNote) / dt;
 		p = std::min(p, 1.f);
 		int x = judgeLine.getCenterPosition(target);
-		int nx = judgeLine.getCenterPosition(nextNote->getTarget());
+		int nx = judgeLine.getCenterPosition(lockNextNote->getTarget());
 		return x + p * (nx - x);
 	}
 	return LongNote::getX(p);
@@ -45,7 +46,8 @@ void SlideNote::setNextNote(const std::shared_ptr<Note>& next)
 void SlideNote::updateNoteType()
 {
 	type = NoteType::SLIDE;
-	if (!isFirstNote && nextNote) type = NoteType::SLIDE_RELAY;
+	auto&& lockNextNote = nextNote.lock();
+	if (!isFirstNote && lockNextNote) type = NoteType::SLIDE_RELAY;
 	setType(type);
 
 	if (!isFirstNote && !getNextNote()) judgeTiming = JudgeTiming::RELEASE;

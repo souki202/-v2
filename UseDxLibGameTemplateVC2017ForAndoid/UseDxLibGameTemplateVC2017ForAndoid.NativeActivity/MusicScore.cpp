@@ -9,33 +9,37 @@ void MusicScore::loadMusicScore(int difficulty)
 	double nowTime = 0;
 	double lastPeriod = 1;
 	double nowPeriod = 1;
-	int divPeriod = 4; //¬ß•ªŠ„”
-	int numBeatDiv = 4; // div•ª‚ÌnumDiv”q
+	int divPeriod = 4; //å°ç¯€åˆ†å‰²æ•°
+	int numBeatDiv = 4; // divåˆ†ã®numDivæ‹å­
 	int beatDiv = 4;
-	std::map<int, int> useId; //id, uid(”z—ñ”Ô†) LNˆÈŠO
-	std::map<int, int> useLnId; //line, uid LNê—p
+	std::map<int, int> useId; //id, uid(é…åˆ—ç•ªå·) LNä»¥å¤–
+	std::map<int, int> useLnId; //line, uid LNå°‚ç”¨
 	int uid = 0;
+
+	record.difficulty = difficulty;
+
+	std::unordered_map<int, std::vector<std::shared_ptr<Note>>> noteMap;// judgetime, note
 
 	judgeLine.setNumLine(5);
 
 	while (std::getline(ifs, line)) {
-		//ƒRƒƒ“ƒgs
+		//ã‚³ãƒ¡ãƒ³ãƒˆè¡Œ
 		if (line.size() >= 2) {
 			if (line[0] == '/' && line[1] == '/') continue;
 		}
 
-		//––”öCRLF‚È‚ç‘ÎÛ‚É‚æ‚Á‚Ä‚ÍCR‚ªc‚Á‚Ä‚µ‚Ü‚¤‚Ì‚Åíœ
+		//æœ«å°¾CRLFãªã‚‰å¯¾è±¡ã«ã‚ˆã£ã¦ã¯CRãŒæ®‹ã£ã¦ã—ã¾ã†ã®ã§å‰Šé™¤
 		if (!line.empty() && line.back() == '\r') {
 			line.pop_back();
 		}
 
-		//î•ñs
-		//‹È‚ÌŠÔ‚Í‰ÁZ‚µ‚È‚¢
+		//æƒ…å ±è¡Œ
+		//æ›²ã®æ™‚é–“ã¯åŠ ç®—ã—ãªã„
 		if (!line.empty() && line.front() == '#') {
 			line = line.substr(1);
 			std::stringstream ss(line);
 
-			//ˆø”‚½‚¿‚ğæ“¾
+			//å¼•æ•°ãŸã¡ã‚’å–å¾—
 			std::string tmp;
 			std::vector<std::string> args;
 			while (std::getline(ss, tmp, ' ')) {
@@ -44,12 +48,12 @@ void MusicScore::loadMusicScore(int difficulty)
 
 			if (args[0] == "BPM") {
 				bpm = std::atof(args[1].c_str());
-				//ƒsƒŠƒIƒhŒo‰ß”‚ğXV
+				//ãƒ”ãƒªã‚ªãƒ‰çµŒéæ•°ã‚’æ›´æ–°
 				nowTime += calcElapsedTime(lastPeriod, nowPeriod, bpm, numBeatDiv, beatDiv);
 			}
 			else if (args[0] == "StartTime") {
-				startTime = std::atoi(args[1].c_str());
-				nowTime = startTime;
+				startDelayTime = std::atoi(args[1].c_str());
+				nowTime = startDelayTime;
 			}
 			else if (args[0] == "Humen") isHumen = true;
 			else if (args[0] == "Key") {
@@ -59,7 +63,7 @@ void MusicScore::loadMusicScore(int difficulty)
 				numBeatDiv = std::atoi(args[1].c_str());
 				beatDiv = std::atoi(args[2].c_str());
 			}
-			else if (std::isdigit(args[0][0])) { //¬ß”ƒXƒLƒbƒv
+			else if (std::isdigit(args[0][0])) { //å°ç¯€æ•°ã‚¹ã‚­ãƒƒãƒ—
 				lastPeriod = nowPeriod;
 				nowPeriod = std::atof(args[0].c_str());
 				divPeriod = std::atoi(args[1].c_str());
@@ -68,30 +72,30 @@ void MusicScore::loadMusicScore(int difficulty)
 			continue;
 		}
 
-		//•ˆ–Ês
+		//è­œé¢è¡Œ
 		std::stringstream ss(line);
-		//•ˆ–Ê‚È‚µ‚Ìs
+		//è­œé¢ãªã—ã®è¡Œ
 		if(line.empty()) {}
-		else { //•ˆ–Ê‚ ‚è
+		else { //è­œé¢ã‚ã‚Š
 			std::vector<std::string> noteInfo;
 			std::string noteStr;
 			int no = 0;
 			while (std::getline(ss, noteStr, '\t')) {
-				//ƒm[ƒgî•ñ‚ ‚è
+				//ãƒãƒ¼ãƒˆæƒ…å ±ã‚ã‚Š
 				if (!noteStr.empty() && noteStr.front() != '-') {
-					//ˆø”‚ğæ“¾
+					//å¼•æ•°ã‚’å–å¾—
 					std::stringstream ss2(noteStr);
 					std::vector<float> args;
 					while (std::getline(ss2, noteStr, ' ')) {
 						args.push_back(std::atof(noteStr.c_str()));
 					}
 
-					//ƒm[ƒgİ’è
-					//ˆø”‚Í type appear id endpoint
+					//ãƒãƒ¼ãƒˆè¨­å®š
+					//å¼•æ•°ã¯ type appear id endpoint
 					float appear = no;
 					NoteType type;
 					int id = 0;
-					int endPoint = false; //LN“™‚ÌI“_
+					int endPoint = false; //LNç­‰ã®çµ‚ç‚¹
 					type = static_cast<NoteType>(static_cast<int>(args[0]));
 					if (args.size() >= 2) {
 						float a = args[1];
@@ -102,10 +106,10 @@ void MusicScore::loadMusicScore(int difficulty)
 					if (args.size() >= 4) endPoint = true;
 
 
-					//ƒ^ƒCƒvİ’è
-					//FLICK‚ÍLN,SLIDEI“_ˆÈŠO©“®İ’è
+					//ã‚¿ã‚¤ãƒ—è¨­å®š
+					//FLICKã¯LN,SLIDEçµ‚ç‚¹ä»¥å¤–è‡ªå‹•è¨­å®š
 					std::shared_ptr<Note> lastNote;
-					//‘O‚Ìƒm[ƒg‚ª‚ ‚é‚È‚ç‚»‚ê‚ğ—˜—p‚·‚é‚½‚ß•Û‘¶
+					//å‰ã®ãƒãƒ¼ãƒˆãŒã‚ã‚‹ãªã‚‰ãã‚Œã‚’åˆ©ç”¨ã™ã‚‹ãŸã‚ä¿å­˜
 					if (useId.find(id) != useId.end() && type != NoteType::LN) {
 						lastNote = notes[useId[id]];
 					}
@@ -137,9 +141,9 @@ void MusicScore::loadMusicScore(int difficulty)
 
 							std::shared_ptr<FlickNote> flickNote = std::make_shared<FlickNote>();
 							flickNote->setting(no, appear, nowTime, uid, id);
-							//æ‚èŠ¸‚¦‚¸“Ë‚Á‚ñ‚Ç‚­
+							//å–ã‚Šæ•¢ãˆãšçªã£è¾¼ã‚“ã©ã
 							flickNote->setDirection(direction);
-							//‘O‰ñ‚Ìƒm[ƒg‚ÆÆ‚ç‚µ‡‚í‚¹‚ÄƒtƒŠƒbƒN•ûŒü‚ğŒˆ’è
+							//å‰å›ã®ãƒãƒ¼ãƒˆã¨ç…§ã‚‰ã—åˆã‚ã›ã¦ãƒ•ãƒªãƒƒã‚¯æ–¹å‘ã‚’æ±ºå®š
 							if (lastNote) {
 								lastNote->setDirectionByNextNote(flickNote);
 								flickNote->setDirectionByLastNote(lastNote);
@@ -150,14 +154,14 @@ void MusicScore::loadMusicScore(int difficulty)
 						default: break;
 						}
 
-						//è‘O‚Ìƒm[ƒg‚ÉÚ‘±‚·‚éƒm[ƒg‚ğİ’è
+						//æ‰‹å‰ã®ãƒãƒ¼ãƒˆã«æ¥ç¶šã™ã‚‹ãƒãƒ¼ãƒˆã‚’è¨­å®š
 						if (lastNote) {
 							lastNote->setNextNote(haveNextNote);
 							haveNextNote->setIsFirstNote(false);
 						}
 						note = haveNextNote;
 
-						//Ÿ‚Ìƒm[ƒg‚ğXV
+						//æ¬¡ã®ãƒãƒ¼ãƒˆã‚’æ›´æ–°
 						if (NoteType::LN < type && type <= NoteType::FLICK_R) {
 							useId[id] = uid;
 						}
@@ -165,7 +169,7 @@ void MusicScore::loadMusicScore(int difficulty)
 							useLnId[no] = uid;
 						}
 
-						//idŠJ•ú •’Ê‚ÌLN‚ÍÚ‘±æ‚ªŒ»‚ê‚½‚ç‹­§“I‚ÉŠJ•ú
+						//idé–‹æ”¾ æ™®é€šã®LNã¯æ¥ç¶šå…ˆãŒç¾ã‚ŒãŸã‚‰å¼·åˆ¶çš„ã«é–‹æ”¾
 						if (endPoint && (type != NoteType::LN)) {
 							useId.erase(id);
 						}
@@ -173,39 +177,49 @@ void MusicScore::loadMusicScore(int difficulty)
 							useLnId.erase(no);
 						}
 					}
-					//”Ä—pİ’è‚µ‚Ä’Ç‰Á
+					//æ±ç”¨è¨­å®šã—ã¦è¿½åŠ 
 					note->setting(no, appear, nowTime, uid, id);
-					notes.push_back(std::move(note));
+					if (!noteMap.count(nowTime)) noteMap[nowTime] = std::vector<std::shared_ptr<Note>>();
+					noteMap[nowTime].push_back(note);
+					notes.push_back(note);
 
-					//”z—ñ”Ô†‚ği‚ß‚é
+					//é…åˆ—ç•ªå·ã‚’é€²ã‚ã‚‹
 					uid++;
 				}
 				no++;
 			}
 		}
 
-		//Œo‰ßƒsƒŠƒIƒh”‚ğXV
+		//çµŒéãƒ”ãƒªã‚ªãƒ‰æ•°ã‚’æ›´æ–°
 		lastPeriod = nowPeriod;
 		nowPeriod += 1.0 / divPeriod / (numBeatDiv / beatDiv);
 		nowTime += calcElapsedTime(lastPeriod, nowPeriod, bpm, numBeatDiv, beatDiv);
 		continue;
 	}
 
+	//æ¥ç¶š
+	for (auto& sameTimeNote : noteMap) {
+		for (auto& note : sameTimeNote.second) {
+			for (auto& otherNote : sameTimeNote.second) {
+				note->addSameTimeNote(otherNote);
+			}
+		}
+	}
 
-	//ƒm[ƒg‚ğŠÔ‡‚Éƒ\[ƒg
+	//ãƒãƒ¼ãƒˆã‚’æ™‚é–“é †ã«ã‚½ãƒ¼ãƒˆ
 	std::sort(notes.begin(), notes.end(), 
 			  [](const std::shared_ptr<Note>& l, const std::shared_ptr<Note>& r) {
 					return l->getJudgeTime() < r->getJudgeTime(); 
 			  }
 	);
 
-	//”»’è•”•ª‚ÌƒAƒCƒRƒ““Ç‚İ‚İ
+	//åˆ¤å®šéƒ¨åˆ†ã®ã‚¢ã‚¤ã‚³ãƒ³èª­ã¿è¾¼ã¿
 	judgeLine.loadJudgeIcons();
 
-	//ƒXƒRƒA‰Šú‰»
+	//ã‚¹ã‚³ã‚¢åˆæœŸåŒ–
 	score.initScore(musicInfo.getLevel(difficulty), notes.size());
 
-	//‰¹Šy“Ç‚İ‚İ
+	//éŸ³æ¥½èª­ã¿è¾¼ã¿
 	std::string musicFile = (musicInfo.getFilePath() + "bgm.ogg");
 	bgm = LoadSoundMem(musicFile.c_str());
 }
@@ -217,30 +231,38 @@ double MusicScore::calcElapsedTime(double lastPeriod, double nowPeriod, float bp
 
 void MusicScore::draw()
 {
+	for (auto& x : notes) x->drawSameTimeNoteLine();
 	for (auto& x : notes) x->draw();
 	judge.draw();
 	combo.draw();
 	score.draw();
+	life.draw();
 
 #ifdef DEBUG
 	DrawFormatString(800, 100, 0xffffff, "time:%d", timer.getElapsedTime());
+	DrawFormatString(800, 120, 0xffffff, "end:%d", endPlayTimer.getElapsedTime());
 #endif
 }
 
 void MusicScore::update()
 {
-	timer.update();
+	if (isStarted) timer.update();
+	if ((isStarted && !CheckSoundMem(bgm)) || bgm <= 0) endPlayTimer.update();
+	else endPlayTimer.reset();
+	if (isStartMoveNotes) noteDrawTimer.update();
+
 	judge.update();
 	judge.resetJudgedId();
 	for (auto& x : notes) {
-		//”»’è
-		if (!x->getWasJudged()) {
+		//åˆ¤å®š
+		if (!x->getWasJudged() && isSurvive()) {
 			JudgeResult grade = judge.judge(x->getJudgeTiming(),
 				                           timer.getElapsedTime(), 
 				                           x->getJudgeTime(), 
 				                           x->getTarget(),
 				                           x->getTouchId());
 			x->setJudge(grade);
+			life.setJudge(grade.grade);
 			if (grade.grade <= JudgeGrade::GOOD) {
 				combo.addCombo();
 				score.addScore(grade.grade, combo.getCombo());
@@ -250,9 +272,28 @@ void MusicScore::update()
 			}
 		}
 
-		x->setNowTime(timer.getElapsedTime());
+		x->setNowTime(noteDrawTimer.getElapsedTime() - playSettings.getDelayTime() - startDelayTime);
 		x->update();
 	}
 	score.update();
 	combo.update();
+	life.update();
+}
+
+bool MusicScore::isSurvive()
+{
+	if (playSettings.getGaugeType() == GaugeType::PRACTICE) {
+		return true;
+	}
+	return life.getLife() > 0;
+}
+
+void MusicScore::saveRecord()
+{
+	record.score = score.getScore();
+	record.exScore = score.getExScore();
+	record.life = life.getLife();
+	record.totalNotes = notes.size();
+	record.judgeCnt = judge.getJudgeCount();
+	record.combo = combo.getMaxCombo();
 }

@@ -21,8 +21,9 @@ public:
 	~MusicInfo() {};
 
 	void loadMusicInfo(const std::string& folderPath);
-	const std::string& getFilePath() const { return info.filePath; };//––”ö‚ÉƒXƒ‰ƒbƒVƒ…‚ª•K‚¸‚Â‚­
+	const std::string& getFilePath() const { return info.filePath; };//æœ«å°¾ã«ã‚¹ãƒ©ãƒƒã‚·ãƒ¥ãŒå¿…ãšã¤ã
 	const std::string& getTitle() const { return info.title; };
+	const std::string& getArtist() const { return info.artist; };
 	const int& getLevel(int difficulty) const { return info.difficulty[difficulty-1]; };
 private:
 	Info info;

@@ -6,6 +6,7 @@
 #include "DxLib.h"
 #include "Align.h"
 #include "CommonSettings.h"
+#include "NowLoadingWindow.h"
 
 #undef max
 #undef min
@@ -42,12 +43,12 @@ public:
 	const Point& getUpperLeftPosition() const { return pos; };
 	const std::array<std::pair<float, float>, 4>& getVertexes() const { return vertexes; };
 	Point getPositionNonScroll() { return std::make_pair(pos.first - scrollPos.first, pos.second - scrollPos.second); };
-	const Point& getImageSize() const { return rawSize; }; //‰æ‘œ‚»‚Ì‚Ü‚Ü‚ÌƒTƒCƒY‚ğ•Ô‚µ‚Ü‚·
-	const Point& getSize() const { return scaledSize; }; //‰æ‘œ‚ğƒŠƒXƒP[ƒ‹Œã‚ÌƒTƒCƒY‚ğ•Ô‚µ‚Ü‚·
+	const Point& getImageSize() const { return rawSize; }; //ç”»åƒãã®ã¾ã¾ã®ã‚µã‚¤ã‚ºã‚’è¿”ã—ã¾ã™
+	const Point& getSize() const { return scaledSize; }; //ç”»åƒã‚’ãƒªã‚¹ã‚±ãƒ¼ãƒ«å¾Œã®ã‚µã‚¤ã‚ºã‚’è¿”ã—ã¾ã™
 	const float& getAngle() const { return angle; };
 
 	virtual void draw();
-	void drawByVertex(const std::vector<Point>& vertex) const; //’¸“_‚Ì’l‚Í•Û‘¶‚³‚ê‚È‚¢
+	void drawByVertex(const std::vector<Point>& vertex) const; //é ‚ç‚¹ã®å€¤ã¯ä¿å­˜ã•ã‚Œãªã„
 	virtual void update();
 
 	void setHasDefaultCollider(bool b) { hasDefaultCollider = b; };
