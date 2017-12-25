@@ -14,7 +14,7 @@ public:
 
 	virtual void draw() { Note::draw(); /*if(nextNote)DrawFormatString(300, 16*getUid(), 0xffffff, "next:%d", nextNote->getUid()); */};
 	virtual void setNextNote(const std::shared_ptr<Note>& next) { nextNote = next; };
-	const std::shared_ptr<Note>& getNextNote() const { return nextNote.lock(); };
+	std::shared_ptr<Note> getNextNote() const { return nextNote.lock(); };
 	virtual void setTouchId(int id);
 
 	virtual void setJudge(const JudgeResult& judgeResult);

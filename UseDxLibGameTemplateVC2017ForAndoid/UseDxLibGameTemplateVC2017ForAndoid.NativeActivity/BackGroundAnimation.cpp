@@ -14,11 +14,11 @@ void BackGroundAnimation::update()
 		timer.reset();
 	}
 	//性能によってはずれるので調整
-	if(isMovie && isPlayed && timer.getElapsedTime() > nextAdjastInterval) {
-		SeekMovieToGraph(bga.getHandle(), timer.getElapsedTime());
-		PlayMovieToGraph(bga.getHandle());
-		nextAdjastInterval += adjastInterval;
-	}
+	//if(isMovie && isPlayed && timer.getElapsedTime() > nextAdjastInterval) {
+	//	SeekMovieToGraph(bga.getHandle(), timer.getElapsedTime());
+	//	PlayMovieToGraph(bga.getHandle());
+	//	nextAdjastInterval += adjastInterval;
+	//}
 	if (loading.getHasComplete()) {
 		if (bga.getHandle() > 0 && !wasSetPosition) {
 			using namespace CommonSettings;
@@ -38,11 +38,7 @@ void BackGroundAnimation::setBga(const std::string & folderPath)
 {
 	std::string filePath = folderPath + "bga.";
 	bga.setImage(filePath + "ogv");
-	std::ifstream ifs(filePath + "ogv");
-	if (ifs.is_open()) {
-		int a = 0;
-		a = 5;
-	}
+
 	if (bga.getHandle() > 0) {
 		isMovie = true;
 	}
@@ -58,6 +54,7 @@ void BackGroundAnimation::setBga(const std::string & folderPath)
 void BackGroundAnimation::playBga(int delay)
 {
 	isPlayed = false;
+	if (!isMovie) isPlayed = true;
 	isReservePlayMovie = true;
 	timer.reset();
 }

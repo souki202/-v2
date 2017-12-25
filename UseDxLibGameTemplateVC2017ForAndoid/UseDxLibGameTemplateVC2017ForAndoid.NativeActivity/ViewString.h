@@ -35,16 +35,17 @@ public:
 	void addAngle(float delta) { strImg.addAngle(delta); };
 	void setAlpha(int alpha) { strImg.setAlpha(alpha); }; //0~255
 	void recalcPosition() { strImg.recalcPosition(); };
-	const Point& getPosition() const { return strImg.getPosition(); };
-	const Point& getUpperLeftPosition() const { return strImg.getUpperLeftPosition(); };
+	const Point& getPosition() { return strImg.getPosition(); };
+	const Point& getUpperLeftPosition() { return strImg.getUpperLeftPosition(); };
 	const std::array<std::pair<float, float>, 4>& getVertexes() const { return strImg.getVertexes(); };
 	Point getPositionNonScroll() { return strImg.getPositionNonScroll(); };
-	const Point& getImageSize() const { return strImg.getImageSize(); }; //画像そのままのサイズを返します
-	const Point& getSize() const { return strImg.getSize(); }; //画像をリスケール後のサイズを返します
+	const Point& getImageSize() { return strImg.getImageSize(); }; //画像そのままのサイズを返します
+	const Point& getSize() { return strImg.getSize(); }; //画像をリスケール後のサイズを返します
 	const float& getAngle() const { return strImg.getAngle(); };
 	void drawByVertex(const std::vector<Point>& vertex) const { strImg.drawByVertex(vertex); }; //頂点の値は保存されない
 	void setHasDefaultCollider(bool b) { strImg.setHasDefaultCollider(b); };
 	bool getIsOutOfWindow() { return strImg.getIsOutOfWindow(); };
+	void setIsPremulti(bool b) { strImg.setIsPremulti(b); };
 private:
 	Image strImg;
 	std::string str;

@@ -1,6 +1,5 @@
 #pragma once
-
-#include "DxLib.h" //Ｃ直下統一でお願い　|ω・`）ﾁﾗｯ
+#include "DxLib.h"
 #include "CommonSettings.h"
 #include "InputDevice.h"
 #include "Factory.h"
@@ -21,7 +20,7 @@ public:
 	~Form();
 
 	bool update();
-
+	bool draw();
 private:
 	Timer timer;
 };

@@ -35,7 +35,7 @@ private:
 
 	bool isAuto = true;
 	GaugeType gaugeType = GaugeType::NORMAL;
-	int startDelayTime = 1000;
+	int startDelayTime = 3000;
 	int playIntroTime = 5000;
 	int playEndWaitTime = 1500;
 };

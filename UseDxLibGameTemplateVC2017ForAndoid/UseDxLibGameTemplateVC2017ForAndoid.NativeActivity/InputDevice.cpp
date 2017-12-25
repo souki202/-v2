@@ -174,8 +174,10 @@ void InputDevice::Touch::update()
 		}
 	}
 
+	//タッチが無ければ最初のタッチを初期化
+	if (!num && newTouches.empty()) firstTouchId = -1;
+
 	//残ったkeyは新規
-	if (!num && keys.empty() && touches.empty()) firstTouchId = -1;
 	for (auto& key : keys) {
 		if (firstTouchId == -1) {
 			firstTouchId = key.first;

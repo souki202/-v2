@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <fstream>
 #include "DxLib.h"
 #include "Timer.h"
 #include "Image.h"

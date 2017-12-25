@@ -1,7 +1,7 @@
 #include "Result.h"
 
 Result::Result(ResultRecord record, MusicInfo musicInfo)
-	: record(record), musicInfo(musicInfo)
+	: musicInfo(musicInfo), record(record)
 {
 	ScoreRank scoreRank;
 	scoreRank.setRank(record.exScore, record.totalNotes * 2);
@@ -10,6 +10,8 @@ Result::Result(ResultRecord record, MusicInfo musicInfo)
 	judgeResult.setJudgeCount(record.judgeCnt, record.judgeCnt);
 	judgeResult.setScore(record.score, record.score, record.exScore, record.exScore);
 	judgeResult.setCombo(record.combo, record.combo);
+	lifeGauge.setGauge(record.lifeHistry);
+	thumb.setCover(musicInfo.getCoverPath());
 
 	//font
 	smallFont = LoadFontDataToHandle("Font/24px.dft");
@@ -18,7 +20,9 @@ Result::Result(ResultRecord record, MusicInfo musicInfo)
 
 	//クリア状態
 	isClear = record.life > 0 || playSettings.getGaugeType() == GaugeType::PRACTICE;
+#ifdef DEBUG
 	isClear = true;
+#endif
 	if (isClear) bg.setImage("Images/Result/clear_bg.png");
 	else bg.setImage("Images/Result/failed_bg.png");
 
@@ -38,6 +42,14 @@ Result::Result(ResultRecord record, MusicInfo musicInfo)
 	difficulty.setAlign(Align::Horizontal::CENTER);
 	difficulty.setColor(0x414141);
 	difficulty.setFont(smallFont);
+	updateLoadCount();
+
+	mouseSubject = std::make_unique<LayerObject<Button>>();
+	okButton = std::make_shared<OkButton>();
+	mouseSubject->addObject(okButton);
+	okButton->setPosition(1235.f, 691.f);
+	okButton->setAlign(Align::Horizontal::RIGHT, Align::Vertical::BOTTOM);
+	okButton->funcs.connect([](const ButtonEvent& e) {myFactory.setNewScene<SelectMusic>(); });
 }
 
 Result::~Result()
@@ -48,12 +60,17 @@ Result::~Result()
 
 void Result::update()
 {
+	Scene::update();
 	judgeResult.update();
 	bga.update();
+	lifeGauge.update();
+	thumb.update();
+	mouseSubject->update();
 }
 
 void Result::draw()
 {
+	Scene::draw();
 	if (loading.getHasComplete()) {
 		if (isClear) {
 			DrawBox(0, 0, CommonSettings::WINDOW_WIDTH, CommonSettings::WINDOW_HEIGHT, 0xffffff, true);
@@ -64,5 +81,8 @@ void Result::draw()
 		title.draw();
 		artist.draw();
 		difficulty.draw();
+		lifeGauge.draw();
+		thumb.draw();
+		okButton->draw();
 	}
 }

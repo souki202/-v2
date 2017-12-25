@@ -24,7 +24,7 @@ void ViewString::setString(const std::string & str)
 		SetDrawScreen(img);
 		ClearDrawScreen();
 		DrawFormatStringToHandle(0, 0, color, font, str.c_str());
-		SetDrawScreen(DX_SCREEN_BACK);
+		SetDrawScreen(Screen::getScreen());
 
 		strImg.setImage(img);
 	}

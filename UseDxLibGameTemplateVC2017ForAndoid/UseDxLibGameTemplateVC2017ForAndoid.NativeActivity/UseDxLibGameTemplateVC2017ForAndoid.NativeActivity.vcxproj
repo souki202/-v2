@@ -151,12 +151,12 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
-      <AdditionalIncludeDirectories>C:\DxLib_Android\プロジェクトに追加すべきファイル_Android_ARM用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\boost;C:\DxLib_Android\プロジェクトに追加すべきファイル_Android_ARM用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CppLanguageStandard>c++1y</CppLanguageStandard>
     </ClCompile>
     <Link>
       <LibraryDependencies>%(LibraryDependencies);GLESv1_CM;EGL;stdc++;GLESv2;OpenSLES;m;DxLib;DxUseCLib;jpeg;png;zlib;tiff;theora_static;vorbis_static;vorbisfile_static;ogg_static;bullet;opus</LibraryDependencies>
-      <AdditionalLibraryDirectories>C:\DxLib_Android\プロジェクトに追加すべきファイル_Android_ARM用;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\boost\stage\lib;C:\DxLib_Android\プロジェクトに追加すべきファイル_Android_ARM用;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
@@ -165,12 +165,12 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
-      <AdditionalIncludeDirectories>C:\DxLib_Android\プロジェクトに追加すべきファイル_Android_ARM用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\boost;C:\DxLib_Android\プロジェクトに追加すべきファイル_Android_ARM用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CppLanguageStandard>c++1y</CppLanguageStandard>
     </ClCompile>
     <Link>
       <LibraryDependencies>%(LibraryDependencies);GLESv1_CM;EGL;stdc++;GLESv2;OpenSLES;m;DxLib;DxUseCLib;jpeg;png;zlib;tiff;theora_static;vorbis_static;vorbisfile_static;ogg_static;bullet;opus</LibraryDependencies>
-      <AdditionalLibraryDirectories>C:\DxLib_Android\プロジェクトに追加すべきファイル_Android_ARM用;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\boost\stage\lib;C:\DxLib_Android\プロジェクトに追加すべきファイル_Android_ARM用;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -201,12 +201,13 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
-      <AdditionalIncludeDirectories>C:\DxLib_Android\プロジェクトに追加すべきファイル_Android_x86用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\boost;C:\DxLib_Android\プロジェクトに追加すべきファイル_Android_x86用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CppLanguageStandard>c++1y</CppLanguageStandard>
+      <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
     <Link>
       <LibraryDependencies>%(LibraryDependencies);GLESv1_CM;EGL;stdc++;GLESv2;OpenSLES;m;DxLib;DxUseCLib;jpeg;png;zlib;tiff;theora_static;vorbis_static;vorbisfile_static;ogg_static;bullet;opus</LibraryDependencies>
-      <AdditionalLibraryDirectories>C:\DxLib_Android\プロジェクトに追加すべきファイル_Android_x86用;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\boost\stage\lib;C:\DxLib_Android\プロジェクトに追加すべきファイル_Android_x86用;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
@@ -215,17 +216,19 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
-      <AdditionalIncludeDirectories>C:\DxLib_Android\プロジェクトに追加すべきファイル_Android_x86用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\boost;C:\DxLib_Android\プロジェクトに追加すべきファイル_Android_x86用;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CppLanguageStandard>c++1y</CppLanguageStandard>
+      <ExceptionHandling>Enabled</ExceptionHandling>
     </ClCompile>
     <Link>
       <LibraryDependencies>%(LibraryDependencies);GLESv1_CM;EGL;stdc++;GLESv2;OpenSLES;m;DxLib;DxUseCLib;jpeg;png;zlib;tiff;theora_static;vorbis_static;vorbisfile_static;ogg_static;bullet;opus</LibraryDependencies>
-      <AdditionalLibraryDirectories>C:\DxLib_Android\プロジェクトに追加すべきファイル_Android_x86用;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\boost\stage\lib;C:\DxLib_Android\プロジェクトに追加すべきファイル_Android_x86用;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BackGroundAnimation.cpp" />
     <ClCompile Include="Bomb.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Combo.cpp" />
     <ClCompile Include="FlickNote.cpp" />
     <ClCompile Include="Form.cpp" />
@@ -237,20 +240,25 @@
     <ClCompile Include="JudgeLine.cpp" />
     <ClCompile Include="JudgeView.cpp" />
     <ClCompile Include="Life.cpp" />
+    <ClCompile Include="LifeGaugeTransition.cpp" />
     <ClCompile Include="LongNote.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MouseSubject.cpp" />
     <ClCompile Include="MusicInfo.cpp" />
     <ClCompile Include="MusicScore.cpp" />
     <ClCompile Include="NormalNote.cpp" />
     <ClCompile Include="Note.cpp" />
     <ClCompile Include="NoteCommon.cpp" />
     <ClCompile Include="NowLoadingWindow.cpp" />
+    <ClCompile Include="OkButton.cpp" />
+    <ClCompile Include="Panel.cpp" />
     <ClCompile Include="Play.cpp" />
     <ClCompile Include="PlayIntro.cpp" />
     <ClCompile Include="PlaySettings.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="ResultBackGroundAnimation.cpp" />
+    <ClCompile Include="ResultThumb.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Score.cpp" />
     <ClCompile Include="ScoreGauge.cpp" />
@@ -258,6 +266,7 @@
     <ClCompile Include="ScoreRank.cpp" />
     <ClCompile Include="SelectMusic.cpp" />
     <ClCompile Include="SlideNote.cpp" />
+    <ClCompile Include="TouchSubject.cpp" />
     <ClCompile Include="ViewJudgeResultDetail.cpp" />
     <ClCompile Include="ViewString.cpp" />
   </ItemGroup>
@@ -265,6 +274,9 @@
     <ClInclude Include="Align.h" />
     <ClInclude Include="BackGroundAnimation.h" />
     <ClInclude Include="Bomb.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="ButtonEvent.h" />
+    <ClInclude Include="ButtonSubject.h" />
     <ClInclude Include="ColorList.h" />
     <ClInclude Include="Combo.h" />
     <ClInclude Include="CommonSettings.h" />
@@ -277,14 +289,20 @@
     <ClInclude Include="GaugeType.h" />
     <ClInclude Include="GetFilePath.h" />
     <ClInclude Include="HaveNextNote.h" />
+    <ClInclude Include="HaveUuid.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="InputDevice.h" />
     <ClInclude Include="Judge.h" />
     <ClInclude Include="JudgeGrade.h" />
     <ClInclude Include="JudgeResult.h" />
     <ClInclude Include="JudgeView.h" />
+    <ClInclude Include="LayerObject.h" />
     <ClInclude Include="Life.h" />
+    <ClInclude Include="LifeGaugeTransition.h" />
     <ClInclude Include="LongNote.h" />
+    <ClInclude Include="MouseEvent.h" />
+    <ClInclude Include="MouseListener.h" />
+    <ClInclude Include="MouseSubject.h" />
     <ClInclude Include="MusicInfo.h" />
     <ClInclude Include="MusicScore.h" />
     <ClInclude Include="MyFuncs.h" />
@@ -292,6 +310,8 @@
     <ClInclude Include="Note.h" />
     <ClInclude Include="NoteCommon.h" />
     <ClInclude Include="NowLoadingWindow.h" />
+    <ClInclude Include="OkButton.h" />
+    <ClInclude Include="Panel.h" />
     <ClInclude Include="Play.h" />
     <ClInclude Include="JudgeLine.h" />
     <ClInclude Include="PlayIntro.h" />
@@ -300,6 +320,7 @@
     <ClInclude Include="Result.h" />
     <ClInclude Include="ResultBackGroundAnimation.h" />
     <ClInclude Include="ResultRecord.h" />
+    <ClInclude Include="ResultThumb.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Score.h" />
     <ClInclude Include="ScoreGauge.h" />
@@ -307,7 +328,11 @@
     <ClInclude Include="ScoreRank.h" />
     <ClInclude Include="SelectMusic.h" />
     <ClInclude Include="SlideNote.h" />
+    <ClInclude Include="Subject.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="TouchEvent.h" />
+    <ClInclude Include="TouchListener.h" />
+    <ClInclude Include="TouchSubject.h" />
     <ClInclude Include="ViewJudgeResultDetail.h" />
     <ClInclude Include="ViewKey.h" />
     <ClInclude Include="ViewString.h" />

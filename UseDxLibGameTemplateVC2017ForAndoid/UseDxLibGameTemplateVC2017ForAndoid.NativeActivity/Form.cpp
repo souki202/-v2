@@ -2,7 +2,7 @@
 Form::Form()
 {
 	noteImageManager.loadImage();
-	factory.setNewScene<SelectMusic>();
+	myFactory.setNewScene<SelectMusic>();
 }
 
 Form::~Form()
@@ -12,14 +12,21 @@ Form::~Form()
 bool Form::update()
 {
 	timer.update();
-	factory.update();
-	factory.changeScene();
+	myFactory.update();
+	myFactory.changeScene();
 
-	if (factory.getScene()) {
-		factory.getScene()->update();
+	if (myFactory.getScene()) {
+		myFactory.getScene()->update();
 		loading.updateLoadCount();
-		factory.getScene()->draw();
 	}
-	factory.draw();
+	return true;
+}
+
+bool Form::draw()
+{
+	if (myFactory.getScene()) {
+		myFactory.getScene()->draw();
+	}
+	myFactory.draw();
 	return true;
 }

@@ -26,8 +26,8 @@ public:
 private:
 	JudgeView view;
 	std::vector<int> judgedId;//判定済みのidを格納
-	std::array<int, static_cast<int>(JudgeGrade::INVALID)> judgeRange = { 0 };
-	std::array<int, static_cast<int>(JudgeGrade::INVALID)> flickJudgeRange = { 0 };
+	std::array<int, static_cast<int>(JudgeGrade::INVALID)> judgeRange = { { 0 } };
+	std::array<int, static_cast<int>(JudgeGrade::INVALID)> flickJudgeRange = { { 0 } };
 	int tapSe = 0; 
-	std::array<int, static_cast<int>(JudgeGrade::INVALID)> cnt = {0};
+	std::array<int, static_cast<int>(JudgeGrade::INVALID)> cnt = { { 0 } };
 };

@@ -15,10 +15,13 @@ public:
 	void draw();
 
 	void updateLoadCount() { initLoadCount = GetASyncLoadNum(); };
-	bool getHasComplete() { return GetASyncLoadNum() == 0; };
+	bool getHasComplete() { return GetASyncLoadNum() == 0 && externLoadCnt <= 0; };
+	void addLoadCount() { ++externLoadCnt; };
+	void subLoadCount() { --externLoadCnt; };
 private:
 	int initLoadCount = 0;
 	int nowLoadCount = 0;
 	int gaugeWidth = 1;
 	float loadRaito = 1.f; //すべて終わっていれば1
+	int externLoadCnt = 0;
 };

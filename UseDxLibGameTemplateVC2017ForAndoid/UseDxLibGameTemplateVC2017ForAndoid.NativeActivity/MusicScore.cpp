@@ -221,7 +221,7 @@ void MusicScore::loadMusicScore(int difficulty)
 
 	//音楽読み込み
 	std::string musicFile = (musicInfo.getFilePath() + "bgm.ogg");
-	bgm = LoadSoundMem(musicFile.c_str());
+	bgm = LoadSoundMem(musicFile.c_str(), 1);
 }
 
 double MusicScore::calcElapsedTime(double lastPeriod, double nowPeriod, float bpm, int numBeatDiv, int beatDiv)
@@ -253,6 +253,11 @@ void MusicScore::update()
 
 	judge.update();
 	judge.resetJudgedId();
+	//更新順注意
+	for (auto& x : notes) {
+		x->setNowTime(noteDrawTimer.getElapsedTime() - playSettings.getDelayTime());
+	}
+	for (auto& x : notes) x->update();
 	for (auto& x : notes) {
 		//判定
 		if (!x->getWasJudged() && isSurvive()) {
@@ -271,13 +276,19 @@ void MusicScore::update()
 				combo.resetCombo();
 			}
 		}
-
-		x->setNowTime(noteDrawTimer.getElapsedTime() - playSettings.getDelayTime() - startDelayTime);
-		x->update();
 	}
 	score.update();
 	combo.update();
 	life.update();
+}
+
+void MusicScore::startMusic()
+{
+	timer.reset();
+	life.setRecordLifeInterval(getMusicLength());
+	life.startRecord();
+	PlaySoundMem(bgm, DX_PLAYTYPE_BACK); 
+	isStarted = true;
 }
 
 bool MusicScore::isSurvive()
@@ -293,6 +304,7 @@ void MusicScore::saveRecord()
 	record.score = score.getScore();
 	record.exScore = score.getExScore();
 	record.life = life.getLife();
+	record.lifeHistry = life.getLifeHistory();
 	record.totalNotes = notes.size();
 	record.judgeCnt = judge.getJudgeCount();
 	record.combo = combo.getMaxCombo();

@@ -109,6 +109,27 @@
     <ClCompile Include="ViewJudgeResultDetail.cpp">
       <Filter>Source\MyGame\Result</Filter>
     </ClCompile>
+    <ClCompile Include="LifeGaugeTransition.cpp">
+      <Filter>Source\MyGame\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultThumb.cpp">
+      <Filter>Source\MyGame\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="Panel.cpp">
+      <Filter>Source\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseSubject.cpp">
+      <Filter>Source\InputEvent\Subject</Filter>
+    </ClCompile>
+    <ClCompile Include="TouchSubject.cpp">
+      <Filter>Source\InputEvent\Subject</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source\Panel</Filter>
+    </ClCompile>
+    <ClCompile Include="OkButton.cpp">
+      <Filter>Source\MyGame\Result</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header">
@@ -176,6 +197,30 @@
     </Filter>
     <Filter Include="Source\MyGame\Result">
       <UniqueIdentifier>{c353b17a-2f30-41c4-8608-44e60882c6a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\Panel">
+      <UniqueIdentifier>{61b17749-0da4-4466-b615-bbac89e46dc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Panel">
+      <UniqueIdentifier>{3d6dfdfd-93c3-42a3-b6ed-b7419d0b8659}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\InputEvent">
+      <UniqueIdentifier>{aec69056-b5bf-4156-b74d-f1c7f3ea3848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\InputEvent\Subject">
+      <UniqueIdentifier>{f7ae4196-f4db-492a-a967-a1878b413e89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header\InputEvent\Listener">
+      <UniqueIdentifier>{e8ec3b8c-a668-4eb1-abf2-c273b201c979}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\InputEvent">
+      <UniqueIdentifier>{9f33d985-85f0-4a97-b25d-506acbb9a340}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\InputEvent\Subject">
+      <UniqueIdentifier>{e7302fc7-6355-4577-a915-f1dc62bb04c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\InputEvent\Listener">
+      <UniqueIdentifier>{e8075acb-a51f-471a-b266-d4a6fd4c5fa9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -324,6 +369,54 @@
       <Filter>Header\MyGame\Result</Filter>
     </ClInclude>
     <ClInclude Include="ViewJudgeResultDetail.h">
+      <Filter>Header\MyGame\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeGaugeTransition.h">
+      <Filter>Header\MyGame\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultThumb.h">
+      <Filter>Header\MyGame\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Panel.h">
+      <Filter>Header\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseSubject.h">
+      <Filter>Header\InputEvent\Subject</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseEvent.h">
+      <Filter>Header\InputEvent\Subject</Filter>
+    </ClInclude>
+    <ClInclude Include="HaveUuid.h">
+      <Filter>Header\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="TouchSubject.h">
+      <Filter>Header\InputEvent\Subject</Filter>
+    </ClInclude>
+    <ClInclude Include="TouchEvent.h">
+      <Filter>Header\InputEvent\Subject</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseListener.h">
+      <Filter>Header\InputEvent\Listener</Filter>
+    </ClInclude>
+    <ClInclude Include="TouchListener.h">
+      <Filter>Header\InputEvent\Listener</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Header\InputEvent\Subject</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonSubject.h">
+      <Filter>Header\InputEvent\Subject</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonEvent.h">
+      <Filter>Header\InputEvent\Subject</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header\Panel</Filter>
+    </ClInclude>
+    <ClInclude Include="LayerObject.h">
+      <Filter>Header\InputEvent\Subject</Filter>
+    </ClInclude>
+    <ClInclude Include="OkButton.h">
       <Filter>Header\MyGame\Result</Filter>
     </ClInclude>
   </ItemGroup>

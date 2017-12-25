@@ -1,4 +1,5 @@
 #pragma once
+#include "DxLib.h"
 namespace CommonSettings {
 	//解像度
 	constexpr int WINDOW_WIDTH = 1280;
@@ -10,4 +11,18 @@ namespace CommonSettings {
 	constexpr int FRAME_RATE = 60;
 
 	constexpr const char* GAME_TITLE = "Game"; //Unicode文字セット利用時はwchar_tに。
+};
+
+class Screen {
+private:
+	Screen() {};
+	~Screen() {};
+public:
+	static const int getScreen() { return screen; };
+	static void setScreen(int val) { DeleteGraph(screen); screen = val; };
+
+private:
+	static int screen;
+	static int width;
+	static int height;
 };

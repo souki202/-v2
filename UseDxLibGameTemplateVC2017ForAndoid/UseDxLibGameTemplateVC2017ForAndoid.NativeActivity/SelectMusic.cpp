@@ -8,8 +8,8 @@ SelectMusic::SelectMusic()
 void SelectMusic::update()
 {
 	if (isFirstFrame) {
-		MusicInfo musicInfo("Assets/Musics/started/");
-		factory.setNewScene<Play>(musicInfo, 1);
+		MusicInfo musicInfo("Assets/Musics/Trinity Field/");
+		myFactory.setNewScene<Play>(musicInfo, 1);
 		isFirstFrame = false;
 	}
 }

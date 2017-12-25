@@ -9,6 +9,16 @@ Life::Life()
 
 void Life::update()
 {
+	recTimer.update();
+	//record
+	if (hasStartedRec) {
+		while (recTimer.getElapsedTime() >= nextRecordLifeTime) {
+			nextRecordLifeTime += recordLifeInterval;
+			if (recCnt >= 0 && recCnt < static_cast<int>(lifeHistry.size())) {
+				lifeHistry[recCnt++] = life;
+			}
+		}
+	}
 	lifeWidth = GAUGE_MAX_WIDTH * life / 100.f;
 	if (life / 100.f <= 0.2) color = GetColor(110, 0, 0);
 	else color = GetColor(110, 207, 112);
@@ -54,5 +64,13 @@ void Life::setJudge(const JudgeGrade & grade)
 	default: break;
 	}
 	if (life > 0) life += d;
-	life = std::max(life, 0.f);
+	life = std::min(std::max(life, 0.f),100.f);
+}
+
+void Life::startRecord()
+{
+	recTimer.reset();
+	nextRecordLifeTime = 0;
+	recCnt = 0;
+	hasStartedRec = true;
 }

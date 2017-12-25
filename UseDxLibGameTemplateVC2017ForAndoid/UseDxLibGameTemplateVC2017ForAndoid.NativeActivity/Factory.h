@@ -6,7 +6,7 @@
 #include "Easing.h"
 #include "Debug.h"
 using namespace CommonSettings;
-#define factory Factory::getInstance()
+#define myFactory Factory::getInstance()
 
 class Factory {
 private:
@@ -42,7 +42,7 @@ public:
 		}
 	};
 	const std::unique_ptr<Scene>& getScene() { return scene; };
-	bool getIsSetNextScene() const { return (nextScene.operator bool()); };
+	bool getHaveNextScene() const { return (nextScene.operator bool()); };
 private:
 	Timer timer;
 	int fadeIn = 500, fadeOut = 500;

@@ -13,5 +13,5 @@ private:
 	Timer timer;
 	std::array<int, 4> circleRawImgs;
 	std::array<Image, 8> animCircleImgs;
-	std::array<int, 8> speed = {1, -1, 1, -1, -1, 1, 1, -1};
+	std::array<int, 8> speed = { {1, -1, 1, -1, -1, 1, 1, -1} };
 };

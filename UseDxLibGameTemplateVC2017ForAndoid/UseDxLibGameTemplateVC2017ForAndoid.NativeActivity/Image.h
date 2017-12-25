@@ -16,8 +16,9 @@ public:
 	Image();
 	Image(std::string filePath);
 	Image(std::string filePath, const Point& position);
-	Image(int handle);
-	Image(int handle, const Point& position);
+	Image(const int& handle);
+	Image(int&& handle);
+	Image(const int& handle, const Point& position);
 	~Image();
 
 	void init();
@@ -26,7 +27,8 @@ public:
 	void setAlign(const Align::Vertical& vAlign) { setAlign(hAlign, vAlign); };
 	void setAlign(const Align::Horizontal& hAlign, const Align::Vertical& vAlign);
 	void setImage(std::string filePath);
-	void setImage(int handle);
+	void setImage(const int& handle);
+	void setImage(int&& handle); //画像のリソース破棄はImage内で実行される
 	void setPosition(float x, float y) { setPosition(std::make_pair(x, y)); };
 	void setPosition(const Point& position);
 	void setScrollPosition(float x, float y) { setScrollPosition(std::make_pair(x, y)); };
@@ -39,12 +41,12 @@ public:
 	void recalcPosition();
 
 	const int& getHandle() const { return img; };
-	const Point& getPosition() const { return rawPos; };
-	const Point& getUpperLeftPosition() const { return pos; };
+	const Point& getPosition() { if (rawSize.first <= 0) calcImageSize(); return rawPos; };
+	const Point& getUpperLeftPosition() { if (rawSize.first <= 0) calcImageSize();  return pos; };
 	const std::array<std::pair<float, float>, 4>& getVertexes() const { return vertexes; };
 	Point getPositionNonScroll() { return std::make_pair(pos.first - scrollPos.first, pos.second - scrollPos.second); };
-	const Point& getImageSize() const { return rawSize; }; //画像そのままのサイズを返します
-	const Point& getSize() const { return scaledSize; }; //画像をリスケール後のサイズを返します
+	const Point& getImageSize() { if (rawSize.first <= 0) calcImageSize();  return rawSize; }; //画像そのままのサイズを返します
+	const Point& getSize() { if (rawSize.first <= 0) calcImageSize(); return scaledSize; }; //画像をリスケール後のサイズを返します
 	const float& getAngle() const { return angle; };
 
 	virtual void draw();
@@ -54,7 +56,9 @@ public:
 	void setHasDefaultCollider(bool b) { hasDefaultCollider = b; };
 
 	bool getIsOutOfWindow();
+	void calcImageSize();
 
+	void setIsPremulti(bool b) { isPremulti = b; };
 protected:
 
 private:
@@ -76,4 +80,5 @@ private:
 	Align::Horizontal hAlign = Align::Horizontal::LEFT;
 	Align::Vertical vAlign = Align::Vertical::UPPER;
 	bool hasDefaultCollider = true;
+	bool isPremulti = false;
 };

@@ -3,7 +3,7 @@
 
 void Scene::update()
 {
-	if (loading.getHasComplete() && !isExecuteLoadComplete && !factory.getIsSetNextScene()) {
+	if (loading.getHasComplete() && !isExecuteLoadComplete && !myFactory.getHaveNextScene()) {
 		onLoadComplete();
 		isExecuteLoadComplete = true;
 	}

@@ -4,9 +4,10 @@ namespace MyEase {
 	/**
 	* イージング
 	* @param t 現在の経過時間
-	*        d 移動が終わる時間
+	*        d t=0から開始して,移動が終わる時間
 	*        start 開始値
 	*        end 終了値
+	*        isInRange tを0<=t<=dに収めるかどうか
 	*/
 	template<typename T>
 	auto easeIn(int t, int d, T start, T end, bool isInRange = false) -> decltype((end - start) * t, T()) {

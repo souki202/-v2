@@ -81,9 +81,6 @@ float Note::getY(float p)
 
 float Note::getViewPercentage()
 {
-	//座標計算
-	int viewTime = playSettings.getViewNoteTime();
-
 	//判定時刻と出現時刻から進行度合いを計算
 	int appearTime = judgeTime - playSettings.getViewNoteTime();
 	int deltaTime = nowTime - appearTime;

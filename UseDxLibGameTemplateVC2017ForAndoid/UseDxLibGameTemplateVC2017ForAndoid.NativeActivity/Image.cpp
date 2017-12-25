@@ -19,14 +19,21 @@ Image::Image(std::string filePath, const Point & position)
 	init();
 }
 
-Image::Image(int handle)
+Image::Image(const int& handle)
 {
 	setImage(handle);
 	setPosition(std::make_pair(0.f, 0.f));
 	init();
 }
 
-Image::Image(int handle, const Point & position)
+Image::Image(int && handle)
+{
+	setImage(std::forward<int>(handle));
+	setPosition(std::make_pair(0.f, 0.f));
+	init();
+}
+
+Image::Image(const int& handle, const Point & position)
 {
 	setImage(handle);
 	setPosition(position);
@@ -52,18 +59,29 @@ void Image::setAlign(const Align::Horizontal & hAlign, const Align::Vertical & v
 
 void Image::setImage(std::string filePath)
 {
+	SetUsePremulAlphaConvertLoad(isPremulti);
 	img = LoadGraph(filePath.c_str());
+	SetUsePremulAlphaConvertLoad(false);
 	GetGraphSizeF(img, &rawSize.first, &rawSize.second);
 	recalcPosition();
 	loading.updateLoadCount();
+	isExternal = false;
 }
 
-void Image::setImage(int handle)
+void Image::setImage(const int& handle)
 {
 	img = handle;
 	GetGraphSizeF(img, &rawSize.first, &rawSize.second);
 	recalcPosition();
 	isExternal = true;
+}
+
+void Image::setImage(int && handle)
+{
+	img = handle;
+	GetGraphSizeF(img, &rawSize.first, &rawSize.second);
+	recalcPosition();
+	isExternal = false;
 }
 
 void Image::setPosition(const Point & position)
@@ -123,14 +141,9 @@ void Image::recalcPosition()
 
 void Image::draw()
 {
-	if (!rawSize.first || !rawSize.second) {
-		GetGraphSizeF(img, &rawSize.first, &rawSize.second);
-		//ちょうどロード終了
-		if (rawSize.first && rawSize.second) {
-			recalcPosition();
-		}
-	}
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+	calcImageSize();
+	if (isPremulti) SetDrawBlendMode(DX_BLENDMODE_PMA_ALPHA, alpha);
+	else SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 	DrawModiGraphF(
 		vertexes[0].first, vertexes[0].second,
 		vertexes[1].first, vertexes[1].second,
@@ -144,7 +157,8 @@ void Image::draw()
 
 void Image::drawByVertex(const std::vector<Point>& vertex) const
 {
-	SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+	if (isPremulti) SetDrawBlendMode(DX_BLENDMODE_PMA_ALPHA, alpha);
+	else SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
 	DrawModiGraphF(
 		vertex[0].first, vertex[0].second,
 		vertex[1].first, vertex[1].second,
@@ -192,4 +206,15 @@ bool Image::getIsOutOfWindow()
 	if (isOk) return true;
 
 	return false;
+}
+
+void Image::calcImageSize()
+{
+	if (!rawSize.first || !rawSize.second) {
+		GetGraphSizeF(img, &rawSize.first, &rawSize.second);
+		//ちょうどロード終了
+		if (rawSize.first && rawSize.second) {
+			recalcPosition();
+		}
+	}
 }

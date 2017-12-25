@@ -77,6 +77,9 @@ namespace InputDevice {
 		std::pair<int, int> getDeltaPosition() {
 			return std::make_pair(m_position.first - m_lastPosition.first, m_position.second - m_lastPosition.second);
 		};
+
+		const std::array<std::pair<int, int>, 3>& getPressInfo() const { return press; };
+		const std::array<PressPhase, 3>& getPhaseInfo() const { return phases; };
 	private:
 		Timer timer;
 		std::array<std::pair<int, int>, 3> press;//フレーム, 時間

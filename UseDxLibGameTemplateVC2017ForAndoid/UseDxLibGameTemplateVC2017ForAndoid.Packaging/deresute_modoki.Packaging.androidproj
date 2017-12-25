@@ -121,15 +121,19 @@
   <ItemGroup>
     <Content Include="assets\Font\24px.dft" />
     <Content Include="assets\Font\30px.dft" />
+    <Content Include="assets\Font\36px.dft" />
     <Content Include="assets\Font\36px_number.dft" />
     <Content Include="assets\Images\bomb.png" />
     <Content Include="assets\Images\Common\buttonbgsquare.png" />
     <Content Include="assets\Images\Common\buttonbgwide.png" />
+    <Content Include="assets\Images\Common\difficulty.png" />
+    <Content Include="assets\Images\Common\ok.png" />
     <Content Include="assets\Images\judgeline.png" />
     <Content Include="assets\Images\Play\Bomb\hit_circle.png" />
     <Content Include="assets\Images\Play\Bomb\hit_star.png" />
     <Content Include="assets\Images\Play\Bomb\kira.png" />
     <Content Include="assets\Images\Play\comboText.png" />
+    <Content Include="assets\Images\Play\intro.png" />
     <Content Include="assets\Images\Play\judgePoint.png" />
     <Content Include="assets\Images\Play\back.png" />
     <Content Include="assets\Images\Play\BGI\1.png" />
@@ -155,6 +159,7 @@
     <Content Include="assets\Images\Result\circle_out.png" />
     <Content Include="assets\Images\Result\clear_bg.png" />
     <Content Include="assets\Images\Result\failed_bg.png" />
+    <Content Include="assets\Images\Result\gauge_grad.png" />
     <Content Include="assets\Images\Select\bg.png" />
     <Content Include="assets\Images\Select\closeoption.png" />
     <Content Include="assets\Images\Select\decspeed.png" />
@@ -181,6 +186,9 @@
     <ProjectReference Include="..\UseDxLibGameTemplateVC2017ForAndoid.NativeActivity\UseDxLibGameTemplateVC2017ForAndoid.NativeActivity.vcxproj">
       <Project>{d56559f3-2fc9-4296-a130-7348b9031e1e}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <JavaCompile Include="src\com\deresute_modoki\Packaging\deresute_modoki.java" />
   </ItemGroup>
   <Import Project="$(AndroidTargetsPath)\Android.targets" />
   <ImportGroup Label="ExtensionTargets" />

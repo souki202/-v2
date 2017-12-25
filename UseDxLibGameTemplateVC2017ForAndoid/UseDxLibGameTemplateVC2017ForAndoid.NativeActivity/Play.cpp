@@ -1,7 +1,7 @@
 #include "Play.h"
 
 Play::Play(const MusicInfo& musicInfo, int difficulty)
-	: musicInfo(musicInfo), difficulty(difficulty)
+	: difficulty(difficulty), musicInfo(musicInfo)
 {
 	musicScore.setMusicInfo(musicInfo);
 	musicScore.loadMusicScore(difficulty);
@@ -25,20 +25,21 @@ void Play::update()
 		startDelayTimer.update();
 		intro.update();
 	}
-	if (!isInitIntroTime && intro.getIsEndIntro()) {
+	if (!isInitIntroTime && intro.getHasEndedIntro()) {
 		startDelayTimer.reset();
 		musicScore.startMoveNotes();
 		isInitIntroTime = true;
 		isStarted = false;
 	}
-	if (!isStarted && intro.getIsEndIntro() && startDelayTimer.getElapsedTime() >= playSettings.getDelayTime()) {
-		bga.playBga();
+	if (!isStarted && intro.getHasEndedIntro() && startDelayTimer.getElapsedTime() >= playSettings.getDelayTime()) {
 		musicScore.startMusic();
+		bga.playBga();
 		isStarted = true;
 	}
 	if (musicScore.getIsEndMusic()) {
+		if (myFactory.getHaveNextScene()) return;
 		musicScore.saveRecord();
-		factory.setNewScene<Result>(musicScore.getResultRecord(), musicInfo);
+		myFactory.setNewScene<Result>(musicScore.getResultRecord(), musicInfo);
 	}
 	bga.update();
 	musicScore.update();

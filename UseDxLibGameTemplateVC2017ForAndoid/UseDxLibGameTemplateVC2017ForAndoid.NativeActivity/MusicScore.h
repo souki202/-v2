@@ -34,13 +34,15 @@ public:
 	
 	void draw();
 	void update();
-	void startMusic() { PlaySoundMem(bgm, DX_PLAYTYPE_BACK); timer.reset(); isStarted = true; };
+	void startMusic();
 	bool isSurvive();
 	//bool getIsEndMusic() { return !CheckSoundMem(bgm) && isStarted && endPlayTimer.getElapsedTime() > playSettings.getPlayEndWaitTime(); };
-	bool getIsEndMusic() { return timer.getElapsedTime() > 10000; };
+	bool getIsEndMusic() { return timer.getElapsedTime() > 8000; };
 	void startMoveNotes() { noteDrawTimer.reset(); isStartMoveNotes = true; };
 	void saveRecord();
 	const ResultRecord& getResultRecord() const { return record; };
+	float getMusicLength() { return GetSoundTotalTime(bgm) / static_cast<float>(record.NUM_OF_LIFE_HISTORY); };
+	
 private:
 	ResultRecord record;
 	MusicInfo musicInfo;
